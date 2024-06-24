@@ -16,16 +16,4 @@ export class AuthController {
   async login(@Request()req) {
     return this.authService.login(req.user);
   }
-
-  /*@UseGuards(LocalAuthGuard)
-    @Post('auth/login')
-    async login(@Request() req) {
-      return req.user;
-  }   */
-
-  @UseGuards(JwtAuthGuard)
-  @Get('users/profile')
-  getProfile(@Request() req){
-    return req.user;
-  }
 }

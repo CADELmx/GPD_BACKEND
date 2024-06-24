@@ -2,6 +2,7 @@ import { ConflictException, Injectable, NotAcceptableException, NotFoundExceptio
 import { Prisma, Users } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
+import { CreateUserDto } from './dto/create-user.dt';
 
 
 @Injectable()
@@ -48,4 +49,5 @@ export class UsersService {
 
     return user;
   }
+
 }
