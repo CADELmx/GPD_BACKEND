@@ -46,6 +46,10 @@ lerna-debug.log*
 .temp
 .tmp
 
+#img for db
+*.definition.*.png
+*.test.sql
+*.erd.json
 # Runtime data
 pids
 *.pid
