@@ -1,10 +1,5 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { Users } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
-import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from 'src/users/dto/create-user.dt';
-import { Prisma } from '@prisma/client';
-import { access } from 'fs';
 import { JwtService } from '@nestjs/jwt';
 
 
@@ -31,12 +26,4 @@ export class AuthService {
     };
   }
 
-
-  /*async register (userDto: CreateUserDto): Promise<Users>{
-    const existingUser = await this.usersService.getUserByEmail(userDto.email);
-    if(existingUser){
-      throw new ConflictException('El usuario ya existe');
-    }
-    return await this.usersService.createUser(userDto);
-  }*/
 }

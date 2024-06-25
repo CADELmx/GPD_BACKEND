@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 import { PrismaService } from 'src/prisma.service';
-import { UsersService } from 'src/users/users.service';
 import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
@@ -23,7 +22,6 @@ import { UsersController } from 'src/users/users.controller';
   providers: [
     AuthService, 
     PrismaService, 
-    UsersService, 
     LocalStrategy,
     JwtStrategy
   ],
