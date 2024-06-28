@@ -14,6 +14,8 @@ export class TemplatesService {
    * @returns {Promise<Template>} - The registered template
    */
   async create(createTemplateDto: CreateTemplateDto): Promise<Template> {
+    await this.validateForeignKeys(createTemplateDto);
+
     return await this.prisma.template.create({
       data: {
         ...createTemplateDto,
@@ -27,25 +29,6 @@ export class TemplatesService {
    */
   async findAll(): Promise<Template[]> {
     return await this.prisma.template.findMany();
-  }
-
-  /**
-   * Validates if template ID exists
-   * @param {number} id - Template ID to validate
-   * @returns {Promise<Template>} - The template with the given ID
-   * @throws {NotFoundException} - If the template ID is not found
-   */
-  async validateId(id: number): Promise<Template> {
-    const template = await this.prisma.template.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!template) {
-      throw new NotFoundException('Template not found');
-    }
-    return template;
   }
 
   /**
@@ -73,6 +56,7 @@ export class TemplatesService {
     updateTemplate: UpdateTemplateDto,
   ): Promise<Template> {
     await this.validateId(id);
+    await this.validateForeignKeys(updateTemplate);
 
     return await this.prisma.template.update({
       where: {
@@ -94,5 +78,62 @@ export class TemplatesService {
         id,
       },
     });
+  }
+
+  /**
+   * Validates if template ID exists
+   * @param {number} id - Template ID to validate
+   * @returns {Promise<Template>} - The template with the given ID
+   * @throws {NotFoundException} - If the template ID is not found
+   */
+  async validateId(id: number): Promise<Template> {
+    const template = await this.prisma.template.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!template) {
+      throw new NotFoundException('Template not found');
+    }
+    return template;
+  }
+
+  /**
+   * Validates if foreign keys (areaId, responsibleId, revisedById)
+   * @param {CreateTemplateDto | UpdateTemplateDto} dto - Data to validate
+   * @throws {NotFoundException} - If any foreign keys is not found
+   */
+  private async validateForeignKeys(
+    dto: CreateTemplateDto | UpdateTemplateDto,
+  ): Promise<void> {
+    const { areaId, responsibleId, revisedById } = dto;
+
+    const area = await this.prisma.area.findUnique({
+      where: {
+        id: areaId,
+      },
+    });
+    if (!area) {
+      throw new NotFoundException(`Area with ID ${areaId} not found`);
+    }
+
+    const responsible = await this.prisma.users.findUnique({
+      where: {
+        nt: responsibleId,
+      },
+    });
+    if (!responsible) {
+      throw new NotFoundException(`User with NT ${responsibleId} not found`);
+    }
+
+    const revisedBy = await this.prisma.users.findUnique({
+      where: {
+        nt: revisedById,
+      },
+    });
+    if (!revisedBy) {
+      throw new NotFoundException(`User with NT ${revisedById} not found`);
+    }
   }
 }
