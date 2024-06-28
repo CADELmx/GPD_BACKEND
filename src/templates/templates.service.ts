@@ -1,26 +1,66 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTemplateDto } from './dto/create-template.dto';
-import { UpdateTemplateDto } from './dto/update-template.dto';
+import { Prisma, Template } from '@prisma/client';
+import { PrismaService } from 'src/prisma.service';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class TemplatesService {
-  create(createTemplateDto: CreateTemplateDto) {
-    return 'This action adds a new template';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createTemplate: Prisma.TemplateCreateInput): Promise<Template> {
+    return await this.prisma.template.create({
+      data: createTemplate,
+    });
   }
 
-  findAll() {
-    return `This action returns all templates`;
+  async findAll(): Promise<Template[]> {
+    return await this.prisma.template.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} template`;
+  async validateId(id: number): Promise<Template> {
+    const template = await this.prisma.template.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!template) {
+      throw new NotFoundException('Template not found');
+    }
+    return template;
   }
 
-  update(id: number, updateTemplateDto: UpdateTemplateDto) {
-    return `This action updates a #${id} template`;
+  async findOne(id: number): Promise<Template> {
+    await this.validateId(id);
+
+    const template = await this.prisma.template.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!template) {
+      throw new NotFoundException(`Template witd ID #${id} not found`);
+    }
+    return template;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} template`;
+  async update(id: number, updateTemplateDto: Prisma.TemplateUpdateInput) {
+    await this.validateId(id);
+
+    return await this.prisma.template.update({
+      where: {
+        id,
+      },
+      data: { ...updateTemplateDto },
+    });
+  }
+
+  async remove(id: number) {
+    await this.validateId(id);
+    return await this.prisma.template.delete({
+      where: {
+        id,
+      },
+    });
   }
 }
