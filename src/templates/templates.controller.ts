@@ -1,23 +1,23 @@
 import {
-  Controller,
   Get,
   Post,
   Body,
   Patch,
   Param,
   Delete,
+  Controller,
+  ParseIntPipe,
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { TemplatesService } from './templates.service';
-import { CreateTemplateDto } from './dto/create-template.dto';
-import { UpdateTemplateDto } from './dto/update-template.dto';
 
 @Controller('templates')
 export class TemplatesController {
   constructor(private readonly templatesService: TemplatesService) {}
 
   @Post()
-  create(@Body() createTemplateDto: CreateTemplateDto) {
-    return this.templatesService.create(createTemplateDto);
+  create(@Body() createTemplateDto: Prisma.TemplateCreateInput) {
+    return this.templatesService.create({ ...createTemplateDto });
   }
 
   @Get()
@@ -26,20 +26,20 @@ export class TemplatesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.templatesService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.templatesService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
-    @Body() updateTemplateDto: UpdateTemplateDto,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateTemplateDto: Prisma.TemplateUpdateInput,
   ) {
-    return this.templatesService.update(+id, updateTemplateDto);
+    return this.templatesService.update(id, updateTemplateDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.templatesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.templatesService.remove(id);
   }
 }
