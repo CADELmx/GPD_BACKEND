@@ -10,7 +10,7 @@ export class TemplatesService {
 
   /**
    * Rregisters a new template
-   * @param {Prisma.TemplateCreateInput} createTemplate - The template data to register
+   * @param {CreateTemplateDto} createTemplate - The template data to register
    * @returns {Promise<Template>} - The registered template
    */
   async create(createTemplateDto: CreateTemplateDto): Promise<Template> {
@@ -65,7 +65,7 @@ export class TemplatesService {
   /**
    * Updates a template by its ID
    * @param {number} id - ID of template to update
-   * @param {Prisma.TemplateUpdateInput} updateTemplate - Template data to update
+   * @param {UpdateTemplateDto} updateTemplate - Template data to update
    * @returns {Promise<Template>} - The updated template
    */
   async update(

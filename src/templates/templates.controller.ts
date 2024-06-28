@@ -18,7 +18,7 @@ export class TemplatesController {
 
   /**
    * Creates a new template
-   * @param {Prisma.TemplateCreateInput} createTemplateDto The template data transfer object
+   * @param {CreateTemplateDto} createTemplateDto The template data transfer object
    * @returns - The created template
    */
   @Post()
@@ -48,7 +48,7 @@ export class TemplatesController {
   /**
    * Updates a template by ID
    * @param {number} id - The ID of the template to update
-   * @param {Prisma.TemplateUpdateInput} updateTemplateDto - The updated template data traansfer object
+   * @param {UpdateTemplateDto} updateTemplateDto - The updated template data traansfer object
    * @returns - The updated template
    */
   @Patch(':id')
