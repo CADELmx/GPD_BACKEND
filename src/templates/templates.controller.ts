@@ -8,8 +8,9 @@ import {
   Controller,
   ParseIntPipe,
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { TemplatesService } from './templates.service';
+import { CreateTemplateDto } from 'src/models/template/create-template.dto';
+import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
 
 @Controller('templates')
 export class TemplatesController {
@@ -21,7 +22,7 @@ export class TemplatesController {
    * @returns - The created template
    */
   @Post()
-  create(@Body() createTemplateDto: Prisma.TemplateCreateInput) {
+  create(@Body() createTemplateDto: CreateTemplateDto) {
     return this.templatesService.create({ ...createTemplateDto });
   }
 
@@ -53,7 +54,7 @@ export class TemplatesController {
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateTemplateDto: Prisma.TemplateUpdateInput,
+    @Body() updateTemplateDto: UpdateTemplateDto,
   ) {
     return this.templatesService.update(id, updateTemplateDto);
   }
