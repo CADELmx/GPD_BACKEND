@@ -13,9 +13,11 @@ export class TemplatesService {
    * @param {Prisma.TemplateCreateInput} createTemplate - The template data to register
    * @returns {Promise<Template>} - The registered template
    */
-  async create(createTemplateDTO: CreateTemplateDto): Promise<Template> {
+  async create(createTemplateDto: CreateTemplateDto): Promise<Template> {
     return await this.prisma.template.create({
-      data: createTemplateDTO,
+      data: {
+        ...createTemplateDto,
+      },
     });
   }
 
