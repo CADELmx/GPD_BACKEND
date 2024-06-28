@@ -1,6 +1,8 @@
-import { Prisma, Template } from '@prisma/client';
+import { Template } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateTemplateDto } from 'src/models/template/create-template.dto';
+import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
 
 @Injectable()
 export class TemplatesService {
@@ -11,9 +13,9 @@ export class TemplatesService {
    * @param {Prisma.TemplateCreateInput} createTemplate - The template data to register
    * @returns {Promise<Template>} - The registered template
    */
-  async create(createTemplate: Prisma.TemplateCreateInput): Promise<Template> {
+  async create(createTemplateDTO: CreateTemplateDto): Promise<Template> {
     return await this.prisma.template.create({
-      data: createTemplate,
+      data: createTemplateDTO,
     });
   }
 
@@ -66,7 +68,7 @@ export class TemplatesService {
    */
   async update(
     id: number,
-    updateTemplate: Prisma.TemplateUpdateInput,
+    updateTemplate: UpdateTemplateDto,
   ): Promise<Template> {
     await this.validateId(id);
 
