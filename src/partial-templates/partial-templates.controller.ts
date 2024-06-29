@@ -8,8 +8,20 @@ import { JwtAuthGuard } from 'src/auth/strategies/guards/jwt-auth.guard';
 export class PartialTemplatesController {
   constructor(private readonly partialTemplatesService: PartialTemplatesService) {}
 
-  create(createPartialTemplateDto: CreatePartialTemplateDto) {
-    return 'This action adds a new partial';
+  @Post()
+  create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
+    return this.partialTemplatesService.create({
+      nt: createPartialTemplateDto.nt,
+      name: createPartialTemplateDto.name,
+      gender: createPartialTemplateDto.gender,
+      position: createPartialTemplateDto.position,
+      status: createPartialTemplateDto.status,
+      total: createPartialTemplateDto.total,
+      year: createPartialTemplateDto.year,
+      period: createPartialTemplateDto.period,
+      templateId: createPartialTemplateDto.templateId
+
+    });
   }
 
   @UseGuards(JwtAuthGuard)

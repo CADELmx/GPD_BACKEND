@@ -10,8 +10,8 @@ import { Prisma } from '@prisma/client';
 export class PartialTemplatesService {
   constructor(private readonly prisma: PrismaService){};
 
-  create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <PartialTemplate> {
-    return this.prisma.partialTemplate.create({
+  async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <PartialTemplate> {
+    return await this.prisma.partialTemplate.create({
       data: {
         ...createPartialTemplateDto
       }
