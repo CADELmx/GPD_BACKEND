@@ -42,7 +42,12 @@ export class PartialTemplatesService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} partialTemplate`;
+  async remove(id: number) {
+    await this.findOne(id);
+    return this.prisma.partialTemplate.delete({
+      where: {
+        id
+      }
+    });
   }
 }

@@ -41,8 +41,9 @@ export class PartialTemplatesController {
     return this.partialTemplatesService.update(id, updatePartialTemplateDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.partialTemplatesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.partialTemplatesService.remove(id);
   }
 }
