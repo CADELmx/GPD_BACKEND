@@ -1,10 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PartialTemplate } from '@prisma/client';
-import { promises } from 'dns';
 import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
 import { PrismaService } from 'src/prisma.service';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PartialTemplatesService {
@@ -34,8 +32,14 @@ export class PartialTemplatesService {
     return partialTemplate;
   }
 
-  update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto) {
-    return `This action updates a #${id} partialTemplate`;
+  async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto) {
+    await this.findOne(id);
+    return this.prisma.partialTemplate.update({
+      data: { ...updatePartialTemplateDto} as any,
+      where: {
+        id
+      }
+    });
   }
 
   remove(id: number) {

@@ -37,8 +37,8 @@ export class PartialTemplatesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePartialTemplateDto: UpdatePartialTemplateDto) {
-    return this.partialTemplatesService.update(+id, updatePartialTemplateDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updatePartialTemplateDto: UpdatePartialTemplateDto) {
+    return this.partialTemplatesService.update(id, updatePartialTemplateDto);
   }
 
   @Delete(':id')
