@@ -107,7 +107,7 @@ model Activity {
 model Template {
   id              BigInt            @id @unique @default(autoincrement())
   state           String            @default("pendiente") @db.VarChar(50)
-  areaId          BigInt            @unique
+  areaId          BigInt            
   period          String            @db.VarChar(50)
   responsibleId   Int
   revisedById     Int
