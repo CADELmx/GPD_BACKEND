@@ -47,8 +47,18 @@ export class EducationalProgramsService {
     return edu_project;
   }
 
-  update(id: number, updateEducationalProgramDto: UpdateEducationalProgramDto) {
-    return `This action updates a #${id} educationalProgram`;
+  /**
+   * Method to update a program using its id
+   * @param id id of the program to update
+   * @param updateEducationalProgramDto Program data to update
+   * @returns Returns the updated program
+   */
+
+  async update(id: number, updateEducationalProgramDto: UpdateEducationalProgramDto,): Promise<EducationalPrograms> {
+    await this.byId(id);
+    return await this.prisma.educationalPrograms.update({data: {...updateEducationalProgramDto}as any, where: { id},
+    });
+    `This action updates a #${id} educationalProgram`;
   }
 
   remove(id: number) {

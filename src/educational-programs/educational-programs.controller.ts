@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
+import { LocalAuthGuard } from 'src/auth/strategies/guards/local-auth.guard';
 
 /**
  * Program root path
@@ -25,6 +26,7 @@ export class EducationalProgramsController {
    * Get all programs
    * @returns Return the programs
  */
+  @UseGuards(LocalAuthGuard)
   @Get()
   findAll() {
     return this.educationalProgramsService.findAll();
@@ -40,11 +42,19 @@ export class EducationalProgramsController {
     return this.educationalProgramsService.byId(id);
   }
 
+  /**
+   * Update a program using its id
+   * @param id id of the program to update
+   * @param updateEducationalProgramDto Program data to update
+   * @returns Returns the updated program
+   */
+
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEducationalProgramDto: UpdateEducationalProgramDto) {
-    return this.educationalProgramsService.update(+id, updateEducationalProgramDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateEducationalProgramDto: UpdateEducationalProgramDto) {
+    return this.educationalProgramsService.update(id, updateEducationalProgramDto);
   }
 
+ 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.educationalProgramsService.remove(+id);
