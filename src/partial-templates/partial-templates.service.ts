@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PartialTemplate } from '@prisma/client';
 import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
@@ -9,12 +9,21 @@ export class PartialTemplatesService {
   constructor(private readonly prisma: PrismaService){};
 
   async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <PartialTemplate> {
-    return await this.prisma.partialTemplate.create({
+    const existingPartialTemplate =  await this.prisma.partialTemplate.findFirst({
+      where: {
+        name: createPartialTemplateDto.name,
+      },
+    });
+    if (existingPartialTemplate){
+      throw new BadRequestException('Ya existe una plantilla parcial con ese nombre');
+    }
+
+    return this.prisma.partialTemplate.create({
       data: {
-        ...createPartialTemplateDto
-      }
-    })
-  }
+        ...createPartialTemplateDto,
+      },
+    });
+  }
 
   async findAll(): Promise <PartialTemplate[]> {
     return this.prisma.partialTemplate.findMany();
@@ -32,7 +41,7 @@ export class PartialTemplatesService {
     return partialTemplate;
   }
 
-  async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto) {
+  async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto): Promise<PartialTemplate> {
     await this.findOne(id);
     return this.prisma.partialTemplate.update({
       data: { ...updatePartialTemplateDto} as any,
@@ -42,12 +51,13 @@ export class PartialTemplatesService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<{ message: string }> {
     await this.findOne(id);
-    return this.prisma.partialTemplate.delete({
+    await this.prisma.partialTemplate.delete({
       where: {
         id
       }
     });
+    return { message: 'Eliminado con éxito' };
   }
 }
