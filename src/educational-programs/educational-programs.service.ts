@@ -1,8 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
 import { PrismaService } from 'src/prisma.service';
 import { EducationalPrograms, Prisma } from '@prisma/client';
+import { promises } from 'dns';
+
 
 @Injectable()
 export class EducationalProgramsService {
@@ -15,6 +17,14 @@ export class EducationalProgramsService {
  * @returns Registered Educational Program
  */
   async createProg(data: Prisma.EducationalProgramsCreateInput): Promise<EducationalPrograms> {
+    const existing = await this.prisma.educationalPrograms.findFirst({
+      where:{
+        description: data.description,
+      },
+    });
+    if(existing){
+      throw new BadRequestException(`This educational program already exists`);
+    }
    return this.prisma.educationalPrograms.create({
     data,
    })
@@ -58,10 +68,22 @@ export class EducationalProgramsService {
     await this.byId(id);
     return await this.prisma.educationalPrograms.update({data: {...updateEducationalProgramDto}as any, where: { id},
     });
-    `This action updates a #${id} educationalProgram`;
+  
   }
+  
+/**
+ * *Method to delete a program
+ * @param id id of the program to delete
+ * @returns Return a message after deleting a program
+ */
 
-  remove(id: number) {
-    return `This action removes a #${id} educationalProgram`;
-  }
+ async remove(id: number): Promise<{ message: string }> {
+  await this.byId(id);
+  await this.prisma.educationalPrograms.delete({
+    where: {
+      id
+    }
+  });
+  return { message: 'Deleted successfully' };
+  }
 }

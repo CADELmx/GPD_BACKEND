@@ -54,9 +54,13 @@ export class EducationalProgramsController {
     return this.educationalProgramsService.update(id, updateEducationalProgramDto);
   }
 
- 
+ /**
+  * Method to delete a program
+  * @param id id of the program to delete
+  * @returns Return a message after deleting a program
+  */
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.educationalProgramsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.educationalProgramsService.remove(id);
   }
 }
