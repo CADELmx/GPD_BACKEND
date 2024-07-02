@@ -9,8 +9,13 @@ export class PartialTemplatesService {
 
   // Injects PrismaService into the service
   constructor(private readonly prisma: PrismaService){};
-  // Creates a new partial template
 
+
+    /**
+   * Rregisters a new PartialTemplate
+   * @param {CreatePartialTemplateDto} createPartialTemplateDto - The partialTemplate data to register
+   * @returns {Promise<PartialTemplate>} - The registered partialTemplate
+   */
   async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <PartialTemplate> {
     // Checks if a partial template with the same name already exists
     const existingPartialTemplate =  await this.prisma.partialTemplate.findFirst({
@@ -31,12 +36,19 @@ export class PartialTemplatesService {
     });
   }
 
-  // Retrieves all partial templates
+  /**
+   * Lists all partialTemplates
+   * @returns {Promise<PartialTemplate[]>} - All registered partialTemplates
+   */
   async findAll(): Promise <PartialTemplate[]> {
     return this.prisma.partialTemplate.findMany();
   }
 
-  // Retrieves a specific partial template by ID
+   /**
+   * Gets a partialTemplate by its ID
+   * @param {number} partialTemplateId - partialTemplate ID to search for
+   * @returns {Promise<PartialTemplate>} -  The partialTemplate based on the given ID
+   */
   async findOne(partialTemplateId: number): Promise<PartialTemplate>{
     const partialTemplate = await this.prisma.partialTemplate.findUnique({
       where: {
@@ -50,7 +62,12 @@ export class PartialTemplatesService {
     return partialTemplate;
   }
 
-  // Updates a specific partial template by ID
+    /**
+   * Updates a partialTemplate by its ID
+   * @param {number} id - ID of partialTemplate to update
+   * @param {UpdatePartialTemplateDto} updatePartialTemplateDto - partialTemplate data to update
+   * @returns {Promise<PartialTemplate>} - The updated partialTemplate
+   */
   async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto): Promise<PartialTemplate> {
     // Ensures the partial template exists before updating
     await this.findOne(id);
@@ -62,7 +79,11 @@ export class PartialTemplatesService {
     });
   }
 
-  // Deletes a specific partial template by ID
+  /**
+   * Deletes a partialTemplate by its ID
+   * @param {number} id - ID of the partialTemplate to delete
+   * @returns {Promise<PartialTemplate>} - The deleted partialTemplate
+   */
   async remove(id: number): Promise<{ message: string }> {
     // Ensures the partial template exists before deleting
     await this.findOne(id);

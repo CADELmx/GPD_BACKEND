@@ -7,10 +7,14 @@ import { JwtAuthGuard } from 'src/auth/strategies/guards/jwt-auth.guard';
 @Controller('partial-templates')
 export class PartialTemplatesController {
 
-  // Injects the PartialTemplatesService into the controller
   constructor(private readonly partialTemplatesService: PartialTemplatesService) {}
 
-  // Creates a new partial template
+  
+  /**
+  * Creates a new partialTemplate
+  * @param {CreatePartialTemplateDto} createPartialTemplateDto The partialTemplate data transfer object
+  * @returns - The created partialTemplate
+  */
   @Post()
   create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
     return this.partialTemplatesService.create({
@@ -27,31 +31,45 @@ export class PartialTemplatesController {
     });
   }
 
-  // Uses JWT authentication guard to protect the route
+
+  /**
+   * Retrieves all partialTemplates
+   * @returns . An array of all partialTemplates
+  */
   @UseGuards(JwtAuthGuard)
-   // Retrieves all partial templates
   @Get()
   findAll() {
     return this.partialTemplatesService.findAll();
   }
 
-  // Uses JWT authentication guard to protect the route
+  
+  /** Retrieves a partialTemplate by ID
+  * @param {number} id - The ID of the partialTemplate to retrieve
+  * @returns - The partialTemplate with the specified ID
+  */
   @UseGuards(JwtAuthGuard)
-   // Retrieves a specific partial template by ID
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.partialTemplatesService.findOne(id);
   }
 
-  // Updates a specific partial template by ID
+  /**
+   * Updates a partialTemplate by ID
+   * @param {number} id - The ID of the partialTemplate to update
+   * @param {UpdatePartialTemplateDto} updatePartialTemplateDto - The updated partialTemplate data traansfer object
+   * @returns - The updated partialTemplate
+   */
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updatePartialTemplateDto: UpdatePartialTemplateDto) {
     return this.partialTemplatesService.update(id, updatePartialTemplateDto);
   }
 
-  // Uses JWT authentication guard to protect the route
+  
+  /** Deletes a partialTemplate by ID
+  * @param {number} id - The ID of the partialTemplate to delete
+  * @returns - The deleted partialTemplate
+  */
   @UseGuards(JwtAuthGuard)
-  // Deletes a specific partial template by ID
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.partialTemplatesService.remove(id);
