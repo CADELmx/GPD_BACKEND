@@ -53,17 +53,18 @@ export class TemplatesService {
    */
   async update(
     id: number,
-    updateTemplate: UpdateTemplateDto,
+    updateTemplateDto: UpdateTemplateDto,
   ): Promise<Template> {
     await this.validateId(id);
-    await this.validateForeignKeys(updateTemplate);
+    await this.validateForeignKeys(updateTemplateDto);
 
-    return await this.prisma.template.update({
+    const updateTemplate = await this.prisma.template.update({
       where: {
         id,
       },
-      data: { ...updateTemplate },
+      data: { ...updateTemplateDto },
     });
+    return updateTemplate;
   }
 
   /**
