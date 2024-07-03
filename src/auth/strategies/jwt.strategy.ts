@@ -13,8 +13,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
   async validate(payload: any) {
-    try {
-    console.log('Payload:', payload);
     if (!payload.sub) {
       throw new UnauthorizedException('Token inválido');
     }
@@ -25,10 +23,5 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       }
       const { password, ...result} = user;
       return result;
-    }catch (error){
-      console.log('Error:', error);
-      throw new UnauthorizedException('Usuario no encontrado');
     }
-  } 
-  
 }
