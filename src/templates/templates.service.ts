@@ -110,31 +110,45 @@ export class TemplatesService {
   ): Promise<void> {
     const { areaId, responsibleId, revisedById } = dto;
 
-    const area = await this.prisma.area.findUnique({
-      where: {
-        id: areaId,
-      },
-    });
-    if (!area) {
-      throw new NotFoundException(`Area with ID ${areaId} not found`);
+    const validations = [];
+
+    if (areaId !== undefined) {
+      validations.push(
+        this.prisma.area.count({ where: { id: areaId } }).then((count) => {
+          if (count === 0) {
+            throw new NotFoundException(`Area with ID ${areaId} not found`);
+          }
+        }),
+      );
     }
 
-    const responsible = await this.prisma.users.findUnique({
-      where: {
-        nt: responsibleId,
-      },
-    });
-    if (!responsible) {
-      throw new NotFoundException(`User with NT ${responsibleId} not found`);
+    if (responsibleId !== undefined) {
+      validations.push(
+        this.prisma.users
+          .count({ where: { id: responsibleId } })
+          .then((count) => {
+            if (count === 0) {
+              throw new NotFoundException(
+                `User with NT ${responsibleId} not found`,
+              );
+            }
+          }),
+      );
     }
 
-    const revisedBy = await this.prisma.users.findUnique({
-      where: {
-        nt: revisedById,
-      },
-    });
-    if (!revisedBy) {
-      throw new NotFoundException(`User with NT ${revisedById} not found`);
+    if (revisedById !== undefined) {
+      validations.push(
+        this.prisma.users
+          .count({ where: { nt: revisedById } })
+          .then((count) => {
+            if (count === 0) {
+              throw new NotFoundException(
+                `User with NT ${revisedById} not found`,
+              );
+            }
+          }),
+      );
     }
+    await Promise.all(validations);
   }
 }
