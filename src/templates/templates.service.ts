@@ -109,7 +109,6 @@ export class TemplatesService {
     dto: CreateTemplateDto | UpdateTemplateDto,
   ): Promise<void> {
     const { areaId, responsibleId, revisedById } = dto;
-
     const validations = [];
 
     if (areaId !== undefined) {
