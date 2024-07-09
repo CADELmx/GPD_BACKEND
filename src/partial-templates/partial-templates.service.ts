@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PartialTemplate } from '@prisma/client';
 import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
@@ -16,25 +16,20 @@ export class PartialTemplatesService {
    * @param {CreatePartialTemplateDto} createPartialTemplateDto - The partialTemplate data to register
    * @returns {Promise<PartialTemplate>} - The registered partialTemplate
    */
-  async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <PartialTemplate> {
-    // Checks if a partial template with the same name already exists
-    const existingPartialTemplate =  await this.prisma.partialTemplate.findFirst({
-      where: {
-        name: createPartialTemplateDto.name,
-      },
-    });
-    // Throws an exception if a template with the same name exists
-    if (existingPartialTemplate){
-      throw new BadRequestException('A partial template with this name already exists');
+    async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <{ message: string; data: PartialTemplate}> {
+      try {
+      const newPartialTemplate = await this.prisma.partialTemplate.create({
+        data: {
+          ...createPartialTemplateDto,
+        },
+      });
+  
+      return { message: 'Listo enviado', data: newPartialTemplate};
+    } catch (error) {
+      console.error('Error al enviar', error);
+      throw new InternalServerErrorException ('Error al enviar')
     }
-
-    // Creates a new partial template
-    return this.prisma.partialTemplate.create({
-      data: {
-        ...createPartialTemplateDto,
-      },
-    });
-  }
+    }
 
   /**
    * Lists all partialTemplates

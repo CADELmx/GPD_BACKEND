@@ -36,7 +36,7 @@ export class PartialTemplatesController {
    * Retrieves all partialTemplates
    * @returns . An array of all partialTemplates
   */
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.partialTemplatesService.findAll();
@@ -47,7 +47,7 @@ export class PartialTemplatesController {
   * @param {number} id - The ID of the partialTemplate to retrieve
   * @returns - The partialTemplate with the specified ID
   */
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.partialTemplatesService.findOne(id);
@@ -69,7 +69,7 @@ export class PartialTemplatesController {
   * @param {number} id - The ID of the partialTemplate to delete
   * @returns - The deleted partialTemplate
   */
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.partialTemplatesService.remove(id);
