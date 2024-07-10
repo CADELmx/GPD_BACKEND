@@ -19,7 +19,7 @@ export class EducationalProgramsController {
    */
   @Post()
   create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
-    return this.educationalProgramsService.createProg({ ...createEducationalProgramDto});
+    return this.educationalProgramsService.create({ ...createEducationalProgramDto});
   }
 
   /**

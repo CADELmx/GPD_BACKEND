@@ -4,5 +4,5 @@ import { CreateEducationalProgramDto } from './create-educational-program.dto';
 export class UpdateEducationalProgramDto extends PartialType(CreateEducationalProgramDto) {
     abbreviation? : string
     description?: string
-    areaId?: string
+    areaId?: number
 }

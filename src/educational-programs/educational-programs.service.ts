@@ -16,19 +16,20 @@ export class EducationalProgramsService {
  * @param data Program data to register
  * @returns Registered Educational Program
  */
-  async createProg(data: Prisma.EducationalProgramsCreateInput): Promise<EducationalPrograms> {
-    const existing = await this.prisma.educationalPrograms.findFirst({
-      where:{
-        description: data.description,
-      },
-    });
-    if(existing){
-      throw new BadRequestException(`This educational program already exists`);
-    }
-   return this.prisma.educationalPrograms.create({
-    data,
-   })
-  }
+async create(educationalProgram: CreateEducationalProgramDto): Promise <{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
+  try {
+  await this.validateForeignKeys(educationalProgram);
+  const newPartialTemplate = await this.prisma.educationalPrograms.create({
+    data: {
+      ...educationalProgram,
+    },
+    });
+
+  return { message: 'Listo, enviado', error: null, data: newPartialTemplate};
+} catch (error) {
+  return { message: 'Error al enviar', error: error.message , data: null };
+    }
+ }
 
   /**
    * Method to consult all programs
@@ -86,4 +87,31 @@ export class EducationalProgramsService {
   });
   return { message: 'Deleted successfully' };
   }
+
+/**
+   * Validates if foreign keys (areaId, responsibleId, revisedById)
+   * @param {CreateEducationalProgramDto | UpdateEducationalProgramDto} dto - Data to validate
+   * @throws {NotFoundException} - If any foreign keys is not found
+   */
+private async validateForeignKeys(
+  dto: CreateEducationalProgramDto | UpdateEducationalProgramDto,
+): Promise<void> {
+  const { areaId } = dto;
+  const validations = [];
+
+  if (areaId !== undefined) {
+    if (typeof areaId !== 'number') {
+      throw new Error(`Tipo de areaId inválido: se esperaba un número, se recibió ${typeof areaId}`);
+    }
+    validations.push(
+      this.prisma.area.count({ where: { id: areaId } }).then((count) => {
+        if (count === 0) {
+          throw new NotFoundException(`Área con ID ${areaId} no encontrada`);
+        }
+      }),
+    );
+  }
+
+  await Promise.all(validations);
+}
 }
