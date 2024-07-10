@@ -85,7 +85,7 @@ export class PartialTemplatesService {
         id
       }
     });
-    return { message: 'Plantilla actualizada', data: updatePartialTemplate};
+    return { message: 'Plantilla parcial actualizada', data: updatePartialTemplate};
   }
 
   /**
@@ -100,7 +100,7 @@ export class PartialTemplatesService {
         id
       }
     });
-    return { message: 'Deleted successfully' };
+    return { message: 'Eliminado con exito' };
   }
 
    /**

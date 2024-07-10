@@ -33,29 +33,21 @@ export class PartialTemplatesController {
     });
   }
 
-
   @Get()
   async findAll(@Query('status') status: string, @Res() res: Response) {
     try {
       const partialTemplate = await this.partialTemplatesService.findAll(status);
 
-      if (partialTemplate.length === 0) {
-        return res.status(HttpStatus.OK).json({
-          message: 'No hay plantillas parciales para mostrar',
-        });
-      }
-
       return res.status(HttpStatus.OK).json({
         data: partialTemplate,
       });
+
     } catch (error) {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         message: 'Error al cargar las plantillas',
       });
     }
   }
-
-
   
   /** Retrieves a partialTemplate by ID
   * @param {number} id - The ID of the partialTemplate to retrieve
