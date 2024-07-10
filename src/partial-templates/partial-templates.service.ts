@@ -16,28 +16,41 @@ export class PartialTemplatesService {
    * @param {CreatePartialTemplateDto} createPartialTemplateDto - The partialTemplate data to register
    * @returns {Promise<PartialTemplate>} - The registered partialTemplate
    */
-    async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <{ message: string; data: PartialTemplate}> {
+    async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <{ message: string | null; error: { message: string } | null; data: PartialTemplate | null }> {
       try {
+      await this.validateForeignKeys(createPartialTemplateDto);
       const newPartialTemplate = await this.prisma.partialTemplate.create({
         data: {
           ...createPartialTemplateDto,
         },
       });
   
-      return { message: 'Listo enviado', data: newPartialTemplate};
+      return { message: 'Listo, enviado', error: null, data: newPartialTemplate};
     } catch (error) {
-      console.error('Error al enviar', error);
-      throw new InternalServerErrorException ('Error al enviar')
-    }
+      return { message: 'Error al enviar', error: error.message , data: null };
     }
+ }
 
   /**
    * Lists all partialTemplates
-   * @returns {Promise<PartialTemplate[]>} - All registered partialTemplates
+   * @returns {Promise<PartialTemplate[]>} - All registered partialTemplates, by status
    */
-  async findAll(): Promise <PartialTemplate[]> {
-    return this.prisma.partialTemplate.findMany();
-  }
+  async findAll(status?: string): Promise <{name: string, totalHours: number, status: string }[]> {
+    const filter = status ? { status } : {};
+    const partialTemplates = await this.prisma.partialTemplate.findMany({
+      where: filter,
+      select: {
+        name: true,
+        total: true,
+        status: true,
+      },
+  });
+  return partialTemplates.map(template => ({
+    name: template.name,
+    totalHours: template.total,
+    status: template.status,
+  }));
+ }
 
    /**
    * Gets a partialTemplate by its ID
@@ -50,7 +63,6 @@ export class PartialTemplatesService {
         id: partialTemplateId
       },
     });
-    // Throws an exception if the partial template is not found
     if(!partialTemplate){
       throw new NotFoundException('Partial template not found');
     }
@@ -63,15 +75,17 @@ export class PartialTemplatesService {
    * @param {UpdatePartialTemplateDto} updatePartialTemplateDto - partialTemplate data to update
    * @returns {Promise<PartialTemplate>} - The updated partialTemplate
    */
-  async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto): Promise<PartialTemplate> {
-    // Ensures the partial template exists before updating
-    await this.findOne(id);
-    return this.prisma.partialTemplate.update({
+  async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto): Promise< {message: string; data:PartialTemplate}> {
+    await this.validateId(id);
+    await this.validateForeignKeys(updatePartialTemplateDto);
+
+    const updatePartialTemplate = await this.prisma.partialTemplate.update({
       data: { ...updatePartialTemplateDto} as any,
       where: {
         id
       }
     });
+    return { message: 'Plantilla actualizada', data: updatePartialTemplate};
   }
 
   /**
@@ -80,7 +94,6 @@ export class PartialTemplatesService {
    * @returns {Promise<PartialTemplate>} - The deleted partialTemplate
    */
   async remove(id: number): Promise<{ message: string }> {
-    // Ensures the partial template exists before deleting
     await this.findOne(id);
     await this.prisma.partialTemplate.delete({
       where: {
@@ -89,4 +102,45 @@ export class PartialTemplatesService {
     });
     return { message: 'Deleted successfully' };
   }
+
+   /**
+   * Validates if partailTemplate ID exists
+   * @param {number} id - partailTemplate ID to validate
+   * @returns {Promise<Template>} - The partailTemplate with the given ID
+   * @throws {NotFoundException} - If the partailTemplate ID is not found
+   */
+  async validateId(id: number): Promise<PartialTemplate> {
+    const partialTemplate = await this.prisma.partialTemplate.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!partialTemplate) {
+      throw new NotFoundException('Plantilla Parcial no encontrada');
+    }
+    return partialTemplate;
+  }
+
+    /**
+   * Validates if foreign keys (templateId)
+   * @param {CreatePartialTemplateDto | UpdatePartialTemplateDto} dto - Data to validate
+   * @throws {NotFoundException} - If any foreign keys is not found
+   */
+  private async validateForeignKeys( dto: CreatePartialTemplateDto | UpdatePartialTemplateDto): Promise<void> {
+    const { templateId } = dto;
+    const validations = [];
+
+    if (templateId !== undefined) {
+      validations.push(
+        this.prisma.area.count({ where: { id: templateId } }).then((count) => {
+          if (count === 0) {
+            throw new NotFoundException(`Plantilla con id ${templateId} no encontrada`);
+          }
+        }),
+      );
+    }
+    await Promise.all(validations);
+  }
+
 }
