@@ -127,11 +127,11 @@ model Area {
 
 model EducationalPrograms {
   id           BigInt  @id @unique @default(autoincrement())
-  abbreviation String? @db.VarChar(20)
-  description  String? @db.VarChar(255)
+  abbreviation String @db.VarChar(20)
+  description  String @db.VarChar(255)
 
-  areaId     BigInt?
-  area       Area?      @relation(fields: [areaId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  areaId     BigInt
+  area       Area      @relation(fields: [areaId], references: [id], onUpdate: Cascade)
   activities Activity[]
   subjects   Subject[]
 }
