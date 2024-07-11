@@ -18,16 +18,16 @@ export class EducationalProgramsService {
  */
 async create(educationalProgram: CreateEducationalProgramDto): Promise <{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
   try {
-  await this.validateForeignKeys(educationalProgram);
+  await this.validateAreaId(educationalProgram);
   const newPartialTemplate = await this.prisma.educationalPrograms.create({
     data: {
       ...educationalProgram,
     },
   });
 
-  return { message: 'Listo, enviado', error: null, data: newPartialTemplate};
+  return { message: 'Registrado con éxito', error: null, data: newPartialTemplate};
 } catch (error) {
-  return { message: 'Error al enviar', error: error.message , data: null };
+  return { message: 'No se pudo registrar el programa educativo', error: error.message , data: null };
   }
  }
 
@@ -84,7 +84,7 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
   ): Promise<{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
     try {
       // Primero, realiza la validación de las claves foráneas
-      await this.validateForeignKeys(updateEducationalProgramDto);
+      await this.validateAreaId(updateEducationalProgramDto);
   
       // Asegúrate de que el programa educativo existe
       await this.byId(id);
@@ -106,6 +106,13 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
  * *Method to delete a program
  * @param id id of the program to delete
  * @returns Return a message after deleting a program
+ */
+
+/**
+ * 
+ * @param id 
+ * @param confirmed  Comentario que se realice en lugar del query del body
+ * @returns 
  */
 
 async remove(id: number, confirmed: boolean): Promise<{ message: string }> {
@@ -131,7 +138,7 @@ async remove(id: number, confirmed: boolean): Promise<{ message: string }> {
    * @param {CreateEducationalProgramDto | UpdateEducationalProgramDto} dto - Data to validate
    * @throws {NotFoundException} - If any foreign keys is not found
    */
-private async validateForeignKeys(
+private async validateAreaId(
   dto: CreateEducationalProgramDto | UpdateEducationalProgramDto,
 ): Promise<void> {
   const { areaId } = dto;
@@ -144,7 +151,7 @@ private async validateForeignKeys(
     validations.push(
       this.prisma.area.count({ where: { id: areaId } }).then((count) => {
         if (count === 0) {
-          throw new NotFoundException(`Área con ID ${areaId} no encontrada`);
+          throw new NotFoundException(`Área con ID ${areaId} no existe`);
         }
       }),
     );

@@ -59,24 +59,27 @@ export class EducationalProgramsController {
   * @param id id of the program to delete
   * @returns Return a message after deleting a program
   */
-    @Delete(':id')
-    async remove(@Param('id') id: string, @Query('Confirmado') confirmed: string) {
-      const idNumber = parseInt(id, 10);
-  
-      if (isNaN(idNumber)) {
-        throw new BadRequestException('Formato de ID no válido');
-      }
-  
-      // Convert confirmed to a boolean
-      const isConfirmed = confirmed === 'true';
-  
-      if (!isConfirmed) {
-        return { message: 'Operación no confirmada por el usuario' };
-      }
-  
-      const result = await this.educationalProgramsService.remove(idNumber, isConfirmed);
-      
-      return result;
-    }
+ @Delete(':id')
+ async remove(
+   @Param('id') id: string,
+   @Body() body: { Confirmado: string }
+ ) {
+   const idNumber = parseInt(id, 10);
+
+   if (isNaN(idNumber)) {
+     throw new BadRequestException('Formato de ID no válido');
+   }
+
+   // Convert confirmed to a boolean
+   const isConfirmed = body.Confirmado === 'true';
+
+   if (!isConfirmed) {
+     return { message: 'Operación no confirmada por el usuario' };
+   }
+
+   const result = await this.educationalProgramsService.remove(idNumber, isConfirmed);
+   
+   return result;
+ }
   
 }
