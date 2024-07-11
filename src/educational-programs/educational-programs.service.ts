@@ -83,13 +83,10 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
     updateEducationalProgramDto: UpdateEducationalProgramDto
   ): Promise<{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
     try {
-      // Primero, realiza la validación de las claves foráneas
       await this.validateAreaId(updateEducationalProgramDto);
   
-      // Asegúrate de que el programa educativo existe
       await this.byId(id);
   
-      // Realiza la actualización
       const updatedProgram = await this.prisma.educationalPrograms.update({
         data: { ...updateEducationalProgramDto },
         where: { id },
@@ -108,23 +105,15 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
  * @returns Return a message after deleting a program
  */
 
-/**
- * 
- * @param id 
- * @param confirmed  Comentario que se realice en lugar del query del body
- * @returns 
- */
-
 async remove(id: number, confirmed: boolean): Promise<{ message: string }> {
-  // Verifica si la eliminación ha sido confirmada por el usuario
+ 
   if (!confirmed) {
     return { message: 'Operación no confirmada por el usuario' };
   }
 
-  // Verifica que el programa educativo existe
+  
   await this.byId(id);
 
-  // Elimina el programa educativo
   await this.prisma.educationalPrograms.delete({
     where: { id }
   });

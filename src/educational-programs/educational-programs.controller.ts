@@ -70,7 +70,6 @@ export class EducationalProgramsController {
      throw new BadRequestException('Formato de ID no válido');
    }
 
-   // Convert confirmed to a boolean
    const isConfirmed = body.Confirmado === 'true';
 
    if (!isConfirmed) {
