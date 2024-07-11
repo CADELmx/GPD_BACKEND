@@ -4,7 +4,9 @@ import { validateForeignKeys } from "src/common/validation/custom-validation.pip
 import { CreateSubjectDto } from "src/models/subject/create-subject.dto";
 import { UpdateSubjectDto } from "src/models/subject/update-subject.dto";
 import { PrismaService } from "src/prisma.service";
-
+/**
+ * Interface to define the methods of the subjects service
+ */
 interface SubjectResult {
     create(createSubjectDto: CreateSubjectDto): Promise<{ message: string, data: Subject, error: string | null }>
     findByProgram(id: number): Promise<{ message: string, data: Subject[] | null, error: string | null }>
@@ -19,6 +21,11 @@ export class SubjectService implements SubjectResult {
         private readonly prisma: PrismaService,
         private readonly foreign: validateForeignKeys
     ) { }
+    /**
+     * Creates a new subject
+     * @param createSubjectDto data to create a new subject
+     * @returns object with the new subject, a message and an error if ocurred
+     */
     async create(createSubjectDto: CreateSubjectDto) {
         this.foreign.add(this.prisma.educationalPrograms.count({ where: { id: createSubjectDto.educationalProgramId } }))
         this.foreign.validate()
@@ -41,6 +48,11 @@ export class SubjectService implements SubjectResult {
             }
         }
     }
+    /**
+     * Returns all subjects of an educational program
+     * @param id the id of the educational program
+     * @returns object with the subjects, a message and an error if ocurred
+     */
     async findByProgram(id: number) {
         try {
             const subjects = await this.prisma.subject.findMany({
@@ -63,6 +75,11 @@ export class SubjectService implements SubjectResult {
             }
         }
     }
+    /**
+     * Returns a subject by its id
+     * @param id id of the subject
+     * @returns object with the subject, a message and an error if ocurred
+     */
     async findOne(id: number) {
         try {
             const subject = await this.prisma.subject.findFirst({
@@ -82,6 +99,10 @@ export class SubjectService implements SubjectResult {
             }
         }
     }
+    /**
+     * Returns all subjects
+     * @returns object with all subjects, a message and an error if ocurred
+     */
     async findAll() {
         try {
             const subjects = await this.prisma.subject.findMany({ orderBy: { educationalProgramId: 'asc', monthPeriod: 'asc', subjectName: 'asc' } });
@@ -99,6 +120,12 @@ export class SubjectService implements SubjectResult {
             }
         }
     }
+    /**
+     * Updates a subject by its id
+     * @param id id of the subject
+     * @param updateSubjectDto data to update the subject
+     * @returns object with the updated subject, a message and an error if ocurred
+     */
     async update(id: number, updateSubjectDto: UpdateSubjectDto) {
         try {
             this.findOne(id);
