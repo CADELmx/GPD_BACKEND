@@ -156,17 +156,30 @@ export class TemplatesService {
   }
 
   /**
-   * Deletes a template by its ID
-   * @param {number} id - ID of the template to delete
-   * @returns {Promise<Template>} - The deleted template
+   * Deletes a template by its ID.
+   * @param {number} id - The ID of the template to delete.
+   * @returns {Promise<{ message: string; error: string | null; data: null }>} - The result of the deletion.
    */
-  async remove(id: number): Promise<Template> {
-    await this.validateId(id);
-    return await this.prisma.template.delete({
-      where: {
-        id,
-      },
-    });
+  async remove(id: number): Promise<any> {
+    try {
+      await this.validateId(id);
+      await this.prisma.template.delete({
+        where: {
+          id,
+        },
+      });
+      return {
+        message: 'Se eliminó la plantilla',
+        error: null,
+        data: null,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al eliminar la plantilla',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 
   /**
