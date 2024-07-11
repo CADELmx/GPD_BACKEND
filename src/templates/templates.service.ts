@@ -93,7 +93,7 @@ export class TemplatesService {
         return {
           message: 'Plantillas obtenidas con éxito',
           error: null,
-          data: null,
+          data: template,
         };
       }
     } catch (error) {
