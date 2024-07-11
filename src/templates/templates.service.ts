@@ -142,6 +142,26 @@ export class TemplatesService {
   }
 
   /**
+   * Gets the current period based on the current month and year.
+   * @param {boolean} ord - Indicates whether the period is Ordinary (true) or Extraordinary (false).
+   * @returns {string} - The period string for the current period.
+   */
+  private static currentPeriod(ord: boolean): string {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const ordinary = ord ? 'Ordinario' : 'Extraordinario';
+
+    if (month <= 4) {
+      return `enero - abril ${year}: ${ordinary}`;
+    } else if (month <= 8) {
+      return `mayo - agosto ${year}: ${ordinary}`;
+    } else {
+      return `septiembre - diciembre ${year}: ${ordinary}`;
+    }
+  }
+
+  /**
    * Validates if a template ID exists.
    * @param {number} id - The ID of the template to validate.
    * @returns {Promise<Template>} - The template with the given ID.
