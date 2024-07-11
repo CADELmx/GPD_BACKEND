@@ -101,6 +101,28 @@ export class TemplatesService {
   }
 
   /**
+   * Validates if the responsible user ID exists.
+   * @param {CreateTemplateDto | UpdateTemplateDto} dto - The DTO containing the responsible user ID.
+   * @returns {Promise<void>} - Resolves if the responsible user ID is valid.
+   * @throws {NotFoundException} - If the responsible user ID is not found.
+   */
+  private async validateResponsibleId(
+    dto: CreateTemplateDto | UpdateTemplateDto,
+  ): Promise<void> {
+    const { responsibleId } = dto;
+    if (responsibleId !== undefined) {
+      const user = await this.prisma.users.findUnique({
+        where: { nt: responsibleId },
+      });
+      if (!user) {
+        throw new NotFoundException(
+          `Usuario con NT ${responsibleId} no encontrado`,
+        );
+      }
+    }
+  }
+
+  /**
    * Validates if the revised by user ID exists.
    * @param {CreateTemplateDto | UpdateTemplateDto} dto - The DTO containing the revised by user ID.
    * @returns {Promise<void>} - Resolves if the revised by user ID is valid.
