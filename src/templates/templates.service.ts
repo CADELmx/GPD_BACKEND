@@ -67,18 +67,42 @@ export class TemplatesService {
       };
     }
   }
+
   /**
-   * Gets a template by its ID
-   * @param {number} id - Template ID to search for
-   * @returns {Promise<Template>} -  The template based on the given ID
+   * Gets a template by its ID.
+   * @param {number} id - The ID of the template to search for.
+   * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The template based on the given ID.
    */
-  async findOne(id: number): Promise<Template> {
-    await this.validateId(id);
-    return await this.prisma.template.findUnique({
-      where: {
-        id,
-      },
-    });
+  async findOne(id: number): Promise<any> {
+    try {
+      if (id) {
+        await this.validateId(id);
+        const template = await this.prisma.template.findMany({
+          where: {
+            id,
+          },
+        });
+
+        if (template.length === 0) {
+          return {
+            message: 'Aún no existen plantillas para este área',
+            error: null,
+            data: template,
+          };
+        }
+        return {
+          message: 'Plantillas obtenidas con éxito',
+          error: null,
+          data: null,
+        };
+      }
+    } catch (error) {
+      return {
+        message: 'Error al obtener la plantilla',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 
   /**
