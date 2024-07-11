@@ -59,16 +59,12 @@ export class EducationalProgramsController {
   * @param id id of the program to delete
   * @returns Return a message after deleting a program
   */
-  /*@Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.educationalProgramsService.remove(id);
-  }*/
     @Delete(':id')
-    async remove(@Param('id') id: string, @Query('confirmed') confirmed: string) {
+    async remove(@Param('id') id: string, @Query('Confirmado') confirmed: string) {
       const idNumber = parseInt(id, 10);
   
       if (isNaN(idNumber)) {
-        throw new BadRequestException('Invalid ID format');
+        throw new BadRequestException('Formato de ID no válido');
       }
   
       // Convert confirmed to a boolean
