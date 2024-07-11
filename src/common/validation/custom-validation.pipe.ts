@@ -28,7 +28,7 @@ export class validateForeignKeys {
     add(validation) {
         this.validations.push(validation)
     }
-    async validate(){
+    async validate() {
         const res = await Promise.all(this.validations)
         if (res.some(count => count === 0)) {
             throw new BadRequestException('Relación no encontrada')
