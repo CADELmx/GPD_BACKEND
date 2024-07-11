@@ -7,10 +7,10 @@ export class UpdateTemplateDto {
   state?: string;
 
   @IsOptional()
-  @IsInt({ message: 'El campo "área" tiene que ser un numero entero' })
-  @IsNotEmpty({ message: 'El campo "área" no puede estar vacio' })
+  @IsInt({ message: "El campo 'área' tiene que ser un numero entero" })
+  @IsNotEmpty({ message: "El campo 'área' no puede estar vacio" })
   @Min(1, {
-    message: 'El campo "área" tiene que ser un número entero positivo',
+    message: "El campo 'área' tiene que ser un número entero positivo",
   })
   areaId?: number;
 
@@ -20,19 +20,19 @@ export class UpdateTemplateDto {
   period?: string;
 
   @IsOptional()
-  @IsInt({ message: 'El campo "responsable" tiene que ser un numero entero' })
-  @IsNotEmpty({ message: 'El campo "responsable" id no puede estar vacio' })
+  @IsInt({ message: "El campo 'responsable' tiene que ser un numero entero" })
+  @IsNotEmpty({ message: "El campo 'responsable' id no puede estar vacio" })
   @Min(1, {
     message:
-      'El campo "responsable" id tiene que ser un número entero positivo',
+      "El campo 'responsable' id tiene que ser un número entero positivo",
   })
   responsibleId?: number;
 
   @IsOptional()
-  @IsInt({ message: 'El campo "revisado por" tiene que ser un numero entero' })
-  @IsNotEmpty({ message: 'El campo "revisado por" no puede estar vacio' })
+  @IsInt({ message: "El campo 'revisado por' tiene que ser un numero entero" })
+  @IsNotEmpty({ message: "El campo 'revisado por' no puede estar vacio" })
   @Min(1, {
-    message: 'El campo "revisado por" tiene que ser un número entero positivo',
+    message: "El campo 'revisado por' tiene que ser un número entero positivo",
   })
   revisedById?: number;
 }

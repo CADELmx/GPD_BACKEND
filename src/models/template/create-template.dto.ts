@@ -5,10 +5,10 @@ export class CreateTemplateDto {
   @IsNotEmpty({ message: 'El campo estado no puede estar vacío' })
   state: string = 'pendiente';
 
-  @IsInt({ message: 'El campo area id tiene que ser un número entero' })
-  @IsNotEmpty({ message: 'El campo area id no puede estar vacío' })
+  @IsInt({ message: "El campo 'área' tiene que ser un número entero" })
+  @IsNotEmpty({ message: "El campo 'área' no puede estar vacío" })
   @Min(1, {
-    message: 'El campo are id tiene que ser un número entero positivo',
+    message: "El campo 'área' tiene que ser un número entero positivo",
   })
   areaId: number;
 
@@ -16,17 +16,17 @@ export class CreateTemplateDto {
   @IsNotEmpty({ message: 'El campo periodo no puede estar vacío' })
   period: string;
 
-  @IsInt({ message: 'El campo responsable id tiene que ser un número entero' })
-  @IsNotEmpty({ message: 'El campo responsable id no puede estar vacío' })
+  @IsInt({ message: "El campo 'responsable' tiene que ser un número entero" })
+  @IsNotEmpty({ message: "El campo 'responsable' no puede estar vacío" })
   @Min(1, {
-    message: 'El campo responsable id tiene que ser un número entero positivo',
+    message: "El campo 'responsable' tiene que ser un número entero positivo",
   })
   responsibleId: number;
 
-  @IsInt({ message: 'El campo revisado por id tiene que ser un número entero' })
-  @IsNotEmpty({ message: 'El campo revisado por id no puede estar vacío' })
+  @IsInt({ message: "El campo 'revisado por' tiene que ser un número entero" })
+  @IsNotEmpty({ message: "El campo 'revisado por' no puede estar vacío" })
   @Min(1, {
-    message: 'El campo revisado por id tiene que ser un número entero',
+    message: "El campo 'revisado por' tiene que ser un número entero",
   })
   revisedById: number;
 }
