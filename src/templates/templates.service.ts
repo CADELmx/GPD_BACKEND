@@ -101,53 +101,24 @@ export class TemplatesService {
   }
 
   /**
-   * Validates if foreign keys (areaId, responsibleId, revisedById)
-   * @param {CreateTemplateDto | UpdateTemplateDto} dto - Data to validate
-   * @throws {NotFoundException} - If any foreign keys is not found
+   * Validates if the revised by user ID exists.
+   * @param {CreateTemplateDto | UpdateTemplateDto} dto - The DTO containing the revised by user ID.
+   * @returns {Promise<void>} - Resolves if the revised by user ID is valid.
+   * @throws {NotFoundException} - If the revised by user ID is not found.
    */
-  private async validateForeignKeys(
+  private async validateRevisedById(
     dto: CreateTemplateDto | UpdateTemplateDto,
   ): Promise<void> {
-    const { areaId, responsibleId, revisedById } = dto;
-    const validations = [];
-
-    if (areaId !== undefined) {
-      validations.push(
-        this.prisma.area.count({ where: { id: areaId } }).then((count) => {
-          if (count === 0) {
-            throw new NotFoundException(`Area with ID ${areaId} not found`);
-          }
-        }),
-      );
-    }
-
-    if (responsibleId !== undefined) {
-      validations.push(
-        this.prisma.users
-          .count({ where: { id: responsibleId } })
-          .then((count) => {
-            if (count === 0) {
-              throw new NotFoundException(
-                `User with NT ${responsibleId} not found`,
-              );
-            }
-          }),
-      );
-    }
-
+    const { revisedById } = dto;
     if (revisedById !== undefined) {
-      validations.push(
-        this.prisma.users
-          .count({ where: { nt: revisedById } })
-          .then((count) => {
-            if (count === 0) {
-              throw new NotFoundException(
-                `User with NT ${revisedById} not found`,
-              );
-            }
-          }),
-      );
+      const user = await this.prisma.users.findUnique({
+        where: { nt: revisedById },
+      });
+      if (!user) {
+        throw new NotFoundException(
+          `Usuario con NT ${revisedById} no encontrado`,
+        );
+      }
     }
-    await Promise.all(validations);
   }
 }
