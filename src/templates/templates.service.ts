@@ -39,13 +39,34 @@ export class TemplatesService {
   }
 
   /**
-   * Lists all templates
-   * @returns {Promise<Template[]>} - All registered templates
+   * Lists all templates.
+   * @returns {Promise<{ message: string; error: string | null; data: Template[] | null }>} - All registered templates.
    */
-  async findAll(): Promise<Template[]> {
-    return await this.prisma.template.findMany();
-  }
+  async findAll(): Promise<any> {
+    // return await this.prisma.personalData.findMany();
+    try {
+      const templates = await this.prisma.template.findMany();
+      if (templates.length === 0) {
+        return {
+          message: 'No se encontraron plantillas',
+          error: null,
+          data: [],
+        };
+      }
 
+      return {
+        message: 'Plantillas obtenidas con exito',
+        error: null,
+        data: templates,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al obtener las plantillas',
+        error: error.message,
+        data: null,
+      };
+    }
+  }
   /**
    * Gets a template by its ID
    * @param {number} id - Template ID to search for
