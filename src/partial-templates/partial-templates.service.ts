@@ -32,7 +32,7 @@ export class PartialTemplatesService {
     return this.prisma.partialTemplate.create({
       data: {
         ...createPartialTemplateDto,
-      },
+      } as any,
     });
   }
 
