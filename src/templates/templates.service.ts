@@ -9,18 +9,33 @@ export class TemplatesService {
   constructor(private readonly prisma: PrismaService) {}
 
   /**
-   * Rregisters a new template
-   * @param {CreateTemplateDto} createTemplate - The template data to register
-   * @returns {Promise<Template>} - The registered template
+   * Registers a new template.
+   * @param {CreateTemplateDto} createTemplateDto - The template data to register.
+   * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The registered template.
    */
-  async create(createTemplateDto: CreateTemplateDto): Promise<Template> {
-    await this.validateForeignKeys(createTemplateDto);
+  async create(createTemplateDto: CreateTemplateDto): Promise<any> {
+    try {
+      await this.validateAreaId(createTemplateDto);
+      await this.validateResponsibleId(createTemplateDto);
+      await this.validateRevisedById(createTemplateDto);
 
-    return await this.prisma.template.create({
-      data: {
-        ...createTemplateDto,
-      },
-    });
+      const template = await this.prisma.template.create({
+        data: {
+          ...createTemplateDto,
+        },
+      });
+      return {
+        message: 'Plantilla registrada',
+        error: null,
+        data: template,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al registrar la plantilla',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 
   /**
