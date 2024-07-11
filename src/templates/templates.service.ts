@@ -82,12 +82,12 @@ export class TemplatesService {
   }
 
   /**
-   * Validates if template ID exists
-   * @param {number} id - Template ID to validate
-   * @returns {Promise<Template>} - The template with the given ID
-   * @throws {NotFoundException} - If the template ID is not found
+   * Validates if a template ID exists.
+   * @param {number} id - The ID of the template to validate.
+   * @returns {Promise<Template>} - The template with the given ID.
+   * @throws {NotFoundException} - If the template ID is not found.
    */
-  async validateId(id: number): Promise<Template> {
+  private async validateId(id: number): Promise<Template> {
     const template = await this.prisma.template.findUnique({
       where: {
         id,
@@ -95,7 +95,7 @@ export class TemplatesService {
     });
 
     if (!template) {
-      throw new NotFoundException('Template not found');
+      throw new NotFoundException('Plantilla no encontrada');
     }
     return template;
   }
