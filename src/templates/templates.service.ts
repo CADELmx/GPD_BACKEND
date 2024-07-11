@@ -101,6 +101,24 @@ export class TemplatesService {
   }
 
   /**
+   * Validates if the area ID exists.
+   * @param {CreateTemplateDto | UpdateTemplateDto} dto - The DTO containing the area ID.
+   * @returns {Promise<void>} - Resolves if the area ID is valid.
+   * @throws {NotFoundException} - If the area ID is not found.
+   */
+  private async validateAreaId(
+    dto: CreateTemplateDto | UpdateTemplateDto,
+  ): Promise<void> {
+    const { areaId } = dto;
+    if (areaId !== undefined) {
+      const area = await this.prisma.area.findUnique({ where: { id: areaId } });
+      if (!area) {
+        throw new NotFoundException(`Área con ID ${areaId} no encontrada`);
+      }
+    }
+  }
+
+  /**
    * Validates if the responsible user ID exists.
    * @param {CreateTemplateDto | UpdateTemplateDto} dto - The DTO containing the responsible user ID.
    * @returns {Promise<void>} - Resolves if the responsible user ID is valid.
