@@ -122,7 +122,7 @@ async remove(id: number, confirmed: boolean): Promise<{ message: string }> {
     where: { id }
   });
 
-  return { message: 'Deleted successfully' };
+  return { message: 'Eliminada Correctamente' };
 }
 
 
