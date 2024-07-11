@@ -22,40 +22,53 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
   const newPartialTemplate = await this.prisma.educationalPrograms.create({
     data: {
       ...educationalProgram,
-    },
-    });
+    },
+  });
 
   return { message: 'Listo, enviado', error: null, data: newPartialTemplate};
 } catch (error) {
-  return { message: 'Error al enviar', error: error.message , data: null };
-    }
- }
+  return { message: 'Error al enviar', error: error.message , data: null };
+  }
+ }
 
   /**
    * Method to consult all programs
    * @returns Returns all registered educational programs
    */
-  async findAll(): Promise<EducationalPrograms[]> {
-    return await this.prisma.educationalPrograms.findMany();
+  async findAll(): Promise<any> {
+    try {
+      const programs = await this.prisma.educationalPrograms.findMany();
+      
+      if (programs.length === 0) {
+        return { message: 'Sin programas educativos', error: null, data: null };
+      }
+      
+     
+      return { message: 'Programas educativos encontrados', error: null, data: programs };
+    } catch (error) {
+      return { message: 'Error al cargar programas educativos', error: error.message, data: null };
+    } finally {
+      await this.prisma.$disconnect();
+    }
   }
 
-  /**
-   * Method to query a programs from the id
-   * @param id id of the program to consult
-   * @returns Returns the program with the corresponding id
-   */
 
-  async byId(id: number): Promise<EducationalPrograms> {
-    const edu_project= await this.prisma.educationalPrograms.findUnique({
-      where:{
-        id,
-      },
+   /**
+   * Method to find an educational program by its id.
+   * @param id ID of the program to find
+   * @returns Educational program
+   * @throws NotFoundException if program is not found
+   */
+   async byId(id: number): Promise<EducationalPrograms> {
+    const educationalProgram = await this.prisma.educationalPrograms.findUnique({
+      where: { id },
     });
 
-    if(!edu_project){
-      throw new NotFoundException (`Educational program not found`)
+    if (!educationalProgram) {
+      throw new NotFoundException(`Programa educativo con ID ${id} no encontrado`);
     }
-    return edu_project;
+
+    return educationalProgram;
   }
 
   /**
@@ -65,12 +78,29 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
    * @returns Returns the updated program
    */
 
-  async update(id: number, updateEducationalProgramDto: UpdateEducationalProgramDto,): Promise<EducationalPrograms> {
-    await this.byId(id);
-    return await this.prisma.educationalPrograms.update({data: {...updateEducationalProgramDto}as any, where: { id},
-    });
+  async update(
+    id: number,
+    updateEducationalProgramDto: UpdateEducationalProgramDto
+  ): Promise<{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
+    try {
+      // Primero, realiza la validación de las claves foráneas
+      await this.validateForeignKeys(updateEducationalProgramDto);
   
+      // Asegúrate de que el programa educativo existe
+      await this.byId(id);
+  
+      // Realiza la actualización
+      const updatedProgram = await this.prisma.educationalPrograms.update({
+        data: { ...updateEducationalProgramDto },
+        where: { id },
+      });
+  
+      return { message: 'Actualización exitosa', error: null, data: updatedProgram };
+    } catch (error) {
+      return { message: 'Error al actualizar', error: { message: error.message }, data: null };
+    }
   }
+  
   
 /**
  * *Method to delete a program
@@ -78,15 +108,23 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
  * @returns Return a message after deleting a program
  */
 
- async remove(id: number): Promise<{ message: string }> {
+async remove(id: number, confirmed: boolean): Promise<{ message: string }> {
+  // Verifica si la eliminación ha sido confirmada por el usuario
+  if (!confirmed) {
+    return { message: 'Operación no confirmada por el usuario' };
+  }
+
+  // Verifica que el programa educativo existe
   await this.byId(id);
+
+  // Elimina el programa educativo
   await this.prisma.educationalPrograms.delete({
-    where: {
-      id
-    }
+    where: { id }
   });
-  return { message: 'Deleted successfully' };
-  }
+
+  return { message: 'Deleted successfully' };
+}
+
 
 /**
    * Validates if foreign keys (areaId, responsibleId, revisedById)

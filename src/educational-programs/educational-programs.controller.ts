@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, BadRequestException, Query } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
@@ -59,8 +59,28 @@ export class EducationalProgramsController {
   * @param id id of the program to delete
   * @returns Return a message after deleting a program
   */
-  @Delete(':id')
+  /*@Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.educationalProgramsService.remove(id);
-  }
+  }*/
+    @Delete(':id')
+    async remove(@Param('id') id: string, @Query('confirmed') confirmed: string) {
+      const idNumber = parseInt(id, 10);
+  
+      if (isNaN(idNumber)) {
+        throw new BadRequestException('Invalid ID format');
+      }
+  
+      // Convert confirmed to a boolean
+      const isConfirmed = confirmed === 'true';
+  
+      if (!isConfirmed) {
+        return { message: 'Operación no confirmada por el usuario' };
+      }
+  
+      const result = await this.educationalProgramsService.remove(idNumber, isConfirmed);
+      
+      return result;
+    }
+  
 }
