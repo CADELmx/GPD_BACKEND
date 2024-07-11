@@ -106,25 +106,53 @@ export class TemplatesService {
   }
 
   /**
-   * Updates a template by its ID
-   * @param {number} id - ID of template to update
-   * @param {UpdateTemplateDto} updateTemplate - Template data to update
-   * @returns {Promise<Template>} - The updated template
+   * Updates a template by its ID.
+   * @param {number} id - The ID of the template to update.
+   * @param {UpdateTemplateDto} updateTemplateDto - The template data to update.
+   * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The updated template.
    */
-  async update(
-    id: number,
-    updateTemplateDto: UpdateTemplateDto,
-  ): Promise<Template> {
-    await this.validateId(id);
-    await this.validateForeignKeys(updateTemplateDto);
+  async update(id: number, updateTemplateDto: UpdateTemplateDto): Promise<any> {
+    try {
+      await this.validateId(id);
+      await this.validateAreaId(updateTemplateDto);
+      await this.validateResponsibleId(updateTemplateDto);
+      await this.validateRevisedById(updateTemplateDto);
 
-    const updateTemplate = await this.prisma.template.update({
-      where: {
-        id,
-      },
-      data: { ...updateTemplateDto },
-    });
-    return updateTemplate;
+      const template = await this.validateId(id);
+      const currentPeriods = [
+        TemplatesService.currentPeriod(true),
+        TemplatesService.currentPeriod(false),
+      ];
+
+      if (!currentPeriods.includes(template.period)) {
+        return {
+          message: null,
+          error: 'Esta plantilla no se puede actualizar',
+          data: null,
+        };
+      }
+
+      const updatedTemplate = await this.prisma.template.update({
+        where: {
+          id,
+        },
+        data: {
+          ...updateTemplateDto,
+        },
+      });
+
+      return {
+        message: 'Plantilla actualizada',
+        error: null,
+        data: updatedTemplate,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al actualizar la plantilla',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 
   /**
