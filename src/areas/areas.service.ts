@@ -27,12 +27,58 @@ export class AreasService {
     }
   }
 
-  findAll() {
-    return `This action returns all areas`;
+  async findAll() {
+    try {
+      const areas = await this.prisma.area.findMany();
+
+      if (areas.length === 0) {
+        return {
+          message: 'No hay áreas registradas',
+          error: null,
+          data: [],
+        };
+      }
+
+      return {
+        message: 'Áreas encontradas',
+        error: null,
+        data: areas,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al obtener las áreas',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} area`;
+  async findOne(id: number): Promise<any> {
+    try {
+      const area = await this.prisma.area.findMany({
+        where: {
+          id,
+        },
+      });
+      if (area.length === 0) {
+        return {
+          message: 'Area no encontrada',
+          error: null,
+          data: area,
+        };
+      }
+      return {
+        message: 'Área obtenida con éxito',
+        error: null,
+        data: area,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al obtener el área',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 
   update(id: number, updateAreaDto: UpdateAreaDto) {
