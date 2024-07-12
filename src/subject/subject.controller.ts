@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { SubjectService } from './subject.service';
 import { CreateSubjectDto } from 'src/models/subject/create-subject.dto';
 import { UpdateSubjectDto } from 'src/models/subject/update-subject.dto';
@@ -47,7 +47,7 @@ export class SubjectController {
      * @param updateSubjectDto 
      * @returns 
      */
-    @Patch(':id')
+    @Put(':id')
     update(@Param('id', ParseIntPipe) id: number, @Body() updateSubjectDto: UpdateSubjectDto) {
         return this.subjectService.update(id, updateSubjectDto);
     }

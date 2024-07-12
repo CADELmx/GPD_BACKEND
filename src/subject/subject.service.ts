@@ -30,11 +30,7 @@ export class SubjectService implements SubjectResult {
         this.foreign.add(this.prisma.educationalPrograms.count({ where: { id: createSubjectDto.educationalProgramId } }))
         this.foreign.validate()
         try {
-            const subject = await this.prisma.subject.create({
-                data: {
-                    ...createSubjectDto,
-                },
-            })
+            const subject = await this.prisma.subject.create({ data: createSubjectDto })
             return {
                 data: subject,
                 error: null,
@@ -105,7 +101,7 @@ export class SubjectService implements SubjectResult {
      */
     async findAll() {
         try {
-            const subjects = await this.prisma.subject.findMany({ orderBy: { educationalProgramId: 'asc', monthPeriod: 'asc', subjectName: 'asc' } });
+            const subjects = await this.prisma.subject.findMany({ orderBy: [{ educationalProgramId: 'asc' }, { monthPeriod: 'asc' }, { subjectName: 'asc' }] });
             const message = subjects ? 'Todas las materias de todas las carreras' : 'No se encontraron materias'
             return {
                 data: subjects,
@@ -133,9 +129,7 @@ export class SubjectService implements SubjectResult {
                 where: {
                     id
                 },
-                data: {
-                    ...updateSubjectDto
-                }
+                data: updateSubjectDto
             });
             return {
                 data: updated,
