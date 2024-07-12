@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateAreaDto } from 'src/models/area/create-area.dto';
+import { UpdateAreaDto } from 'src/models/area/update-area.dto';
 
 @Injectable()
 export class AreasService {
@@ -110,8 +111,28 @@ export class AreasService {
     }
   }
 
-  update(id: number, updateAreaDto: UpdateAreaDto) {
-    return `This action updates a #${id} area`;
+  async update(id: number, updateAreaDto: UpdateAreaDto): Promise<any> {
+    try {
+      const area = await this.prisma.area.update({
+        where: {
+          id,
+        },
+        data: {
+          ...updateAreaDto,
+        },
+      });
+      return {
+        message: 'Área actualizada',
+        error: null,
+        data: area,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al actualizar el área',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 
   remove(id: number) {
