@@ -5,12 +5,14 @@ import { UsersService } from 'src/users/users.service';
 
 @Controller()
 export class AuthController {
-
-  constructor(private authService: AuthService, private readonly usersService: UsersService){}
+  constructor(
+    private authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
-  async login(@Request()req) {
+  async login(@Request() req) {
     return this.authService.login(req.user);
   }
 }

@@ -17,11 +17,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Token inválido');
     }
     const userId = BigInt(payload.sub);
-      const user = await this.userService.findUserById(userId);
-      if (!user){
-        throw new UnauthorizedException('Usuario no encontrado');
-      }
-      const { password, ...result} = user;
-      return result;
+    const user = await this.userService.findUserById(userId);
+    if (!user) {
+      throw new UnauthorizedException('Usuario no encontrado');
     }
+    const { password, ...result } = user;
+    return result;
+  }
 }
