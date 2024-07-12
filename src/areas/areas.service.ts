@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAreaDto } from 'src/models/area/create-area.dto';
 import { UpdateAreaDto } from 'src/models/area/update-area.dto';
 
@@ -154,6 +154,17 @@ export class AreasService {
         error: error.message,
         data: null,
       };
+    }
+  }
+
+  private async validateIfExistsAreaId(id: number) {
+    const area = await this.prisma.area.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!area) {
+      throw new NotFoundException(`Área con ID ${id} no encontrada`);
     }
   }
 }
