@@ -135,7 +135,25 @@ export class AreasService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} area`;
+  async remove(id: number): Promise<any> {
+    try {
+      const area = await this.prisma.area.delete({
+        where: {
+          id,
+        },
+      });
+
+      return {
+        message: 'Área eliminada',
+        error: null,
+        data: area,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al eliminar el área',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 }
