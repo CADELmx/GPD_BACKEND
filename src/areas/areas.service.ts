@@ -53,7 +53,7 @@ export class AreasService {
     }
   }
 
-  async findOne(id: number): Promise<any> {
+  async findOneById(id: number): Promise<any> {
     try {
       const area = await this.prisma.area.findMany({
         where: {
