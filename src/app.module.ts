@@ -7,6 +7,7 @@ import { TemplatesModule } from './templates/templates.module';
 import { EducationalProgramsModule } from './educational-programs/educational-programs.module';
 import { SubjectModule } from './subject/subject.module';
 import { PartialTemplatesModule } from './partial-templates/partial-templates.module';
+import { AreasModule } from './areas/areas.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PartialTemplatesModule } from './partial-templates/partial-templates.mo
     TemplatesModule,
     PartialTemplatesModule,
     SubjectModule,
+    AreasModule,
   ],
   controllers: [AppController],
   providers: [AppService],
