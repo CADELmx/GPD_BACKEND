@@ -81,6 +81,35 @@ export class AreasService {
     }
   }
 
+  async findOneByName(name: string): Promise<any> {
+    try {
+      const area = await this.prisma.area.findMany({
+        where: {
+          name,
+        },
+      });
+
+      if (area.length === 0) {
+        return {
+          message: 'Área no encontrada',
+          error: null,
+          data: area,
+        };
+      }
+      return {
+        message: 'Área obtenida con éxito',
+        error: null,
+        data: area,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al obtener el área',
+        error: error.message,
+        data: null,
+      };
+    }
+  }
+
   update(id: number, updateAreaDto: UpdateAreaDto) {
     return `This action updates a #${id} area`;
   }
