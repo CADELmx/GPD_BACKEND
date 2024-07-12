@@ -16,7 +16,7 @@ export class EducationalProgramsService {
  * @param data Program data to register
  * @returns Registered Educational Program
  */
-async create(educationalProgram: CreateEducationalProgramDto): Promise <{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
+async createProgram(educationalProgram: CreateEducationalProgramDto): Promise <{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
   try {
   await this.validateAreaId(educationalProgram);
   const newPartialTemplate = await this.prisma.educationalPrograms.create({
@@ -35,7 +35,7 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
    * Method to consult all programs
    * @returns Returns all registered educational programs
    */
-  async findAll(): Promise<any> {
+  async findAllPrograms(): Promise<any> {
     try {
       const programs = await this.prisma.educationalPrograms.findMany();
       
@@ -47,9 +47,7 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
       return { message: 'Programas educativos encontrados', error: null, data: programs };
     } catch (error) {
       return { message: 'Error al cargar programas educativos', error: error.message, data: null };
-    } finally {
-      await this.prisma.$disconnect();
-    }
+    } 
   }
 
 
@@ -59,7 +57,7 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
    * @returns Educational program
    * @throws NotFoundException if program is not found
    */
-   async byId(id: number): Promise<EducationalPrograms> {
+   async findProgramById(id: number): Promise<EducationalPrograms> {
     const educationalProgram = await this.prisma.educationalPrograms.findUnique({
       where: { id },
     });
@@ -78,14 +76,14 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
    * @returns Returns the updated program
    */
 
-  async update(
+  async updateProgram(
     id: number,
     updateEducationalProgramDto: UpdateEducationalProgramDto
   ): Promise<{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
     try {
       await this.validateAreaId(updateEducationalProgramDto);
   
-      await this.byId(id);
+      await this.findProgramById(id);
   
       const updatedProgram = await this.prisma.educationalPrograms.update({
         data: { ...updateEducationalProgramDto },
@@ -105,14 +103,14 @@ async create(educationalProgram: CreateEducationalProgramDto): Promise <{ messag
  * @returns Return a message after deleting a program
  */
 
-async remove(id: number, confirmed: boolean): Promise<{ message: string }> {
+async removeProgram(id: number, confirmed: boolean): Promise<{ message: string }> {
  
   if (!confirmed) {
     return { message: 'Operación no confirmada por el usuario' };
   }
 
   
-  await this.byId(id);
+  await this.findProgramById(id);
 
   await this.prisma.educationalPrograms.delete({
     where: { id }
