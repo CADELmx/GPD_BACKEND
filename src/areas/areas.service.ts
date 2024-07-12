@@ -1,11 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAreaDto } from './dto/create-area.dto';
-import { UpdateAreaDto } from './dto/update-area.dto';
+import { PrismaService } from 'src/prisma.service';
+import { CreateAreaDto } from 'src/models/area/create-area.dto';
 
 @Injectable()
 export class AreasService {
-  create(createAreaDto: CreateAreaDto) {
-    return 'This action adds a new area';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createAreaDto: CreateAreaDto) {
+    try {
+      const area = await this.prisma.area.create({
+        data: {
+          ...createAreaDto,
+        },
+      });
+      return {
+        message: 'Plantilla registrada',
+        error: null,
+        data: area,
+      };
+    } catch (error) {
+      return {
+        message: 'Error al registrar la plantilla',
+        error: error.message,
+        data: null,
+      };
+    }
   }
 
   findAll() {
