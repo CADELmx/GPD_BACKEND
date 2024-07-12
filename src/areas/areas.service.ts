@@ -6,7 +6,7 @@ import { CreateAreaDto } from 'src/models/area/create-area.dto';
 export class AreasService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createAreaDto: CreateAreaDto) {
+  async create(createAreaDto: CreateAreaDto): Promise<any> {
     try {
       const area = await this.prisma.area.create({
         data: {
@@ -14,13 +14,13 @@ export class AreasService {
         },
       });
       return {
-        message: 'Plantilla registrada',
+        message: 'Área registrada',
         error: null,
         data: area,
       };
     } catch (error) {
       return {
-        message: 'Error al registrar la plantilla',
+        message: 'Error al registrar el área',
         error: error.message,
         data: null,
       };
