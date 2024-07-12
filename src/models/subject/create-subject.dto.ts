@@ -1,8 +1,8 @@
 import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
 
 export class CreateSubjectDto {
-  @IsNotEmpty({ message: 'El programa educativo no puede estar vacío' })
-  @IsString({ message: 'El programa educativo debe ser un texto' })
+  @IsInt({ message: 'El programa educativo debe ser un número entero' })
+  @Min(1, { message: 'El programa educativo debe ser un entero positivo' })
   educationalProgramId: number;
   @IsInt({ message: 'Las horas semanales deben ser un número entero' })
   @Min(1, { message: 'Las horas semanales deben ser un entero positivo' })

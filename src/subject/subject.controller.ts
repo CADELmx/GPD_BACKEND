@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -61,5 +62,14 @@ export class SubjectController {
     @Body() updateSubjectDto: UpdateSubjectDto,
   ) {
     return this.subjectService.update(id, updateSubjectDto);
+  }
+  /**
+   * Handles the delete request to delete a subject
+   * @param id
+   * @returns
+   */
+  @Delete(':id')
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.subjectService.delete(id);
   }
 }

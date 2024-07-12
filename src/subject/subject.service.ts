@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Subject } from '@prisma/client';
 import { validateForeignKeys } from 'src/common/validation/custom-validation.pipe';
 import { CreateSubjectDto } from 'src/models/subject/create-subject.dto';
@@ -10,7 +14,7 @@ import { PrismaService } from 'src/prisma.service';
 interface SubjectResult {
   create(
     createSubjectDto: CreateSubjectDto,
-  ): Promise<{ message: string; data: Subject; error: string | null }>;
+  ): Promise<{ message: string; data: void | Subject; error: string | null }>;
   findByProgram(
     id: number,
   ): Promise<{ message: string; data: Subject[] | null; error: string | null }>;
@@ -45,7 +49,8 @@ export class SubjectService implements SubjectResult {
         where: { id: createSubjectDto.educationalProgramId },
       }),
     );
-    if(this.foreign.validateError()) throw new BadRequestException('El programa educativo no existe');
+    if (await this.foreign.validateError())
+      throw new BadRequestException('El programa educativo no existe');
     try {
       const subject = await this.prisma.subject.create({
         data: createSubjectDto,
@@ -74,11 +79,14 @@ export class SubjectService implements SubjectResult {
         where: {
           educationalProgramId: id,
         },
-        orderBy: { monthPeriod: 'asc', subjectName: 'asc' },
+        orderBy: [{ monthPeriod: 'asc' }, { subjectName: 'asc' }],
       });
-      if (!subjects) throw new NotFoundException('No se encontraron materias');
+      const message =
+        subjects.length === 0
+          ? 'No se encontraron materias'
+          : 'Materias econtradas';
       return {
-        message: 'Materias econtradas',
+        message,
         data: subjects,
         error: null,
       };
@@ -127,9 +135,10 @@ export class SubjectService implements SubjectResult {
           { subjectName: 'asc' },
         ],
       });
-      const message = subjects
-        ? 'Todas las materias de todas las carreras'
-        : 'No se encontraron materias';
+      const message =
+        subjects.length === 0
+          ? 'No se encontraron materias'
+          : 'Todas las materias de todas las carreras';
       return {
         data: subjects,
         message,
@@ -151,7 +160,9 @@ export class SubjectService implements SubjectResult {
    */
   async update(id: number, updateSubjectDto: UpdateSubjectDto) {
     try {
-      this.findOne(id);
+      this.foreign.add(this.prisma.subject.count({ where: { id } }));
+      if (await this.foreign.validateError())
+        throw new NotFoundException('La materia no existe');
       const updated = await this.prisma.subject.update({
         where: {
           id,
@@ -168,6 +179,34 @@ export class SubjectService implements SubjectResult {
         data: null,
         error: 'Error de actualización',
         message: 'Error al actualizar el registro',
+      };
+    }
+  }
+  /**
+   * Deletes a subject by its id
+   * @param id id of the subject
+   * @returns a message and an error if ocurred
+   */
+  async delete(id: number) {
+    try {
+      this.foreign.add(this.prisma.subject.count({ where: { id } }));
+      if (await this.foreign.validateError())
+        throw new NotFoundException('La materia no existe');
+      await this.prisma.subject.delete({
+        where: {
+          id,
+        },
+      });
+      return {
+        data: null,
+        error: null,
+        message: 'Eliminado!',
+      };
+    } catch (error) {
+      return {
+        data: null,
+        error: 'Error de eliminación',
+        message: 'Error al eliminar el registro',
       };
     }
   }
