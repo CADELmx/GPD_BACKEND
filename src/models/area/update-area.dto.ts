@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateAreaDto } from './create-area.dto';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateAreaDto extends PartialType(CreateAreaDto) {}
+export class UpdateAreaDto {
+  @IsString({ message: 'El campo nombre tiene que ser una cadena de texto' })
+  @IsNotEmpty({ message: 'El campo nombre no puede estar vacío' })
+  name: string;
+}
