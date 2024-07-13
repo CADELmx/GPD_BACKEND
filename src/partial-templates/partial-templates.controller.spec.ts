@@ -11,7 +11,9 @@ describe('PartialTemplatesController', () => {
       providers: [PartialTemplatesService],
     }).compile();
 
-    controller = module.get<PartialTemplatesController>(PartialTemplatesController);
+    controller = module.get<PartialTemplatesController>(
+      PartialTemplatesController,
+    );
   });
 
   it('should be defined', () => {

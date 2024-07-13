@@ -11,7 +11,9 @@ describe('EducationalProgramsController', () => {
       providers: [EducationalProgramsService],
     }).compile();
 
-    controller = module.get<EducationalProgramsController>(EducationalProgramsController);
+    controller = module.get<EducationalProgramsController>(
+      EducationalProgramsController,
+    );
   });
 
   it('should be defined', () => {

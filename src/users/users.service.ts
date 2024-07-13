@@ -1,14 +1,16 @@
-import { Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
-
 @Injectable()
 export class UsersService {
+  constructor(private prisma: PrismaService) {}
 
-  constructor (private prisma: PrismaService){}
-
-  async getUserByEmail(email: string): Promise<Users | null>{
+  async getUserByEmail(email: string): Promise<Users | null> {
     const user = await this.prisma.users.findUnique({
       where: {
         email: email,
@@ -16,9 +18,9 @@ export class UsersService {
       },
     });
 
-  if (!user) {
-    throw new NotAcceptableException('usuario no existente');
-  }
+    if (!user) {
+      throw new NotAcceptableException('usuario no existente');
+    }
     return user;
   }
 
@@ -35,5 +37,4 @@ export class UsersService {
 
     return user;
   }
-
 }

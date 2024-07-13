@@ -12,19 +12,14 @@ import { UsersController } from 'src/users/users.controller';
 
 @Module({
   imports: [
-    UsersModule, 
+    UsersModule,
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  providers: [
-    AuthService, 
-    PrismaService, 
-    LocalStrategy,
-    JwtStrategy
-  ],
+  providers: [AuthService, PrismaService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
   controllers: [AuthController, UsersController],
 })

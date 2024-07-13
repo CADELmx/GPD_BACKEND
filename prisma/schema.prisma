@@ -29,8 +29,8 @@ model Users {
 model PersonalData {
   id                BigInt            @id @unique @default(autoincrement())
   ide               Int               @unique @db.Integer
-  name              String?           @db.VarChar(50)
-  position          String?           @db.VarChar(50)
+  name              String?           @db.VarChar(60)
+  position          String?           @db.VarChar(100)
   area              String?           @db.VarChar()
   birthDate         String?           @db.VarChar(20)
   birthPlace        String?           @db.VarChar(80)
