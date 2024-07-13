@@ -12,30 +12,30 @@ export interface ValidationPipeOptions extends ValidatorOptions {
 }
 @Injectable()
 export class CustomValidationPipe extends ValidationPipe {
-  protected flattenValidationErrors(
-    validationErrors: ValidationError[],
-  ): string[] {
-    const messages = validationErrors.map((error) => {
-      return Object.values(error.constraints).join(', ');
-    });
-    return messages;
-  }
-  createExceptionFactory() {
-    return (validationErrors: ValidationError[] = []) => {
-      const messages = this.flattenValidationErrors(validationErrors);
-      return new BadRequestException(messages.join(', '));
-    };
-  }
+    protected flattenValidationErrors(validationErrors: ValidationError[]): string[] {
+        const messages = validationErrors.map(error => {
+            return Object.values(error.constraints).join(', ')
+        })
+        return messages
+    }
+    createExceptionFactory() {
+        return (validationErrors: ValidationError[] = []) => {
+            const messages = this.flattenValidationErrors(validationErrors)
+            return new BadRequestException(messages.join(', '))
+        }
+    }
 }
 
 export class validateForeignKeys {
-  private validations = [];
-  constructor() {}
-  add(validation) {
-    this.validations.push(validation);
-  }
-  async validateError() {
-    const res = await Promise.all(this.validations);
-    return res.some((count) => count === 0);
-  }
+    private validations = []
+    constructor() { }
+    add(validation) {
+        this.validations.push(validation)
+    }
+    async validate() {
+        const res = await Promise.all(this.validations)
+        if (res.some(count => count === 0)) {
+            throw new BadRequestException('Relación no encontrada')
+        }
+    }
 }

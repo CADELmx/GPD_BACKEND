@@ -40,9 +40,10 @@ export class PartialTemplatesService {
     return this.prisma.partialTemplate.create({
       data: {
         ...createPartialTemplateDto,
-      } as any,
-    });
-  }
+
+      } as any,
+    });
+  }
 
   /**
    * Lists all partialTemplates
