@@ -20,7 +20,7 @@ export class UpdatePartialTemplateDto extends PartialType(CreatePartialTemplateD
 
   @IsString({ message: 'El campo estado tiene que ser una cadena de texto'})
   @IsNotEmpty({message: 'El campo estado no puede estar vacío'})
-  @IsIn(['aprobado', 'pendiente', 'corrección'], { message: 'Error al enviar al actualizar el estado' })
+  @IsIn(['aprobado', 'pendiente', 'corrección'], { message: 'Error al actualizar el estado' })
   status?: string;
 
   @IsString({ message: 'El campo año tiene que ser una cadena de texto'})

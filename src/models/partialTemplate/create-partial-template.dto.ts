@@ -1,6 +1,7 @@
-import { IsInt, IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, Length, Matches, Min } from 'class-validator';
 
 export class CreatePartialTemplateDto {
+  @Min(1, { message: 'El campo número de trabajador debe ser mayor a 1' })
   @IsInt({ message: 'El campo número de trabajador debe ser un número entero'})
   @IsNotEmpty({message: 'El campo número de trabajador no puede estar vacío'})
   nt: number;

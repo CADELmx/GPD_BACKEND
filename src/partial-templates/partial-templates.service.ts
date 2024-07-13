@@ -19,6 +19,7 @@ export class PartialTemplatesService {
     async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <{ message: string | null; error: { message: string } | null; data: PartialTemplate | null }> {
       try {
       await this.validateForeignKeys(createPartialTemplateDto);
+      this.validateTotalByPosition(createPartialTemplateDto);
       const newPartialTemplate = await this.prisma.partialTemplate.create({
         data: {
           ...createPartialTemplateDto,
@@ -35,10 +36,8 @@ export class PartialTemplatesService {
    * Lists all partialTemplates
    * @returns {Promise<PartialTemplate[]>} - All registered partialTemplates, by status
    */
-  async findAll(status?: string): Promise <{name: string, totalHours: number, status: string }[]> {
-    const filter = status ? { status } : {};
+  async findAll(): Promise <{name: string, totalHours: number, status: string }[]> {
     const partialTemplates = await this.prisma.partialTemplate.findMany({
-      where: filter,
       select: {
         name: true,
         total: true,
@@ -78,6 +77,7 @@ export class PartialTemplatesService {
   async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto): Promise< {message: string; data:PartialTemplate}> {
     await this.validateId(id);
     await this.validateForeignKeys(updatePartialTemplateDto);
+    this.validateTotalByPosition(updatePartialTemplateDto);
 
     const updatePartialTemplate = await this.prisma.partialTemplate.update({
       data: { ...updatePartialTemplateDto} as any,
@@ -122,7 +122,7 @@ export class PartialTemplatesService {
     return partialTemplate;
   }
 
-    /**
+  /**
    * Validates if foreign keys (templateId)
    * @param {CreatePartialTemplateDto | UpdatePartialTemplateDto} dto - Data to validate
    * @throws {NotFoundException} - If any foreign keys is not found
@@ -141,6 +141,25 @@ export class PartialTemplatesService {
       );
     }
     await Promise.all(validations);
+  }
+
+  /**
+   * Restrict total hours by position 
+   * @param {CreatePartialTemplateDto | UpdatePartialTemplateDto} dto - Data to validate
+   * @throws {BadRequestException} - If the total do not match
+   */
+  private validateTotalByPosition(dto: CreatePartialTemplateDto | UpdatePartialTemplateDto): void {
+    const { position, total } = dto;
+
+    if(position === 'Profesor de asignatura'){
+      if(total < 17 || total > 32 ){
+        throw new BadRequestException('Cantidad de horas no permitida');
+      }
+    } else if (position === 'Profesor de Tiempo Completo'){
+      if (total !== 40){
+        throw new BadRequestException ('Cantidad de horas no permitida');
+      }
+    }
   }
 
 }
