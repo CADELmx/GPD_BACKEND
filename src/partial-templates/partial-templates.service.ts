@@ -19,7 +19,7 @@ export class PartialTemplatesService {
     async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <{ message: string | null; error: { message: string } | null; data: PartialTemplate | null }> {
       try {
       await this.validateForeignKeys(createPartialTemplateDto);
-      this.validateTotalByPosition(createPartialTemplateDto);
+      await this.validateTotalByPosition(createPartialTemplateDto);
       const newPartialTemplate = await this.prisma.partialTemplate.create({
         data: {
           ...createPartialTemplateDto,
@@ -73,7 +73,7 @@ export class PartialTemplatesService {
       },
     });
     if(!partialTemplate){
-      throw new NotFoundException('Partial template not found');
+      throw new NotFoundException('Plantilla parcial no encontrada');
     }
     return partialTemplate;
   }
@@ -87,7 +87,7 @@ export class PartialTemplatesService {
   async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto): Promise< {message: string; data:PartialTemplate}> {
     await this.validateId(id);
     await this.validateForeignKeys(updatePartialTemplateDto);
-    this.validateTotalByPosition(updatePartialTemplateDto);
+    await this.validateTotalByPosition(updatePartialTemplateDto);
 
     const updatePartialTemplate = await this.prisma.partialTemplate.update({
       data: { ...updatePartialTemplateDto} as any,
