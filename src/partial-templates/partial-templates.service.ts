@@ -32,12 +32,22 @@ export class PartialTemplatesService {
     }
  }
 
+
   /**
-   * Lists all partialTemplates
-   * @returns {Promise<PartialTemplate[]>} - All registered partialTemplates, by status
-   */
-  async findAll(): Promise <{name: string, totalHours: number, status: string }[]> {
+   * Lists partialTemplates filtered by status
+   * @param {string} [status] - Status to filter partial templates by. Allowed values
+   * @returns {Promise<{name: string, totalHours: number, status: string}[]>} - All registered partialTemplates
+  */
+  async findAll(status?: string): Promise <{name: string, totalHours: number, status: string }[]> {
+    const allowedStatuses = ['pendiente', 'aprobado', 'corrección'];
+    const filter: any = {};
+
+    if(status && allowedStatuses.includes(status)){
+      filter.status = status;
+    }
+
     const partialTemplates = await this.prisma.partialTemplate.findMany({
+      where: filter,
       select: {
         name: true,
         total: true,

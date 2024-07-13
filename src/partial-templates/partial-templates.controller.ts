@@ -34,12 +34,12 @@ export class PartialTemplatesController {
   }
 
   /**
-   * Retrieves all partialTemplates
-   * @returns An array of all partialTemplates
+   * Retrieves partialTemplates
+   * @returns An array of partialTemplates by status
   */
   @Get()
-  findAll() {
-    return this.partialTemplatesService.findAll();
+  async findAll(@Query('status') status?: string) {
+    return this.partialTemplatesService.findAll(status);
   }
   
   /** Retrieves a partialTemplate by ID
