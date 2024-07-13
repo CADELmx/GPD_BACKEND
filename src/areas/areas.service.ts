@@ -1,3 +1,4 @@
+import { Area } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAreaDto } from 'src/models/area/create-area.dto';
@@ -7,7 +8,9 @@ import { UpdateAreaDto } from 'src/models/area/update-area.dto';
 export class AreasService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createAreaDto: CreateAreaDto): Promise<any> {
+  async create(
+    createAreaDto: CreateAreaDto,
+  ): Promise<{ message: string; error: string | null; data: Area | null }> {
     try {
       const area = await this.prisma.area.create({
         data: {
@@ -28,7 +31,11 @@ export class AreasService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<{
+    message: string;
+    error: string | null;
+    data: Area[] | null;
+  }> {
     try {
       const areas = await this.prisma.area.findMany();
 
@@ -54,7 +61,9 @@ export class AreasService {
     }
   }
 
-  async findOneById(id: number): Promise<any> {
+  async findOneById(
+    id: number,
+  ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
     try {
       const area = await this.prisma.area.findMany({
         where: {
@@ -82,7 +91,9 @@ export class AreasService {
     }
   }
 
-  async findOneByName(name: string): Promise<any> {
+  async findOneByName(
+    name: string,
+  ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
     try {
       const area = await this.prisma.area.findMany({
         where: {
@@ -111,7 +122,10 @@ export class AreasService {
     }
   }
 
-  async update(id: number, updateAreaDto: UpdateAreaDto): Promise<any> {
+  async update(
+    id: number,
+    updateAreaDto: UpdateAreaDto,
+  ): Promise<{ message: string; error: string | null; data: Area | null }> {
     try {
       const area = await this.prisma.area.update({
         where: {
@@ -135,7 +149,9 @@ export class AreasService {
     }
   }
 
-  async remove(id: number): Promise<any> {
+  async remove(
+    id: number,
+  ): Promise<{ message: string; error: string | null; data: Area | null }> {
     try {
       const area = await this.prisma.area.delete({
         where: {
