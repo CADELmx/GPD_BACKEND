@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { UsersModule } from './users/users.module';
 import { TemplatesModule } from './templates/templates.module';
 import { EducationalProgramsModule } from './educational-programs/educational-programs.module';
+import { SubjectModule } from './subject/subject.module';
 import { PartialTemplatesModule } from './partial-templates/partial-templates.module';
 
 @Module({
@@ -13,7 +14,8 @@ import { PartialTemplatesModule } from './partial-templates/partial-templates.mo
     UsersModule,
     EducationalProgramsModule,
     TemplatesModule,
-    PartialTemplatesModule
+    PartialTemplatesModule,
+    SubjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
