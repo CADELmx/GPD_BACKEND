@@ -6,6 +6,6 @@ import { validateForeignKeys } from 'src/common/validation/custom-validation.pip
 
 @Module({
   providers: [SubjectService, PrismaService, validateForeignKeys],
-  controllers: [SubjectController]
+  controllers: [SubjectController],
 })
 export class SubjectModule {}

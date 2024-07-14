@@ -1,10 +1,14 @@
-import { BadRequestException, Injectable, ValidationPipe } from "@nestjs/common";
-import { ValidationError, ValidatorOptions } from "class-validator";
+import {
+  BadRequestException,
+  Injectable,
+  ValidationPipe,
+} from '@nestjs/common';
+import { ValidationError, ValidatorOptions } from 'class-validator';
 
 export interface ValidationPipeOptions extends ValidatorOptions {
-    transform?: boolean;
-    disableErrorMessages?: boolean;
-    exceptionFactory?: (errors: ValidationError[]) => any;
+  transform?: boolean;
+  disableErrorMessages?: boolean;
+  exceptionFactory?: (errors: ValidationError[]) => any;
 }
 @Injectable()
 export class CustomValidationPipe extends ValidationPipe {

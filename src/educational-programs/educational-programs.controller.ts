@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, BadRequestException, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
@@ -10,7 +20,9 @@ import { LocalAuthGuard } from 'src/auth/strategies/guards/local-auth.guard';
  */
 @Controller('educational-programs')
 export class EducationalProgramsController {
-  constructor(private readonly educationalProgramsService: EducationalProgramsService) {}
+  constructor(
+    private readonly educationalProgramsService: EducationalProgramsService,
+  ) {}
 
   /**
    * Create a new program
@@ -25,7 +37,7 @@ export class EducationalProgramsController {
   /**
    * Get all programs
    * @returns Return the programs
- */
+   */
   @UseGuards(LocalAuthGuard)
   @Get()
   findAll() {
@@ -36,7 +48,7 @@ export class EducationalProgramsController {
    * Get a program using its id
    * @param id id of the program to obtain
    * @returns Returns the found program
- */
+   */
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.educationalProgramsService.findProgramById(id);
@@ -80,5 +92,3 @@ export class EducationalProgramsController {
      return result;
    }
  }
- 
-  
