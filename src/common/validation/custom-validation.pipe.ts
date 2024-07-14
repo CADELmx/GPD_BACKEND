@@ -21,3 +21,17 @@ export class CustomValidationPipe extends ValidationPipe {
         }
     }
 }
+
+export class validateForeignKeys {
+    private validations = []
+    constructor() { }
+    add(validation) {
+        this.validations.push(validation)
+    }
+    async validate() {
+        const res = await Promise.all(this.validations)
+        if (res.some(count => count === 0)) {
+            throw new BadRequestException('Relación no encontrada')
+        }
+    }
+}

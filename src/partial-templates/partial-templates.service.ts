@@ -40,7 +40,6 @@ export class PartialTemplatesService {
     }
  }
 
-
   /**
    * Lists partialTemplates filtered by status
    * @param {string} [status] - Status to filter partial templates by. Allowed values

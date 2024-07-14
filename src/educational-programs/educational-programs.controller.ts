@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, BadRequestException, Query } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
@@ -19,7 +19,7 @@ export class EducationalProgramsController {
    */
   @Post()
   create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
-    return this.educationalProgramsService.createProg({ ...createEducationalProgramDto});
+    return this.educationalProgramsService.createProgram({ ...createEducationalProgramDto});
   }
 
   /**
@@ -29,7 +29,7 @@ export class EducationalProgramsController {
   @UseGuards(LocalAuthGuard)
   @Get()
   findAll() {
-    return this.educationalProgramsService.findAll();
+    return this.educationalProgramsService.findAllPrograms();
   }
 
   /**
@@ -39,7 +39,7 @@ export class EducationalProgramsController {
  */
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.educationalProgramsService.byId(id);
+    return this.educationalProgramsService.findProgramById(id);
   }
 
   /**
@@ -51,16 +51,34 @@ export class EducationalProgramsController {
 
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateEducationalProgramDto: UpdateEducationalProgramDto) {
-    return this.educationalProgramsService.update(id, updateEducationalProgramDto);
+    return this.educationalProgramsService.updateProgram(id, updateEducationalProgramDto);
   }
 
  /**
   * Method to delete a program
   * @param id id of the program to delete
+  * @param body Wait for confirmation from the user
   * @returns Return a message after deleting a program
   */
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.educationalProgramsService.remove(id);
-  }
-}
+   @Delete(':id')
+   async remove(
+     @Param('id') id: string,
+     @Body() body: { confirmado: boolean }
+   ) {
+     const idNumber = parseInt(id, 10);
+ 
+     if (isNaN(idNumber)) {
+       throw new BadRequestException('Formato de ID no válido');
+     }
+ 
+     if (!body.confirmado) {
+       return { message: 'Operación no confirmada por el usuario' };
+     }
+ 
+     const result = await this.educationalProgramsService.removeProgram(idNumber, body.confirmado);
+     
+     return result;
+   }
+ }
+ 
+  
