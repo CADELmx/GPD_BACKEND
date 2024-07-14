@@ -49,7 +49,7 @@ export class SubjectService implements SubjectResult {
         where: { id: createSubjectDto.educationalProgramId },
       }),
     );
-    if (await this.foreign.validateError())
+    if (await this.foreign.validate())
       throw new BadRequestException('El programa educativo no existe');
     try {
       const subject = await this.prisma.subject.create({
@@ -161,7 +161,7 @@ export class SubjectService implements SubjectResult {
   async update(id: number, updateSubjectDto: UpdateSubjectDto) {
     try {
       this.foreign.add(this.prisma.subject.count({ where: { id } }));
-      if (await this.foreign.validateError())
+      if (await this.foreign.validate())
         throw new NotFoundException('La materia no existe');
       const updated = await this.prisma.subject.update({
         where: {
@@ -190,7 +190,7 @@ export class SubjectService implements SubjectResult {
   async delete(id: number) {
     try {
       this.foreign.add(this.prisma.subject.count({ where: { id } }));
-      if (await this.foreign.validateError())
+      if (await this.foreign.validate())
         throw new NotFoundException('La materia no existe');
       await this.prisma.subject.delete({
         where: {
