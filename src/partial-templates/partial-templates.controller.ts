@@ -2,35 +2,20 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGua
 import { PartialTemplatesService } from './partial-templates.service';
 import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
-import { Response } from 'express';
-import { CustomExceptionFilter } from 'src/common/filters/custom-exception.filter';
 
-@UseFilters(CustomExceptionFilter)
 @Controller('partial-templates')
 export class PartialTemplatesController {
 
   constructor(private readonly partialTemplatesService: PartialTemplatesService) {}
 
-  
   /**
   * Creates a new partialTemplate
   * @param {CreatePartialTemplateDto} createPartialTemplateDto The partialTemplate data transfer object
   * @returns - The created partialTemplate
   */
   @Post()
-  create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
-    return this.partialTemplatesService.create({
-      nt: createPartialTemplateDto.nt,
-      name: createPartialTemplateDto.name,
-      gender: createPartialTemplateDto.gender,
-      position: createPartialTemplateDto.position,
-      status: createPartialTemplateDto.status,
-      total: createPartialTemplateDto.total,
-      year: createPartialTemplateDto.year,
-      period: createPartialTemplateDto.period,
-      templateId: createPartialTemplateDto.templateId
-
-    });
+  create(@Body() createPartialTemplateDto: CreatePartialTemplateDto){
+    return this.partialTemplatesService.create({ ...createPartialTemplateDto});
   }
 
   /**
