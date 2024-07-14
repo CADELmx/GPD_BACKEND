@@ -4,9 +4,11 @@ import {
   Body,
   Patch,
   Param,
+  Query,
   Delete,
   Controller,
   ParseIntPipe,
+  BadRequestException,
 } from '@nestjs/common';
 import { AreasService } from './areas.service';
 import { CreateAreaDto } from 'src/models/area/create-area.dto';
@@ -22,13 +24,22 @@ export class AreasController {
   }
 
   @Get()
-  findAll() {
+  async find(
+    @Query(
+      'id',
+      new ParseIntPipe({
+        optional: true,
+        exceptionFactory: () => {
+          return new BadRequestException('El id debe ser un número');
+        },
+      }),
+    )
+    id?: number,
+    @Query('name') name?: string,
+  ) {
+    if (id) return this.areasService.findOneById(id);
+    if (name) return this.areasService.findOneByName(name);
     return this.areasService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.areasService.findOneById(id);
   }
 
   @Patch(':id')
