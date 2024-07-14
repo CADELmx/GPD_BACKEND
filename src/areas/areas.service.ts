@@ -65,6 +65,8 @@ export class AreasService {
     id: number,
   ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
     try {
+      await this.validateIfExistsAreaId(id);
+
       const area = await this.prisma.area.findMany({
         where: {
           id,
@@ -95,6 +97,8 @@ export class AreasService {
     name: string,
   ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
     try {
+      await this.validateIfExistsAreaName(name);
+
       const area = await this.prisma.area.findMany({
         where: {
           name,
@@ -173,7 +177,7 @@ export class AreasService {
     }
   }
 
-  private async validateIfExistsAreaId(id: number) {
+  private async validateIfExistsAreaId(id: number): Promise<void> {
     const area = await this.prisma.area.findUnique({
       where: {
         id,
@@ -181,6 +185,17 @@ export class AreasService {
     });
     if (!area) {
       throw new NotFoundException(`Área con ID ${id} no encontrada`);
+    }
+  }
+
+  private async validateIfExistsAreaName(name: string): Promise<void> {
+    const area = await this.prisma.area.findUnique({
+      where: {
+        name,
+      },
+    });
+    if (!area) {
+      throw new NotFoundException(`Área con nombre ${name} no encontrada`);
     }
   }
 }
