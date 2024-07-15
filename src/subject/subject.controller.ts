@@ -2,6 +2,7 @@ import {
     BadRequestException,
     Body,
     Controller,
+    Delete,
     Get,
     Param,
     ParseIntPipe,
@@ -55,7 +56,19 @@ export class SubjectController {
      * @returns 
      */
     @Put(':id')
-    update(@Param('id', ParseIntPipe) id: number, @Body() updateSubjectDto: UpdateSubjectDto) {
+    update(@Param('id', new ParseIntPipe({
+        exceptionFactory: () => {
+            return new BadRequestException('El id no es un número');
+        }
+    })) id: number, @Body() updateSubjectDto: UpdateSubjectDto) {
         return this.subjectService.update(id, updateSubjectDto);
+    }
+    @Delete(':id')
+    delete(@Param('id', new ParseIntPipe({
+        exceptionFactory: () => {
+            return new BadRequestException('El id no es un número');
+        }
+    })) id: number) {
+        return this.subjectService.delete(id);
     }
 }
