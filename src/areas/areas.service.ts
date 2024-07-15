@@ -18,9 +18,7 @@ export class AreasService {
   ): Promise<{ message: string; error: string | null; data: Area | null }> {
     try {
       const area = await this.prisma.area.create({
-        data: {
-          ...createAreaDto,
-        },
+        data: createAreaDto,
       });
       return {
         message: 'Área registrada',
@@ -174,9 +172,7 @@ export class AreasService {
         where: {
           id,
         },
-        data: {
-          ...updateAreaDto,
-        },
+        data: updateAreaDto,
       });
 
       return {
