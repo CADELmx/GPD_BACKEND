@@ -18,11 +18,22 @@ import { UpdateAreaDto } from 'src/models/area/update-area.dto';
 export class AreasController {
   constructor(private readonly areasService: AreasService) {}
 
+  /**
+   * Creates a new area.
+   * @param createAreaDto - Data Transfer Object for creating a new area.
+   * @returns The created area.
+   */
   @Post()
   create(@Body() createAreaDto: CreateAreaDto) {
     return this.areasService.create(createAreaDto);
   }
 
+  /**
+   * Retrieves an area by ID or name, or all areas if no query parameters are provided.
+   * @param id - The ID of the area to retrieve (optional).
+   * @param name - The name of the area to retrieve (optional).
+   * @returns The found area(s).
+   */
   @Get()
   async find(
     @Query(
@@ -42,6 +53,12 @@ export class AreasController {
     return this.areasService.findAll();
   }
 
+  /**
+   * Updates an area by its ID.
+   * @param id - The ID of the area to update.
+   * @param updateAreaDto - Data Transfer Object for updating an area.
+   * @returns The updated area.
+   */
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -50,6 +67,11 @@ export class AreasController {
     return this.areasService.update(id, updateAreaDto);
   }
 
+  /**
+   * Deletes an area by its ID.
+   * @param id - The ID of the area to delete.
+   * @returns The deleted area.
+   */
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.areasService.remove(id);
