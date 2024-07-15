@@ -5,6 +5,9 @@ import { AppController } from './app.controller';
 import { UsersModule } from './users/users.module';
 import { TemplatesModule } from './templates/templates.module';
 import { EducationalProgramsModule } from './educational-programs/educational-programs.module';
+import { SubjectModule } from './subject/subject.module';
+import { PartialTemplatesModule } from './partial-templates/partial-templates.module';
+import { AreasModule } from './areas/areas.module';
 
 @Module({
   imports: [
@@ -12,6 +15,9 @@ import { EducationalProgramsModule } from './educational-programs/educational-pr
     UsersModule,
     EducationalProgramsModule,
     TemplatesModule,
+    PartialTemplatesModule,
+    SubjectModule,
+    AreasModule,
   ],
   controllers: [AppController],
   providers: [AppService],
