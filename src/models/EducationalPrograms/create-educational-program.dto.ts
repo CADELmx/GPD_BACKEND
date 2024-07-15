@@ -13,7 +13,5 @@ export class CreateEducationalProgramDto {
     @IsNotEmpty({ message: 'El ID del área es obligatorio' })
     @Min(1,{message:"El Id del area debe ser un dato válido"})
     areaId: number
-
-
 }
 

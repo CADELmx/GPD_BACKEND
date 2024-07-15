@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PartialTemplate } from '@prisma/client';
 import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
@@ -6,12 +10,10 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class PartialTemplatesService {
-
   // Injects PrismaService into the service
-  constructor(private readonly prisma: PrismaService){};
+  constructor(private readonly prisma: PrismaService) {}
 
-
-    /**
+  /**
    * Rregisters a new PartialTemplate
    * @param {CreatePartialTemplateDto} createPartialTemplateDto - The partialTemplate data to register
    * @returns {Promise<PartialTemplate>} - The registered partialTemplate
@@ -85,7 +87,7 @@ export class PartialTemplatesService {
     };
   }
  }
-
+  
    /**
    * Gets a partial template by its ID.
    * @param {number} id - The ID of the partial template to search for.
@@ -114,7 +116,9 @@ export class PartialTemplatesService {
     };
   }
   } 
-    /**
+
+
+  /**
    * Updates a partialTemplate by its ID
    * @param {number} id - ID of partialTemplate to update
    * @param {UpdatePartialTemplateDto} updatePartialTemplateDto - partialTemplate data to update
@@ -156,8 +160,8 @@ export class PartialTemplatesService {
     await this.findOne(id);
     await this.prisma.partialTemplate.delete({
       where: {
-        id
-      }
+        id,
+      },
     });
     return {
       message: 'Plantilla parcial eliminada con exito',
