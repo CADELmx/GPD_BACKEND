@@ -18,7 +18,7 @@ export class PartialTemplatesService {
    */
     async create(createPartialTemplateDto: CreatePartialTemplateDto): Promise <{ message: string | null; error: { message: string } | null; data: PartialTemplate | null }> {
       try {
-      await this.validateForeignKeys(createPartialTemplateDto);
+      await this.validateIfExistsTemplateId(createPartialTemplateDto);
       await this.validateTotalByPosition(createPartialTemplateDto);
       const newPartialTemplate = await this.prisma.partialTemplate.create({
         data: {
@@ -123,7 +123,7 @@ export class PartialTemplatesService {
   async update(id: number, updatePartialTemplateDto: UpdatePartialTemplateDto): Promise< any> {
     try { 
       await this.validateId(id);
-      await this.validateForeignKeys(updatePartialTemplateDto);
+      await this.validateIfExistsTemplateId(updatePartialTemplateDto);
       await this.validateTotalByPosition(updatePartialTemplateDto);
 
       const updatePartialTemplate = await this.prisma.partialTemplate.update({
@@ -197,20 +197,16 @@ export class PartialTemplatesService {
    * @param {CreatePartialTemplateDto | UpdatePartialTemplateDto} dto - Data to validate
    * @throws {NotFoundException} - If any foreign keys is not found
    */
-  private async validateForeignKeys( dto: CreatePartialTemplateDto | UpdatePartialTemplateDto): Promise<void> {
+  private async validateIfExistsTemplateId( dto: CreatePartialTemplateDto | UpdatePartialTemplateDto): Promise<void> {
     const { templateId } = dto;
-    const validations = [];
 
     if (templateId !== undefined) {
-      validations.push(
-        this.prisma.area.count({ where: { id: templateId } }).then((count) => {
-          if (count === 0) {
-            throw new NotFoundException(`Plantilla con id ${templateId} no encontrada`);
-          }
-        }),
-      );
+      const template = await this.prisma.template.findUnique({ where: {id: templateId }
+      });
+      if (!template) {
+        throw new NotFoundException(`Plantilla con id ${templateId} no encontrada`);
+      }
     }
-    await Promise.all(validations);
   }
 
   /**
