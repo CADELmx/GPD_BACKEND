@@ -8,6 +8,11 @@ import { UpdateAreaDto } from 'src/models/area/update-area.dto';
 export class AreasService {
   constructor(private readonly prisma: PrismaService) {}
 
+  /**
+   * Creates a new area.
+   * @param createAreaDto - Data Transfer Object for creating a new area.
+   * @returns A promise that resolves with a message, any error encountered, and the created area data.
+   */
   async create(
     createAreaDto: CreateAreaDto,
   ): Promise<{ message: string; error: string | null; data: Area | null }> {
@@ -31,6 +36,10 @@ export class AreasService {
     }
   }
 
+  /**
+   * Retrieves all areas.
+   * @returns A promise that resolves with a message, any error encountered, and a list of areas.
+   */
   async findAll(): Promise<{
     message: string;
     error: string | null;
@@ -65,6 +74,11 @@ export class AreasService {
     }
   }
 
+  /**
+   * Retrieves an area by its ID.
+   * @param id - The ID of the area to retrieve.
+   * @returns A promise that resolves with a message, any error encountered, and the area data.
+   */
   async findOneById(
     id: number,
   ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
@@ -102,6 +116,11 @@ export class AreasService {
     }
   }
 
+  /**
+   * Retrieves areas that contain the specified name.
+   * @param name - The name to search for.
+   * @returns A promise that resolves with a message, any error encountered, and a list of areas matching the name.
+   */
   async findOneByName(
     name: string,
   ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
@@ -140,6 +159,12 @@ export class AreasService {
     }
   }
 
+  /**
+   * Updates an area by its ID.
+   * @param id - The ID of the area to update.
+   * @param updateAreaDto - Data Transfer Object for updating an area.
+   * @returns A promise that resolves with a message, any error encountered, and the updated area data.
+   */
   async update(
     id: number,
     updateAreaDto: UpdateAreaDto,
@@ -168,6 +193,11 @@ export class AreasService {
     }
   }
 
+  /**
+   * Deletes an area by its ID.
+   * @param id - The ID of the area to delete.
+   * @returns A promise that resolves with a message, any error encountered, and the deleted area data.
+   */
   async remove(
     id: number,
   ): Promise<{ message: string; error: string | null; data: Area | null }> {
@@ -192,6 +222,11 @@ export class AreasService {
     }
   }
 
+  /**
+   * Validates if an area exists by its ID.
+   * @param id - The ID of the area to validate.
+   * @throws NotFoundException if the area does not exist.
+   */
   private async validateIfExistsAreaId(id: number): Promise<void> {
     const area = await this.prisma.area.findUnique({
       where: {
