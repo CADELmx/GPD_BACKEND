@@ -37,7 +37,11 @@ export class AreasService {
     data: Area[] | null;
   }> {
     try {
-      const areas = await this.prisma.area.findMany();
+      const areas = await this.prisma.area.findMany({
+        orderBy: {
+          name: 'asc',
+        },
+      });
 
       if (areas.length === 0) {
         return {
@@ -71,7 +75,11 @@ export class AreasService {
         where: {
           id,
         },
+        orderBy: {
+          name: 'asc',
+        },
       });
+
       if (area.length === 0) {
         return {
           message: 'Area no encontrada',
@@ -79,6 +87,7 @@ export class AreasService {
           data: area,
         };
       }
+
       return {
         message: 'Área obtenida con éxito',
         error: null,
@@ -97,11 +106,15 @@ export class AreasService {
     name: string,
   ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
     try {
-      await this.validateIfExistsAreaName(name);
-
       const area = await this.prisma.area.findMany({
         where: {
-          name,
+          name: {
+            contains: name,
+            mode: 'insensitive',
+          },
+        },
+        orderBy: {
+          name: 'asc',
         },
       });
 
@@ -112,6 +125,7 @@ export class AreasService {
           data: area,
         };
       }
+
       return {
         message: 'Área obtenida con éxito',
         error: null,
@@ -139,6 +153,7 @@ export class AreasService {
           ...updateAreaDto,
         },
       });
+
       return {
         message: 'Área actualizada',
         error: null,
@@ -183,19 +198,9 @@ export class AreasService {
         id,
       },
     });
+
     if (!area) {
       throw new NotFoundException(`Área con ID ${id} no encontrada`);
-    }
-  }
-
-  private async validateIfExistsAreaName(name: string): Promise<void> {
-    const area = await this.prisma.area.findUnique({
-      where: {
-        name,
-      },
-    });
-    if (!area) {
-      throw new NotFoundException(`Área con nombre ${name} no encontrada`);
     }
   }
 }
