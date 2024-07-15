@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
