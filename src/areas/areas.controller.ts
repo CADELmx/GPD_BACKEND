@@ -41,7 +41,7 @@ export class AreasController {
       new ParseIntPipe({
         optional: true,
         exceptionFactory: () => {
-          return new BadRequestException('El id debe ser un número');
+          return new BadRequestException('El ID debe ser un número');
         },
       }),
     )
@@ -61,7 +61,15 @@ export class AreasController {
    */
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param(
+      'id',
+      new ParseIntPipe({
+        exceptionFactory: () => {
+          return new BadRequestException('El ID debe ser un número');
+        },
+      }),
+    )
+    id: number,
     @Body() updateAreaDto: UpdateAreaDto,
   ) {
     return this.areasService.update(id, updateAreaDto);
@@ -73,7 +81,17 @@ export class AreasController {
    * @returns The deleted area.
    */
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(
+    @Param(
+      'id',
+      new ParseIntPipe({
+        exceptionFactory: () => {
+          return new BadRequestException('El ID debe ser un número');
+        },
+      }),
+    )
+    id: number,
+  ) {
     return this.areasService.remove(id);
   }
 }

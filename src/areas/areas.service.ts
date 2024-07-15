@@ -201,6 +201,7 @@ export class AreasService {
   async remove(
     id: number,
   ): Promise<{ message: string; error: string | null; data: Area | null }> {
+    await this.validateIfExistsAreaId(id);
     try {
       const area = await this.prisma.area.delete({
         where: {
