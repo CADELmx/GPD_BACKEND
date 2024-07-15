@@ -12,7 +12,6 @@ import {
 import { PartialTemplatesService } from './partial-templates.service';
 import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
-import { JwtAuthGuard } from 'src/auth/strategies/guards/jwt-auth.guard';
 
 @Controller('partial-templates')
 export class PartialTemplatesController {
@@ -26,28 +25,17 @@ export class PartialTemplatesController {
    * @returns - The created partialTemplate
    */
   @Post()
-  create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
-    return this.partialTemplatesService.create({
-      nt: createPartialTemplateDto.nt,
-      name: createPartialTemplateDto.name,
-      gender: createPartialTemplateDto.gender,
-      position: createPartialTemplateDto.position,
-      status: createPartialTemplateDto.status,
-      total: createPartialTemplateDto.total,
-      year: createPartialTemplateDto.year,
-      period: createPartialTemplateDto.period,
-      templateId: createPartialTemplateDto.templateId,
-    });
+  create(@Body() createPartialTemplateDto: CreatePartialTemplateDto){
+    return this.partialTemplatesService.create({ ...createPartialTemplateDto});
   }
 
   /**
-   * Retrieves all partialTemplates
-   * @returns . An array of all partialTemplates
-   */
-  @UseGuards(JwtAuthGuard)
+   * Retrieves partialTemplates
+   * @returns An array of partialTemplates by status
+  */
   @Get()
-  findAll() {
-    return this.partialTemplatesService.findAll();
+  async findAll(@Query('status') status?: string) {
+    return this.partialTemplatesService.findAll(status);
   }
 
   /** Retrieves a partialTemplate by ID
