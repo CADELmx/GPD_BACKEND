@@ -8,30 +8,32 @@ import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/updat
 import { PrismaService } from 'src/prisma.service';
 import { EducationalPrograms, Prisma } from '@prisma/client';
 import { promises } from 'dns';
+import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
 
 @Injectable()
 export class EducationalProgramsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly prismaErrorHandler: PrismaErrorHandler,
+  ) { }
 
-/**
- * Method for creating a new educational program.
- * @param data Program data to register
- * @returns Registered Educational Program
- */
-async createProgram(educationalProgram: CreateEducationalProgramDto): Promise <{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
-  try {
-  await this.validateAreaId(educationalProgram);
-  const newPartialTemplate = await this.prisma.educationalPrograms.create({
-    data: {
-      ...educationalProgram,
-    },
-  });
+  /**
+   * Method for creating a new educational program.
+   * @param data Program data to register
+   * @returns Registered Educational Program
+   */
+  async createProgram(educationalProgram: CreateEducationalProgramDto): Promise<{ message: string | null; error: string | null; data: EducationalPrograms | null }> {
+    try {
+      await this.validateAreaId(educationalProgram);
+      const newPartialTemplate = await this.prisma.educationalPrograms.create({
+        data: educationalProgram,
+      });
 
-  return { message: 'Registrado con éxito', error: null, data: newPartialTemplate};
-} catch (error) {
-  return { message: 'No se pudo registrar el programa educativo', error: error.message , data: null };
+      return { message: 'Registrado con éxito', error: null, data: newPartialTemplate };
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(error, 'Error al crear el programa educativo');
+    }
   }
- }
 
   /**
    * Method to consult all programs
@@ -40,35 +42,43 @@ async createProgram(educationalProgram: CreateEducationalProgramDto): Promise <{
   async findAllPrograms(): Promise<any> {
     try {
       const programs = await this.prisma.educationalPrograms.findMany();
-      
+
       if (programs.length === 0) {
         return { message: 'Sin programas educativos', error: null, data: null };
       }
-      
-     
+
+
       return { message: 'Programas educativos encontrados', error: null, data: programs };
     } catch (error) {
-      return { message: 'Error al cargar programas educativos', error: error.message, data: null };
-    } 
+      return this.prismaErrorHandler.handleError(error, 'Error al consultar programas educativos');
+    }
   }
 
 
-   /**
-   * Method to find an educational program by its id.
-   * @param id ID of the program to find
-   * @returns Educational program
-   * @throws NotFoundException if program is not found
-   */
-   async findProgramById(id: number): Promise<EducationalPrograms> {
-    const educationalProgram = await this.prisma.educationalPrograms.findUnique({
-      where: { id },
-    });
+  /**
+  * Method to find an educational program by its id.
+  * @param id ID of the program to find
+  * @returns Educational program
+  * @throws NotFoundException if program is not found
+  */
+  async findProgramById(id: number): Promise<{ data: EducationalPrograms | null, error: string | null, message: string }> {
+    try {
+      const educationalProgram = await this.prisma.educationalPrograms.findUnique({
+        where: { id },
+      });
 
-    if (!educationalProgram) {
-      throw new NotFoundException(`Programa educativo con ID ${id} no encontrado`);
+      if (!educationalProgram) {
+        throw new NotFoundException(`Programa educativo con ID ${id} no encontrado`);
+      }
+
+      return {
+        data: educationalProgram,
+        error: null,
+        message: 'Programa educativo encontrado',
+      };
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(error, 'Error al consultar el programa educativo');
     }
-
-    return educationalProgram;
   }
 
   /**
@@ -81,71 +91,78 @@ async createProgram(educationalProgram: CreateEducationalProgramDto): Promise <{
   async updateProgram(
     id: number,
     updateEducationalProgramDto: UpdateEducationalProgramDto
-  ): Promise<{ message: string | null; error: { message: string } | null; data: EducationalPrograms | null }> {
+  ): Promise<{ message: string | null; error: string | null; data: EducationalPrograms | null }> {
     try {
       await this.validateAreaId(updateEducationalProgramDto);
-  
+
       await this.findProgramById(id);
-  
+
       const updatedProgram = await this.prisma.educationalPrograms.update({
         data: { ...updateEducationalProgramDto },
         where: { id },
       });
-  
+
       return { message: 'Actualización exitosa', error: null, data: updatedProgram };
     } catch (error) {
-      return { message: 'Error al actualizar', error: { message: error.message }, data: null };
+      return this.prismaErrorHandler.handleError(error, 'Error al actualizar el programa educativo');
     }
   }
-  
-  
-/**
- * *Method to delete a program
- * @param id id of the program to delete
- * @returns Return a message after deleting a program
- */
-
-async removeProgram(id: number, confirmed: boolean): Promise<{ message: string }> {
- 
-  if (!confirmed) {
-    return { message: 'Operación no confirmada por el usuario' };
-  }
-
-  
-  await this.findProgramById(id);
-
-  await this.prisma.educationalPrograms.delete({
-    where: { id }
-  });
-
-  return { message: 'Eliminada Correctamente' };
-}
 
 
-/**
-   * Validates if foreign keys (areaId, responsibleId, revisedById)
-   * @param {CreateEducationalProgramDto | UpdateEducationalProgramDto} dto - Data to validate
-   * @throws {NotFoundException} - If any foreign keys is not found
+  /**
+   * *Method to delete a program
+   * @param id id of the program to delete
+   * @returns Return a message after deleting a program
    */
-private async validateAreaId(
-  dto: CreateEducationalProgramDto | UpdateEducationalProgramDto,
-): Promise<void> {
-  const { areaId } = dto;
-  const validations = [];
 
-  if (areaId !== undefined) {
-    if (typeof areaId !== 'number') {
-      throw new Error(`Tipo de areaId inválido: se esperaba un número, se recibió ${typeof areaId}`);
+  async removeProgram(id: number, confirmed: boolean): Promise<{ message: string, error: string | null, data: null }> {
+    try {
+      if (!confirmed) {
+        return {
+          data: null,
+          error: 'No confirmado',
+          message: 'No se ha confirmado la eliminación'
+        };
+      }
+      await this.findProgramById(id);
+      await this.prisma.educationalPrograms.delete({
+        where: { id }
+      });
+      return {
+        data: null,
+        error: null,
+        message: 'Eliminada Correctamente'
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(error, 'Error al eliminar el programa educativo');
     }
-    validations.push(
-      this.prisma.area.count({ where: { id: areaId } }).then((count) => {
-        if (count === 0) {
-          throw new NotFoundException(`Área con ID ${areaId} no existe`);
-        }
-      }),
-    );
   }
 
-  await Promise.all(validations);
-}
+
+  /**
+     * Validates if foreign keys (areaId, responsibleId, revisedById)
+     * @param {CreateEducationalProgramDto | UpdateEducationalProgramDto} dto - Data to validate
+     * @throws {NotFoundException} - If any foreign keys is not found
+     */
+  private async validateAreaId(
+    dto: CreateEducationalProgramDto | UpdateEducationalProgramDto,
+  ): Promise<void> {
+    const { areaId } = dto;
+    const validations = [];
+
+    if (areaId !== undefined) {
+      if (typeof areaId !== 'number') {
+        throw new Error(`Tipo de areaId inválido: se esperaba un número, se recibió ${typeof areaId}`);
+      }
+      validations.push(
+        this.prisma.area.count({ where: { id: areaId } }).then((count) => {
+          if (count === 0) {
+            throw new NotFoundException(`Área con ID ${areaId} no existe`);
+          }
+        }),
+      );
+    }
+
+    await Promise.all(validations);
+  }
 }
