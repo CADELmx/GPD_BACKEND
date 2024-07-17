@@ -15,7 +15,7 @@ export class PrismaErrorHandler {
     P2009: 'No se pudo validar la consulta',
   };
   private readonly notHandledError = 'Error no manejado';
-  private readonly errorText = 'Error en la operacion';
+  private readonly errorText = 'Error en la operación';
 
   public handleError(error: any | PrismaClientKnownRequestError, notPrismaError: string): {
     error: string;
