@@ -1,5 +1,6 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-
+@Injectable()
 export class PrismaErrorHandler {
   private readonly defaultMessages = {
     P2000: 'El valor proporcionado para la columna es demasiado largo',
@@ -13,17 +14,17 @@ export class PrismaErrorHandler {
     P2008: 'Error en la consulta a la base de datos',
     P2009: 'No se pudo validar la consulta',
   };
-  private readonly notHandleError = 'Error no manejado';
+  private readonly notHandledError = 'Error no manejado';
   private readonly errorText = 'Error en la operacion';
 
-  public handleError(error: any | PrismaClientKnownRequestError): {
+  public handleError(error: any | PrismaClientKnownRequestError, notPrismaError: string): {
     error: string;
     message: string;
     data: null;
   } {
     if (error instanceof PrismaClientKnownRequestError) {
       const message: string =
-        this.defaultMessages[error.code] || this.notHandleError;
+        this.defaultMessages[error.code] || this.notHandledError;
 
       return {
         error: this.errorText,
@@ -34,7 +35,7 @@ export class PrismaErrorHandler {
 
     return {
       error: this.errorText,
-      message: 'Error inesperado',
+      message: notPrismaError,
       data: null,
     };
   }

@@ -8,9 +8,11 @@ import { EducationalProgramsModule } from './educational-programs/educational-pr
 import { SubjectModule } from './subject/subject.module';
 import { PartialTemplatesModule } from './partial-templates/partial-templates.module';
 import { AreasModule } from './areas/areas.module';
+import { PrismaErrorHandler } from './common/validation/prisma-error-handler';
 
 @Module({
   imports: [
+    PrismaErrorHandler,
     AuthModule,
     UsersModule,
     EducationalProgramsModule,
