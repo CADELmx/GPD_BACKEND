@@ -12,12 +12,12 @@ export class AuthGuard {
     ) { }
 
     private getTokenFromHeader(request: Request) {
-        const [type, token] = request.headers.authorization.split(' ') ?? []
+        const [type, token] = request.headers.authorization?.split(' ') ?? []
         return type === 'Bearer' ? token : null;
     }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        if (Boolean(Number(process.env.SKIP_AUTH))) {
+        if (process.env.SKIP_AUTH !== undefined && Boolean(Number(process.env.SKIP_AUTH))) {
             return true;
         }
         const isPublic = this.reflector.getAllAndOverride<boolean>('isPublic', [
