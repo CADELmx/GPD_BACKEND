@@ -13,7 +13,6 @@ import {
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
-import { LocalAuthGuard } from 'src/auth/strategies/guards/local-auth.guard';
 
 /**
  * Program root path
@@ -39,7 +38,6 @@ export class EducationalProgramsController {
    * Get all programs
    * @returns Return the programs
    */
-  @UseGuards(LocalAuthGuard)
   @Get()
   findAll() {
     return this.educationalProgramsService.findAllPrograms();

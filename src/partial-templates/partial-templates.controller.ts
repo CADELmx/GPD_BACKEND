@@ -8,10 +8,12 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { PartialTemplatesService } from './partial-templates.service';
 import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
+import { JwtAuthGuard } from 'src/auth/strategies/guards/jwt-auth.guard';
 
 @Controller('partial-templates')
 export class PartialTemplatesController {
@@ -42,7 +44,6 @@ export class PartialTemplatesController {
    * @param {number} id - The ID of the partialTemplate to retrieve
    * @returns - The partialTemplate with the specified ID
    */
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.partialTemplatesService.findOne(id);
@@ -66,7 +67,6 @@ export class PartialTemplatesController {
    * @param {number} id - The ID of the partialTemplate to delete
    * @returns - The deleted partialTemplate
    */
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.partialTemplatesService.remove(id);
