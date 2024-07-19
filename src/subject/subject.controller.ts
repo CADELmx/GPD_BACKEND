@@ -13,6 +13,7 @@ import {
 import { SubjectService } from './subject.service';
 import { CreateSubjectDto } from 'src/models/subject/create-subject.dto';
 import { UpdateSubjectDto } from 'src/models/subject/update-subject.dto';
+import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
 
 @Controller('subject')
 export class SubjectController {
@@ -32,18 +33,13 @@ export class SubjectController {
      */
     @Get()
     find(
-        @Query('id', new ParseIntPipe({
-            optional: true,
-            exceptionFactory: () => {
-                return new BadRequestException('El id no es un número');
-            }
-        })) id: number,
+        @Query('id', customIdPipe) id?: number,
         @Query('programid', new ParseIntPipe({
             optional: true,
             exceptionFactory: () => {
                 return new BadRequestException('El id del programa no es un número');
             }
-        })) programId: number
+        })) programId?: number
     ) {
         if (id) return this.subjectService.findByProgram(id);
         if (programId) return this.subjectService.findByProgram(programId);
@@ -56,19 +52,11 @@ export class SubjectController {
      * @returns 
      */
     @Put(':id')
-    update(@Param('id', new ParseIntPipe({
-        exceptionFactory: () => {
-            return new BadRequestException('El id no es un número');
-        }
-    })) id: number, @Body() updateSubjectDto: UpdateSubjectDto) {
+    update(@Param('id', customIdPipe) id: number, @Body() updateSubjectDto: UpdateSubjectDto) {
         return this.subjectService.update(id, updateSubjectDto);
     }
     @Delete(':id')
-    delete(@Param('id', new ParseIntPipe({
-        exceptionFactory: () => {
-            return new BadRequestException('El id no es un número');
-        }
-    })) id: number) {
+    delete(@Param('id', customIdPipe) id: number) {
         return this.subjectService.delete(id);
     }
 }

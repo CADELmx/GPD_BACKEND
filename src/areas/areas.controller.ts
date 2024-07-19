@@ -13,10 +13,11 @@ import {
 import { AreasService } from './areas.service';
 import { CreateAreaDto } from 'src/models/area/create-area.dto';
 import { UpdateAreaDto } from 'src/models/area/update-area.dto';
+import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
 
 @Controller('areas')
 export class AreasController {
-  constructor(private readonly areasService: AreasService) {}
+  constructor(private readonly areasService: AreasService) { }
 
   /**
    * Creates a new area.
@@ -36,16 +37,7 @@ export class AreasController {
    */
   @Get()
   async find(
-    @Query(
-      'id',
-      new ParseIntPipe({
-        optional: true,
-        exceptionFactory: () => {
-          return new BadRequestException('El ID debe ser un número');
-        },
-      }),
-    )
-    id?: number,
+    @Query('id', customIdPipe) id?: number,
     @Query('name') name?: string,
   ) {
     if (id) return this.areasService.findOneById(id);
@@ -61,15 +53,7 @@ export class AreasController {
    */
   @Patch(':id')
   update(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: () => {
-          return new BadRequestException('El ID debe ser un número');
-        },
-      }),
-    )
-    id: number,
+    @Param('id', customIdPipe) id: number,
     @Body() updateAreaDto: UpdateAreaDto,
   ) {
     return this.areasService.update(id, updateAreaDto);
@@ -82,15 +66,7 @@ export class AreasController {
    */
   @Delete(':id')
   remove(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: () => {
-          return new BadRequestException('El ID debe ser un número');
-        },
-      }),
-    )
-    id: number,
+    @Param('id', customIdPipe) id: number,
   ) {
     return this.areasService.remove(id);
   }

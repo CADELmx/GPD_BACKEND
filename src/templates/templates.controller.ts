@@ -7,15 +7,17 @@ import {
   Delete,
   Controller,
   ParseIntPipe,
+  Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
 import { CreateTemplateDto } from 'src/models/template/create-template.dto';
 import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
+import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
 
 @Controller('templates')
 export class TemplatesController {
-  constructor(private readonly templatesService: TemplatesService) {}
-
+  constructor(private readonly templatesService: TemplatesService) { }
   /**
    * Creates a new template
    * @param {CreateTemplateDto} createTemplateDto The template data transfer object
@@ -31,20 +33,12 @@ export class TemplatesController {
    * @returns . An array of all templates
    */
   @Get()
-  findAll() {
+  find(
+    @Query('id', customIdPipe) id?: number
+  ) {
+    if (id) return this.templatesService.findOne(id);
     return this.templatesService.findAll();
   }
-
-  /**
-   * Retrieves a template by ID
-   * @param {number} id - The ID of the template to retrieve
-   * @returns - The template with the specified ID
-   */
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.templatesService.findOne(id);
-  }
-
   /**
    * Updates a template by ID
    * @param {number} id - The ID of the template to update
@@ -53,7 +47,7 @@ export class TemplatesController {
    */
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', customIdPipe) id: number,
     @Body() updateTemplateDto: UpdateTemplateDto,
   ) {
     return this.templatesService.update(id, updateTemplateDto);
@@ -65,7 +59,7 @@ export class TemplatesController {
    * @returns - The deleted template
    */
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', customIdPipe) id: number) {
     return this.templatesService.remove(id);
   }
 }

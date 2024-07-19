@@ -9,17 +9,18 @@ import {
   ParseIntPipe,
   UseGuards,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { PartialTemplatesService } from './partial-templates.service';
 import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
-import { JwtAuthGuard } from 'src/auth/strategies/guards/jwt-auth.guard';
+import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
 
 @Controller('partial-templates')
 export class PartialTemplatesController {
   constructor(
     private readonly partialTemplatesService: PartialTemplatesService,
-  ) {}
+  ) { }
 
   /**
    * Creates a new partialTemplate
@@ -27,26 +28,17 @@ export class PartialTemplatesController {
    * @returns - The created partialTemplate
    */
   @Post()
-  create(@Body() createPartialTemplateDto: CreatePartialTemplateDto){
-    return this.partialTemplatesService.create({ ...createPartialTemplateDto});
+  create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
+    return this.partialTemplatesService.create({ ...createPartialTemplateDto });
   }
 
-  /**
-   * Retrieves partialTemplates
-   * @returns An array of partialTemplates by status
-  */
-  @Get()
-  async findAll(@Query('status') status?: string) {
-    return this.partialTemplatesService.findAll(status);
-  }
-
-  /** Retrieves a partialTemplate by ID
-   * @param {number} id - The ID of the partialTemplate to retrieve
-   * @returns - The partialTemplate with the specified ID
-   */
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.partialTemplatesService.findOne(id);
+  find(
+    @Query('id', customIdPipe) id?: number,
+    @Query('status') status?: string,
+  ) {
+    if (id) return this.partialTemplatesService.findOne(id);
+    if (status) return this.partialTemplatesService.findAll(status);
+    return this.partialTemplatesService.findAll();
   }
 
   /**
@@ -57,7 +49,7 @@ export class PartialTemplatesController {
    */
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', customIdPipe) id: number,
     @Body() updatePartialTemplateDto: UpdatePartialTemplateDto,
   ) {
     return this.partialTemplatesService.update(id, updatePartialTemplateDto);
@@ -68,7 +60,9 @@ export class PartialTemplatesController {
    * @returns - The deleted partialTemplate
    */
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(
+    @Param('id', customIdPipe) id: number
+  ) {
     return this.partialTemplatesService.remove(id);
   }
 }
