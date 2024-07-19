@@ -8,6 +8,7 @@ import { EducationalProgramsModule } from './educational-programs/educational-pr
 import { SubjectModule } from './subject/subject.module';
 import { PartialTemplatesModule } from './partial-templates/partial-templates.module';
 import { AreasModule } from './areas/areas.module';
+import { AuthGuard } from './auth/auth.guard';
 
 @Module({
   imports: [
@@ -20,6 +21,12 @@ import { AreasModule } from './areas/areas.module';
     AreasModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: 'APP_GUARD',
+      useClass: AuthGuard,
+    }
+  ],
 })
 export class AppModule {}
