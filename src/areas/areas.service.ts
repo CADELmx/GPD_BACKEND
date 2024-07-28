@@ -3,10 +3,14 @@ import { PrismaService } from 'src/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAreaDto } from 'src/models/area/create-area.dto';
 import { UpdateAreaDto } from 'src/models/area/update-area.dto';
+import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
 
 @Injectable()
 export class AreasService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly prismaErrorHandler: PrismaErrorHandler,
+  ) {}
 
   /**
    * Creates a new area.
@@ -26,11 +30,7 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al registrar el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(error, 'Error al crear el área');
     }
   }
 
@@ -64,11 +64,7 @@ export class AreasService {
         data: areas,
       };
     } catch (error) {
-      return {
-        message: 'Error al obtener las áreas',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(error, 'Error al consultar las áreas');
     }
   }
 
@@ -106,11 +102,7 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al obtener el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(error, 'Error al consultar el área');
     }
   }
 
@@ -149,11 +141,7 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al obtener el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(error, 'Error al consultar el área');
     }
   }
 
@@ -181,11 +169,7 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al actualizar el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(error, 'Error al actualizar el área');
     }
   }
 
@@ -211,11 +195,7 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al eliminar el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(error, 'Error al eliminar el área');
     }
   }
 
