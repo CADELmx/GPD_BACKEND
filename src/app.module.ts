@@ -10,6 +10,7 @@ import { PartialTemplatesModule } from './partial-templates/partial-templates.mo
 import { AreasModule } from './areas/areas.module';
 import { PrismaErrorHandler } from './common/validation/prisma-error-handler';
 import { AuthGuard } from './auth/auth.guard';
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AuthGuard } from './auth/auth.guard';
     PartialTemplatesModule,
     SubjectModule,
     AreasModule,
+    ActivityModule,
   ],
   controllers: [AppController],
   providers: [
