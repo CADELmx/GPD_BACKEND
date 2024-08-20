@@ -4,14 +4,15 @@ import { Public } from './decorators/public.decorator';
 
 @Controller()
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-  ) { }
+  constructor(private authService: AuthService) {}
 
   @Public()
   @HttpCode(200)
   @Post('auth/login')
-  async login(@Body('email') email: string, @Body('password') password: string) {
+  async login(
+    @Body('email') email: string,
+    @Body('password') password: string,
+  ) {
     return this.authService.signIn(email, password);
   }
 }
