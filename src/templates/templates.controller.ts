@@ -17,7 +17,7 @@ import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
 
 @Controller('templates')
 export class TemplatesController {
-  constructor(private readonly templatesService: TemplatesService) { }
+  constructor(private readonly templatesService: TemplatesService) {}
   /**
    * Creates a new template
    * @param {CreateTemplateDto} createTemplateDto The template data transfer object
@@ -33,9 +33,7 @@ export class TemplatesController {
    * @returns . An array of all templates
    */
   @Get()
-  find(
-    @Query('id', customIdPipe) id?: number
-  ) {
+  find(@Query('id', customIdPipe) id?: number) {
     if (id) return this.templatesService.findOne(id);
     return this.templatesService.findAll();
   }

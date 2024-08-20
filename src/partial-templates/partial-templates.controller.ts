@@ -20,7 +20,7 @@ import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
 export class PartialTemplatesController {
   constructor(
     private readonly partialTemplatesService: PartialTemplatesService,
-  ) { }
+  ) {}
 
   /**
    * Creates a new partialTemplate
@@ -60,9 +60,7 @@ export class PartialTemplatesController {
    * @returns - The deleted partialTemplate
    */
   @Delete(':id')
-  remove(
-    @Param('id', customIdPipe) id: number
-  ) {
+  remove(@Param('id', customIdPipe) id: number) {
     return this.partialTemplatesService.remove(id);
   }
 }
