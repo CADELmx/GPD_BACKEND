@@ -30,7 +30,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al crear el área');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear el área',
+      );
     }
   }
 
@@ -64,7 +67,10 @@ export class AreasService {
         data: areas,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al consultar las áreas');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las áreas',
+      );
     }
   }
 
@@ -102,7 +108,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al consultar el área');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar el área',
+      );
     }
   }
 
@@ -141,7 +150,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al consultar el área');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar el área',
+      );
     }
   }
 
@@ -169,7 +181,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al actualizar el área');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al actualizar el área',
+      );
     }
   }
 
@@ -195,7 +210,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al eliminar el área');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al eliminar el área',
+      );
     }
   }
 
