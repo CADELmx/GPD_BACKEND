@@ -17,7 +17,7 @@ import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
 
 @Controller('areas')
 export class AreasController {
-  constructor(private readonly areasService: AreasService) { }
+  constructor(private readonly areasService: AreasService) {}
 
   /**
    * Creates a new area.
@@ -65,9 +65,7 @@ export class AreasController {
    * @returns The deleted area.
    */
   @Delete(':id')
-  remove(
-    @Param('id', customIdPipe) id: number,
-  ) {
+  remove(@Param('id', customIdPipe) id: number) {
     return this.areasService.remove(id);
   }
 }
