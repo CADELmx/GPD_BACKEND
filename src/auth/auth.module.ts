@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { UsersModule } from 'src/users/users.module';
-import { PrismaService } from 'src/prisma.service';
-import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { AuthService } from './auth.service';
+import { PrismaService } from 'src/prisma.service';
+import { AuthController } from './auth.controller';
+import { UsersModule } from 'src/users/users.module';
 import { UsersController } from 'src/users/users.controller';
+import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { UsersController } from 'src/users/users.controller';
       signOptions: { expiresIn: '24h' },
     }),
   ],
-  providers: [AuthService, PrismaService],
+  providers: [AuthService, PrismaService, PrismaErrorHandler],
   exports: [AuthService],
   controllers: [AuthController, UsersController],
 })
