@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { EducationalProgramsService } from './educational-programs.service';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
 import { EducationalProgramsController } from './educational-programs.controller';
+import { EducationalProgramsService } from './educational-programs.service';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 
 @Module({
   controllers: [EducationalProgramsController],

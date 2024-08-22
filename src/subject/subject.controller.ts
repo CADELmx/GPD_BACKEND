@@ -11,9 +11,9 @@ import {
   Query,
 } from '@nestjs/common';
 import { SubjectService } from './subject.service';
-import { CreateSubjectDto } from 'src/models/subject/create-subject.dto';
-import { UpdateSubjectDto } from 'src/models/subject/update-subject.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { CreateSubjectDto } from '../models/subject/create-subject.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
 
 @Controller('subject')
 export class SubjectController {

@@ -6,14 +6,12 @@ import {
   Param,
   Delete,
   Controller,
-  ParseIntPipe,
   Query,
-  BadRequestException,
 } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
-import { CreateTemplateDto } from 'src/models/template/create-template.dto';
-import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { CreateTemplateDto } from '../models/template/create-template.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { UpdateTemplateDto } from '../models/template/update-template.dto';
 
 @Controller('templates')
 export class TemplatesController {
@@ -25,7 +23,7 @@ export class TemplatesController {
    */
   @Post()
   create(@Body() createTemplateDto: CreateTemplateDto) {
-    return this.templatesService.create({ ...createTemplateDto });
+    return this.templatesService.create(createTemplateDto);
   }
 
   /**
