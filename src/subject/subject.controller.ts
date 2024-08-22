@@ -14,6 +14,7 @@ import { SubjectService } from './subject.service';
 import { CreateSubjectDto } from '../models/subject/create-subject.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
+import { ApiBody, ApiCreatedResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('subject')
 export class SubjectController {
