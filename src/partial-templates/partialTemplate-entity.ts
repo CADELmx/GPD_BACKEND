@@ -1,15 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Length,
-  Matches,
-  Min,
-} from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
+import { PartialTemplate } from '@prisma/client';
+import { CreatePartialTemplateDto } from '../models/partialTemplate/create-partial-template.dto';
 
-export class CreatePartialTemplateDto {
+export class PartialTemplateEntity implements PartialTemplate {
+  @ApiProperty()
+  id: number;
+
   @Min(1, { message: 'El campo número de trabajador debe ser mayor a 1' })
   @IsInt({ message: 'El campo número de trabajador debe ser un número entero'})
   @IsNotEmpty({message: 'El campo número de trabajador no puede estar vacío'})
@@ -24,7 +21,7 @@ export class CreatePartialTemplateDto {
   @IsString({ message: 'El campo genero tiene que ser una cadena de texto'})
   @IsOptional()
   @ApiProperty({description: 'Especificar el genero'})
-  gender?: string;
+  gender: string;
 
   @IsString({ message: 'El campo posición tiene que ser una cadena de texto'})
   @IsNotEmpty({message: 'El campo posición no puede estar vacío'})
@@ -54,5 +51,5 @@ export class CreatePartialTemplateDto {
   @IsInt({ message: 'El campo ID Plantilla debe ser un número entero'})
   @IsNotEmpty({message: 'El campo ID Plantilla no puede estar vacío'})
   @ApiProperty({required: true, description: 'Ingresa la plantilla a la que pertenece'})
-  templateId: number;
+  templateId: bigint;
 }
