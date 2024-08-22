@@ -12,8 +12,10 @@ async function bootstrap() {
   .setTitle('GPD API')
   .setDescription('Descirpción de uso de la API del proyecto GPD')
   .setVersion('1.0')
-  .addTag('gpd')
+  .addTag('GPD')
+  .addBearerAuth()
   .build();
+  
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

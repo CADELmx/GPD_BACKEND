@@ -14,8 +14,14 @@ import {
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { EduProgramsEntity } from './edu_programs-entity';
+import ObjectSerialization from '../common/validation/ObjectSerialization';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
 
+
+//@ApiBearerAuth()
+@ApiTags('Programas Educativos')
 @Controller('educational-programs')
 export class EducationalProgramsController {
   constructor(
@@ -27,21 +33,31 @@ export class EducationalProgramsController {
    * @param createEducationalProgramDto Program data to create
    * @returns Return the created program
    */
+  @ApiOperation({summary : 'Registar un programa educativo'})
+  @ApiCreatedResponse({ type: EduProgramsEntity})
   @Post()
-  create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
-    return this.educationalProgramsService.createProgram({
-      ...createEducationalProgramDto,
-    });
+  async create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
+    return ObjectSerialization( await this.educationalProgramsService.createProgram({ ...createEducationalProgramDto }));
   }
+
   /**
    * This method is used to find a program by its id or all programs if no query parameters are provided
    * @param id query parameter to find a program by its id
    * @returns
    */
-  @Get()
-  find(@Query('id', customIdPipe) id?: number) {
+  
+  /*@Get()
+  find(@Query('id', customIdPipe) id?: bigint) {
     if (id) return this.educationalProgramsService.findProgramById(id);
     return this.educationalProgramsService.findAllPrograms();
+  }*/
+  @ApiOperation({summary : 'Mostrar un programa educativo'})
+  @ApiCreatedResponse({ type: EduProgramsEntity})
+  @Get(':id')
+  async findById(@Param('id', customIdPipe) id: string) {
+    const programId = BigInt(id);
+    const foundProgram = await this.educationalProgramsService.findProgramById(programId);
+    return ObjectSerialization(foundProgram);
   }
 
   /**
@@ -50,15 +66,14 @@ export class EducationalProgramsController {
    * @param updateEducationalProgramDto Program data to update
    * @returns Returns the updated program
    */
+  @ApiOperation({summary : 'Actualizar un programa educativo'})
+  @ApiCreatedResponse({ type: EduProgramsEntity})
   @Patch(':id')
-  update(
-    @Param('id', customIdPipe) id: number,
-    @Body() updateEducationalProgramDto: UpdateEducationalProgramDto,
-  ) {
-    return this.educationalProgramsService.updateProgram(
-      id,
-      updateEducationalProgramDto,
-    );
+  async update(
+    @Param('id', customIdPipe) id: string,
+    @Body() updateEducationalProgramDto: UpdateEducationalProgramDto) {
+      const programId = BigInt(id);
+    return  ObjectSerialization( await this.educationalProgramsService.updateProgram(programId, updateEducationalProgramDto));
   }
 
   /**
@@ -67,20 +82,21 @@ export class EducationalProgramsController {
    * @param body Wait for confirmation from the user
    * @returns Return a message after deleting a program
    */
+  @ApiOperation({summary : 'Eliminar un programa educativo'})
+  @ApiCreatedResponse({ type: EduProgramsEntity})
+  @ApiBody({ schema: { type: 'object', properties: { confirmado: { type: 'boolean' } } } })
   @Delete(':id')
   async remove(
-    @Param('id', customIdPipe) id: number,
-    @Body() body: { confirmado: boolean },
+    @Param('id', customIdPipe) id: string,
+    @Body() body: { confirmado: boolean }
   ) {
+    const programId = BigInt(id);
     if (!body.confirmado) {
       return { message: 'Operación no confirmada por el usuario' };
     }
 
-    const result = await this.educationalProgramsService.removeProgram(
-      id,
-      body.confirmado,
-    );
+    const result = await this.educationalProgramsService.removeProgram(programId, body.confirmado);
 
-    return result;
+    return  ObjectSerialization( result);
   }
 }

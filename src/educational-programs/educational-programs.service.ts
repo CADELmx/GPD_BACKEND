@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
-import { PrismaService } from 'src/prisma.service';
 import { EducationalPrograms, Prisma } from '@prisma/client';
-import { promises } from 'dns';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+
 
 @Injectable()
 export class EducationalProgramsService {
@@ -79,7 +79,7 @@ export class EducationalProgramsService {
    * @returns Educational program
    * @throws NotFoundException if program is not found
    */
-  async findProgramById(id: number): Promise<{
+  async findProgramById(id: bigint): Promise<{
     data: EducationalPrograms | null;
     error: string | null;
     message: string;
@@ -117,7 +117,7 @@ export class EducationalProgramsService {
    */
 
   async updateProgram(
-    id: number,
+    id: bigint,
     updateEducationalProgramDto: UpdateEducationalProgramDto,
   ): Promise<{
     message: string | null;
@@ -154,7 +154,7 @@ export class EducationalProgramsService {
    */
 
   async removeProgram(
-    id: number,
+    id: bigint,
     confirmed: boolean,
   ): Promise<{ message: string; error: string | null; data: null }> {
     try {
@@ -172,7 +172,7 @@ export class EducationalProgramsService {
       return {
         data: null,
         error: null,
-        message: 'Eliminada Correctamente',
+        message: 'Programa educativo eliminado con éxito',
       };
     } catch (error) {
       return this.prismaErrorHandler.handleError(
