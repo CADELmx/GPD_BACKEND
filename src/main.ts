@@ -1,19 +1,20 @@
-import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { BigIntInterceptor } from './interceptors/bigint.interceptor';
 import { CustomExceptionFilter } from './common/filters/custom-exception.filter';
 import { CustomValidationPipe } from './common/validation/custom-validation.pipe';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-  .setTitle('GPD API')
-  .setDescription('Descirpción de uso de la API del proyecto GPD')
-  .setVersion('1.0')
-  .addTag('gpd')
-  .build();
+    .setTitle('GPD API')
+    .setDescription('Descirpción de uso de la API del proyecto GPD')
+    .addBearerAuth()
+    .setVersion('1.0')
+    .addTag('gpd')
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
