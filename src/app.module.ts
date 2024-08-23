@@ -10,9 +10,11 @@ import { TemplatesModule } from './templates/templates.module';
 import { PrismaErrorHandler } from './common/validation/prisma-error-handler';
 import { PartialTemplatesModule } from './partial-templates/partial-templates.module';
 import { EducationalProgramsModule } from './educational-programs/educational-programs.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({isGlobal: true}),
     AuthModule,
     UsersModule,
     EducationalProgramsModule,

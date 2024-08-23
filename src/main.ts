@@ -4,9 +4,12 @@ import { BigIntInterceptor } from './interceptors/bigint.interceptor';
 import { CustomExceptionFilter } from './common/filters/custom-exception.filter';
 import { CustomValidationPipe } from './common/validation/custom-validation.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(process.env.PORT || 3000);
 
   const config = new DocumentBuilder()
   .setTitle('GPD API')
