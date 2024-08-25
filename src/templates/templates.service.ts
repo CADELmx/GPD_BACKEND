@@ -1,9 +1,9 @@
 import { Template } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTemplateDto } from 'src/models/template/create-template.dto';
-import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
+import { CreateTemplateDto } from '../models/template/create-template.dto';
+import { UpdateTemplateDto } from '../models/template/update-template.dto';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 
 @Injectable()
 export class TemplatesService {
