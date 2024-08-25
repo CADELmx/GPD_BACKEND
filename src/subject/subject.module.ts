@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { SubjectService } from './subject.service';
-import { PrismaService } from 'src/prisma.service';
 import { SubjectController } from './subject.controller';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
-import { validateForeignKeys } from 'src/common/validation/custom-validation.pipe';
+import { validateForeignKeys } from '../common/validation/custom-validation.pipe';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { PrismaService } from '../prisma.service';
+
 
 @Module({
   providers: [
