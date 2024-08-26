@@ -22,7 +22,7 @@ export class EducationalProgramsService {
    * @param data Program data to register
    * @returns Registered Educational Program
    */
- /* async createProgram(
+  async createProgram(
     educationalProgram: CreateEducationalProgramDto,
   ): Promise<{
     message: string | null;
@@ -46,8 +46,8 @@ export class EducationalProgramsService {
         'Error al crear el programa educativo',
       );
     }
-  }*/
-    async createProgram(
+  }
+  /*  async createProgram(
       educationalProgram: CreateEducationalProgramDto,
     ): Promise<{
       message: string | null;
@@ -77,7 +77,7 @@ export class EducationalProgramsService {
         );
       }
     }
-    
+  */  
 
   /**
    * Method to consult all programs
