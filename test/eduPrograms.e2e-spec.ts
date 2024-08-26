@@ -39,7 +39,7 @@ describe('EducationalProgramsController (e2e)', () => {
       expect(response.body).toHaveProperty('data');
       expect(response.body.data).toHaveProperty('id');
     programId = response.body.data.id;
-    console.log(response.body.data)
+    //console.log(response.body.data)
   });
 
   it('debería obtener un programa educativo por ID', async () => {
@@ -49,7 +49,7 @@ describe('EducationalProgramsController (e2e)', () => {
 
     expect(response.body).toHaveProperty('data');
     expect(response.body.data).toHaveProperty('id', programId);
-    console.log(programId)
+   // console.log(programId)
   });
 
   it('debería actualizar un programa educativo', async () => {

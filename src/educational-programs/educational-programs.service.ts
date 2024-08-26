@@ -22,7 +22,7 @@ export class EducationalProgramsService {
    * @param data Program data to register
    * @returns Registered Educational Program
    */
-  async createProgram(
+ /* async createProgram(
     educationalProgram: CreateEducationalProgramDto,
   ): Promise<{
     message: string | null;
@@ -46,7 +46,38 @@ export class EducationalProgramsService {
         'Error al crear el programa educativo',
       );
     }
-  }
+  }*/
+    async createProgram(
+      educationalProgram: CreateEducationalProgramDto,
+    ): Promise<{
+      message: string | null;
+      error: string | null;
+      data: EducationalPrograms | null;
+    }> {
+      try {
+        console.log('Educational Program:', educationalProgram);
+        await this.validateAreaId(educationalProgram);
+    
+        const newPartialTemplate = await this.prisma.educationalPrograms.create({
+          data: educationalProgram,
+        });
+    
+        console.log('New Partial Template:', newPartialTemplate);
+    
+        return {
+          message: 'Registrado con éxito',
+          error: null,
+          data: newPartialTemplate,
+        };
+      } catch (error) {
+        console.error('Error:', error);
+        return this.prismaErrorHandler.handleError(
+          error,
+          'Error al crear el programa educativo',
+        );
+      }
+    }
+    
 
   /**
    * Method to consult all programs
