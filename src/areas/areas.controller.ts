@@ -11,9 +11,9 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { AreasService } from './areas.service';
-import { CreateAreaDto } from 'src/models/area/create-area.dto';
-import { UpdateAreaDto } from 'src/models/area/update-area.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { CreateAreaDto } from '../models/area/create-area.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { UpdateAreaDto } from '../models/area/update-area.dto';
 
 @Controller('areas')
 export class AreasController {

@@ -4,11 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Subject } from '@prisma/client';
-import { validateForeignKeys } from 'src/common/validation/custom-validation.pipe';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
-import { CreateSubjectDto } from 'src/models/subject/create-subject.dto';
-import { UpdateSubjectDto } from 'src/models/subject/update-subject.dto';
-import { PrismaService } from 'src/prisma.service';
+import { CreateSubjectDto } from '../models/subject/create-subject.dto';
+import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
+import { PrismaService } from '../prisma.service';
+import { validateForeignKeys } from '../common/validation/custom-validation.pipe';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 /**
  * Interface to define the methods of the subjects service
  */

@@ -9,21 +9,17 @@ import {
   Controller,
 } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
-import { CreateTemplateDto } from 'src/models/template/create-template.dto';
-import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { CreateTemplateDto } from '../models/template/create-template.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { UpdateTemplateDto } from '../models/template/update-template.dto';
 import {
   ApiBody,
-  ApiTags,
   ApiParam,
   ApiQuery,
   ApiResponse,
   ApiOperation,
-  ApiBearerAuth,
 } from '@nestjs/swagger';
 
-@ApiBearerAuth()
-@ApiTags('Plantillas')
 @Controller('templates')
 export class TemplatesController {
   constructor(private readonly templatesService: TemplatesService) {}
@@ -43,7 +39,7 @@ export class TemplatesController {
   })
   @Post()
   create(@Body() createTemplateDto: CreateTemplateDto) {
-    return this.templatesService.create({ ...createTemplateDto });
+    return this.templatesService.create(createTemplateDto);
   }
 
   /**

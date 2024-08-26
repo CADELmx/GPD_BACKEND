@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TemplatesController } from './templates.controller';
 import { TemplatesService } from './templates.service';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 
 describe('TemplatesController', () => {
   let controller: TemplatesController;
@@ -8,7 +10,7 @@ describe('TemplatesController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TemplatesController],
-      providers: [TemplatesService],
+      providers: [TemplatesService, PrismaService, PrismaErrorHandler],
     }).compile();
 
     controller = module.get<TemplatesController>(TemplatesController);

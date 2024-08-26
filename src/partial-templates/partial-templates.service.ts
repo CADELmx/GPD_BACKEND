@@ -4,10 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PartialTemplate } from '@prisma/client';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
-import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
-import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { CreatePartialTemplateDto } from '../models/partialTemplate/create-partial-template.dto';
+import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-partial-template.dto';
+
 
 @Injectable()
 export class PartialTemplatesService {

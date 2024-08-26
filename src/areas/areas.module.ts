@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AreasService } from './areas.service';
-import { PrismaService } from 'src/prisma.service';
 import { AreasController } from './areas.controller';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { PrismaService } from '../prisma.service';
 
 @Module({
   controllers: [AreasController],

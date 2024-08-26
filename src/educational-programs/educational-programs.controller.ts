@@ -6,15 +6,13 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
-  UseGuards,
-  BadRequestException,
   Query,
 } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+
 
 @Controller('educational-programs')
 export class EducationalProgramsController {
@@ -29,9 +27,7 @@ export class EducationalProgramsController {
    */
   @Post()
   create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
-    return this.educationalProgramsService.createProgram({
-      ...createEducationalProgramDto,
-    });
+    return this.educationalProgramsService.createProgram(createEducationalProgramDto);
   }
   /**
    * This method is used to find a program by its id or all programs if no query parameters are provided

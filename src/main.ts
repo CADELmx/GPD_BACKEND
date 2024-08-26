@@ -9,12 +9,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('GPD API')
-    .setDescription('Descirpción de uso de la API del proyecto GPD')
-    .addBearerAuth()
-    .setVersion('1.0')
-    .addTag('gpd')
-    .build();
+  .setTitle('GPD API')
+  .setDescription('Descirpción de uso de la API del proyecto GPD')
+  .setVersion('1.0')
+  .addBearerAuth()
+  .addTag('gpd')
+  .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

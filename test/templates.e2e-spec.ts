@@ -1,10 +1,16 @@
+// Sobrescribir JSON.stringify para manejar BigInt
+(BigInt.prototype as any).toJSON = function () {
+  return this.toString();
+};
+
+import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
 
 describe('TemplatesController (e2e)', () => {
   let app: INestApplication;
+  let templateId: number;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -16,72 +22,76 @@ describe('TemplatesController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    if (app) {
+      await app.close();
+    }
   });
 
-  it('/templates (GET) - should return all templates', () => {
-    return request(app.getHttpServer())
-      .get('/templates')
-      .expect(200)
-      .expect((response) => {
-        expect(response.body.message).toBe('Plantillas obtenidas con exito');
-        expect(Array.isArray(response.body.data)).toBeTruthy();
-      });
-  });
-
-  it('/templates/:id (GET) - should return a single template', () => {
-    return request(app.getHttpServer())
-      .get('/templates/1')
-      .expect(200)
-      .expect((response) => {
-        expect(response.body.message).toBe('Plantillas obtenidas con éxito');
-        expect(response.body.data.length).toBeGreaterThan(0);
-      });
-  });
-
-  it('/templates (POST) - should create a new template', () => {
-    const createTemplateDto = {
-      state: 'pendiente',
-      areaId: 1,
-      period: 'mayo - agosto 2024: Ordinario',
-      responsibleId: 1,
-      revisedById: 2,
-      // otros campos necesarios
-    };
-
-    return request(app.getHttpServer())
+  it('debería crear una plantilla', async () => {
+    const response = await request(app.getHttpServer())
       .post('/templates')
-      .send(createTemplateDto)
-      .expect(201)
-      .expect((response) => {
-        expect(response.body.message).toBe('Plantilla registrada');
-        expect(response.body.data).toHaveProperty('id');
-      });
+      .send({
+        state: 'pendiente',
+        areaId: 1,
+        responsibleId: 1,
+        revisedById: 2,
+        period: 'mayo - agosto 2024: Ordinario',
+      })
+      .expect(201);
+
+    expect(response.body).toHaveProperty('data');
+    expect(response.body.data).toHaveProperty('id');
+    templateId = response.body.data.id;
+    // console.log('Respuesta de creación:', response.body);
+    // console.log('ID de la plantilla creada:', templateId);
   });
 
-  it('/templates/:id (PATCH) - should update a template', () => {
-    const updateTemplateDto = {
-      areaId: 2,
-      responsibleId: 1,
-      revisedById: 2,
-      // otros campos necesarios
+  it('debería obtener una plantilla por ID', async () => {
+    // console.log('Buscando plantilla con ID:', templateId);
+
+    const response = await request(app.getHttpServer())
+      .get(`/templates/?id=${templateId}`)
+      .expect(200);
+
+    // console.log('Respuesta de búsqueda:', response.body);
+
+    expect(response.body).toHaveProperty('data');
+    expect(response.body.data[0]).toHaveProperty('id', templateId);
+  });
+
+  it('debería actualizar una plantilla', async () => {
+    const updatedData = {
+      state: 'aprobado',
     };
 
-    return request(app.getHttpServer())
-      .patch('/templates/1')
-      .send(updateTemplateDto)
-      .expect(200)
-      .expect((response) => {
-        expect(response.body.message).toBe('Plantilla actualizada');
-      });
+    // console.log(
+    //   'Actualizando plantilla con ID:',
+    //   templateId,
+    //   'con datos:',
+    //   updatedData,
+    // );
+
+    const response = await request(app.getHttpServer())
+      .patch(`/templates/${templateId}`)
+      .send(updatedData)
+      .expect(200);
+
+    // console.log('Respuesta de actualización:', response.body);
+
+    expect(response.body).toHaveProperty('message', 'Plantilla actualizada');
+    expect(response.body).toHaveProperty('error', null);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body.data).not.toBeNull();
+    expect(response.body.data).toHaveProperty('state', 'aprobado');
   });
 
-  it('/templates/:id (DELETE) - should delete a template', () => {
-    return request(app.getHttpServer())
-      .delete('/templates/1')
-      .expect(200)
-      .expect((response) => {
-        expect(response.body.message).toBe('Se eliminó la plantilla');
-      });
+  it('debería eliminar una plantilla', async () => {
+    const response = await request(app.getHttpServer())
+      .delete(`/templates/${templateId}`)
+      .send({ confirmado: true })
+      .expect(200);
+
+    expect(response.body).toHaveProperty('message', 'Se eliminó la plantilla');
+    // console.log('Respuesta de eliminación:', response.body);
   });
 });

@@ -1,9 +1,9 @@
 import { Template } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTemplateDto } from 'src/models/template/create-template.dto';
-import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { CreateTemplateDto } from '../models/template/create-template.dto';
+import { UpdateTemplateDto } from '../models/template/update-template.dto';
 
 @Injectable()
 export class TemplatesService {
@@ -46,7 +46,6 @@ export class TemplatesService {
    * @returns {Promise<{ message: string; error: string | null; data: Template[] | null }>} - All registered templates.
    */
   async findAll(): Promise<any> {
-    // return await this.prisma.personalData.findMany();
     try {
       const templates = await this.prisma.template.findMany();
       if (templates.length === 0) {
@@ -137,9 +136,7 @@ export class TemplatesService {
         where: {
           id,
         },
-        data: {
-          ...updateTemplateDto,
-        },
+        data: updateTemplateDto,
       });
 
       return {
