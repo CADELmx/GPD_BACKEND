@@ -12,7 +12,7 @@ export class ActivityService {
     async create(createActivityDto: CreateActivityDto): Promise<any> {
         try {
             const activity = await this.prisma.activity.create({
-                data: createActivityDto as any //this will be changed in the future
+                data: createActivityDto as any //this will be changed in the future, is not the correct approach
             })
             return {
                 message: 'Actividad academica registrada',

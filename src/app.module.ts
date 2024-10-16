@@ -14,7 +14,6 @@ import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
-    PrismaErrorHandler,
     AuthModule,
     UsersModule,
     EducationalProgramsModule,
@@ -27,6 +26,7 @@ import { ActivityModule } from './activity/activity.module';
   controllers: [AppController],
   providers: [
     AppService,
+    PrismaErrorHandler,
     {
       provide: 'APP_GUARD',
       useClass: AuthGuard,
