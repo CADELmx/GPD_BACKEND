@@ -96,7 +96,7 @@ export class EducationalProgramsService {
       await this.findProgramById(id);
 
       const updatedProgram = await this.prisma.educationalPrograms.update({
-        data: { ...updateEducationalProgramDto },
+        data: updateEducationalProgramDto,
         where: { id },
       });
 
