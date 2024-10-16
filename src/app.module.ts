@@ -22,6 +22,7 @@ import { ActivityModule } from './activity/activity.module';
     PartialTemplatesModule,
     SubjectModule,
     AreasModule,
+    ActivityModule
   ],
   controllers: [AppController],
   providers: [
