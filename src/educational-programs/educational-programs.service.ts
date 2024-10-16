@@ -8,7 +8,6 @@ import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { EducationalPrograms } from '@prisma/client';
 
-
 @Injectable()
 export class EducationalProgramsService {
   constructor(
@@ -129,7 +128,7 @@ export class EducationalProgramsService {
       await this.findProgramById(id);
 
       const updatedProgram = await this.prisma.educationalPrograms.update({
-        data: { ...updateEducationalProgramDto },
+        data: updateEducationalProgramDto,
         where: { id },
       });
 

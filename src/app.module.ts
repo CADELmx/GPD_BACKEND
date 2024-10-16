@@ -10,6 +10,8 @@ import { TemplatesModule } from './templates/templates.module';
 import { PrismaErrorHandler } from './common/validation/prisma-error-handler';
 import { PartialTemplatesModule } from './partial-templates/partial-templates.module';
 import { EducationalProgramsModule } from './educational-programs/educational-programs.module';
+import { ActivityModule } from './activity/activity.module';
+
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { EducationalProgramsModule } from './educational-programs/educational-pr
     PartialTemplatesModule,
     SubjectModule,
     AreasModule,
+    ActivityModule,
   ],
   controllers: [AppController],
   providers: [
