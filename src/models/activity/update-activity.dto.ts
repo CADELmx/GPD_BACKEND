@@ -2,7 +2,7 @@ import { PartialType } from "@nestjs/mapped-types";
 import { CreateActivityDto } from "./create-activity.dto";
 import { IsInt, IsOptional, IsString, Min } from "class-validator";
 
-export class updateActivityDto extends PartialType(CreateActivityDto) {
+export class UpdateActivityDto extends PartialType(CreateActivityDto) {
     @IsInt({ message: 'El ID de Programa educativo debe ser un número entero' })
     @Min(1, { message: 'El ID de Programa educativo debe ser mayor o igual a 1' })
     @IsOptional()
