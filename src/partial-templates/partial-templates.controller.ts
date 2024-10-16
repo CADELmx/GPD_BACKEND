@@ -6,21 +6,19 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
-  UseGuards,
   Query,
-  BadRequestException,
 } from '@nestjs/common';
 import { PartialTemplatesService } from './partial-templates.service';
-import { CreatePartialTemplateDto } from 'src/models/partialTemplate/create-partial-template.dto';
-import { UpdatePartialTemplateDto } from 'src/models/partialTemplate/update-partial-template.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { CreatePartialTemplateDto } from '../models/partialTemplate/create-partial-template.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-partial-template.dto';
+
 
 @Controller('partial-templates')
 export class PartialTemplatesController {
   constructor(
     private readonly partialTemplatesService: PartialTemplatesService,
-  ) { }
+  ) {}
 
   /**
    * Creates a new partialTemplate
@@ -29,7 +27,7 @@ export class PartialTemplatesController {
    */
   @Post()
   create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
-    return this.partialTemplatesService.create({ ...createPartialTemplateDto });
+    return this.partialTemplatesService.create(createPartialTemplateDto);
   }
 
   find(
@@ -60,9 +58,7 @@ export class PartialTemplatesController {
    * @returns - The deleted partialTemplate
    */
   @Delete(':id')
-  remove(
-    @Param('id', customIdPipe) id: number
-  ) {
+  remove(@Param('id', customIdPipe) id: number) {
     return this.partialTemplatesService.remove(id);
   }
 }
