@@ -1,13 +1,11 @@
 import {
-  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
 import { PrismaService } from 'src/prisma.service';
-import { EducationalPrograms, Prisma } from '@prisma/client';
-import { promises } from 'dns';
+import { EducationalPrograms } from '@prisma/client';
 import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
 
 @Injectable()
