@@ -6,18 +6,16 @@ import {
   Param,
   Delete,
   Controller,
-  ParseIntPipe,
   Query,
-  BadRequestException,
 } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
-import { CreateTemplateDto } from 'src/models/template/create-template.dto';
-import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { CreateTemplateDto } from '../models/template/create-template.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { UpdateTemplateDto } from '../models/template/update-template.dto';
 
 @Controller('templates')
 export class TemplatesController {
-  constructor(private readonly templatesService: TemplatesService) { }
+  constructor(private readonly templatesService: TemplatesService) {}
   /**
    * Creates a new template
    * @param {CreateTemplateDto} createTemplateDto The template data transfer object
@@ -25,7 +23,7 @@ export class TemplatesController {
    */
   @Post()
   create(@Body() createTemplateDto: CreateTemplateDto) {
-    return this.templatesService.create({ ...createTemplateDto });
+    return this.templatesService.create(createTemplateDto);
   }
 
   /**
@@ -33,9 +31,7 @@ export class TemplatesController {
    * @returns . An array of all templates
    */
   @Get()
-  find(
-    @Query('id', customIdPipe) id?: number
-  ) {
+  find(@Query('id', customIdPipe) id?: number) {
     if (id) return this.templatesService.findOne(id);
     return this.templatesService.findAll();
   }

@@ -4,11 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Subject } from '@prisma/client';
-import { validateForeignKeys } from 'src/common/validation/custom-validation.pipe';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
-import { CreateSubjectDto } from 'src/models/subject/create-subject.dto';
-import { UpdateSubjectDto } from 'src/models/subject/update-subject.dto';
-import { PrismaService } from 'src/prisma.service';
+import { CreateSubjectDto } from '../models/subject/create-subject.dto';
+import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
+import { PrismaService } from '../prisma.service';
+import { validateForeignKeys } from '../common/validation/custom-validation.pipe';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 /**
  * Interface to define the methods of the subjects service
  */
@@ -39,7 +39,7 @@ export class SubjectService implements SubjectResult {
     private readonly prisma: PrismaService,
     private readonly foreign: validateForeignKeys,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) { }
+  ) {}
   /**
    * Creates a new subject
    * @param createSubjectDto data to create a new subject
@@ -63,7 +63,10 @@ export class SubjectService implements SubjectResult {
         message: 'Registrado!',
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al crear la materia');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear la materia',
+      );
     }
   }
   /**
@@ -89,7 +92,10 @@ export class SubjectService implements SubjectResult {
         error: null,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al buscar la materia');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al buscar la materia',
+      );
     }
   }
   /**
@@ -109,7 +115,10 @@ export class SubjectService implements SubjectResult {
         message,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al buscar la materia');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al buscar la materia',
+      );
     }
   }
   /**
@@ -135,7 +144,10 @@ export class SubjectService implements SubjectResult {
         error: null,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al buscar las materias');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al buscar las materias',
+      );
     }
   }
   /**
@@ -161,7 +173,10 @@ export class SubjectService implements SubjectResult {
         error: null,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al actualizar la materia');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al actualizar la materia',
+      );
     }
   }
   /**
@@ -185,7 +200,10 @@ export class SubjectService implements SubjectResult {
         message: 'Eliminado!',
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al eliminar la materia');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al eliminar la materia',
+      );
     }
   }
 }

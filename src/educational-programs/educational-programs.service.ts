@@ -4,32 +4,45 @@ import {
 } from '@nestjs/common';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { EducationalPrograms } from '@prisma/client';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
 
 @Injectable()
 export class EducationalProgramsService {
   constructor(
     private prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) { }
+  ) {}
 
   /**
    * Method for creating a new educational program.
    * @param data Program data to register
    * @returns Registered Educational Program
    */
-  async createProgram(educationalProgram: CreateEducationalProgramDto): Promise<{ message: string | null; error: string | null; data: EducationalPrograms | null }> {
+  async createProgram(
+    educationalProgram: CreateEducationalProgramDto,
+  ): Promise<{
+    message: string | null;
+    error: string | null;
+    data: EducationalPrograms | null;
+  }> {
     try {
       await this.validateAreaId(educationalProgram);
       const newPartialTemplate = await this.prisma.educationalPrograms.create({
         data: educationalProgram,
       });
 
-      return { message: 'Registrado con éxito', error: null, data: newPartialTemplate };
+      return {
+        message: 'Registrado con éxito',
+        error: null,
+        data: newPartialTemplate,
+      };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al crear el programa educativo');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear el programa educativo',
+      );
     }
   }
 
@@ -45,28 +58,40 @@ export class EducationalProgramsService {
         return { message: 'Sin programas educativos', error: null, data: null };
       }
 
-
-      return { message: 'Programas educativos encontrados', error: null, data: programs };
+      return {
+        message: 'Programas educativos encontrados',
+        error: null,
+        data: programs,
+      };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al consultar programas educativos');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar programas educativos',
+      );
     }
   }
 
-
   /**
-  * Method to find an educational program by its id.
-  * @param id ID of the program to find
-  * @returns Educational program
-  * @throws NotFoundException if program is not found
-  */
-  async findProgramById(id: number): Promise<{ data: EducationalPrograms | null, error: string | null, message: string }> {
+   * Method to find an educational program by its id.
+   * @param id ID of the program to find
+   * @returns Educational program
+   * @throws NotFoundException if program is not found
+   */
+  async findProgramById(id: number): Promise<{
+    data: EducationalPrograms | null;
+    error: string | null;
+    message: string;
+  }> {
     try {
-      const educationalProgram = await this.prisma.educationalPrograms.findUnique({
-        where: { id },
-      });
+      const educationalProgram =
+        await this.prisma.educationalPrograms.findUnique({
+          where: { id },
+        });
 
       if (!educationalProgram) {
-        throw new NotFoundException(`Programa educativo con ID ${id} no encontrado`);
+        throw new NotFoundException(
+          `Programa educativo con ID ${id} no encontrado`,
+        );
       }
 
       return {
@@ -75,7 +100,10 @@ export class EducationalProgramsService {
         message: 'Programa educativo encontrado',
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al consultar el programa educativo');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar el programa educativo',
+      );
     }
   }
 
@@ -88,8 +116,12 @@ export class EducationalProgramsService {
 
   async updateProgram(
     id: number,
-    updateEducationalProgramDto: UpdateEducationalProgramDto
-  ): Promise<{ message: string | null; error: string | null; data: EducationalPrograms | null }> {
+    updateEducationalProgramDto: UpdateEducationalProgramDto,
+  ): Promise<{
+    message: string | null;
+    error: string | null;
+    data: EducationalPrograms | null;
+  }> {
     try {
       await this.validateAreaId(updateEducationalProgramDto);
 
@@ -100,12 +132,18 @@ export class EducationalProgramsService {
         where: { id },
       });
 
-      return { message: 'Actualización exitosa', error: null, data: updatedProgram };
+      return {
+        message: 'Actualización exitosa',
+        error: null,
+        data: updatedProgram,
+      };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al actualizar el programa educativo');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al actualizar el programa educativo',
+      );
     }
   }
-
 
   /**
    * *Method to delete a program
@@ -113,35 +151,40 @@ export class EducationalProgramsService {
    * @returns Return a message after deleting a program
    */
 
-  async removeProgram(id: number, confirmed: boolean): Promise<{ message: string, error: string | null, data: null }> {
+  async removeProgram(
+    id: number,
+    confirmed: boolean,
+  ): Promise<{ message: string; error: string | null; data: null }> {
     try {
       if (!confirmed) {
         return {
           data: null,
           error: 'No confirmado',
-          message: 'No se ha confirmado la eliminación'
+          message: 'No se ha confirmado la eliminación',
         };
       }
       await this.findProgramById(id);
       await this.prisma.educationalPrograms.delete({
-        where: { id }
+        where: { id },
       });
       return {
         data: null,
         error: null,
-        message: 'Eliminada Correctamente'
-      }
+        message: 'Eliminada Correctamente',
+      };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al eliminar el programa educativo');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al eliminar el programa educativo',
+      );
     }
   }
 
-
   /**
-     * Validates if foreign keys (areaId, responsibleId, revisedById)
-     * @param {CreateEducationalProgramDto | UpdateEducationalProgramDto} dto - Data to validate
-     * @throws {NotFoundException} - If any foreign keys is not found
-     */
+   * Validates if foreign keys (areaId, responsibleId, revisedById)
+   * @param {CreateEducationalProgramDto | UpdateEducationalProgramDto} dto - Data to validate
+   * @throws {NotFoundException} - If any foreign keys is not found
+   */
   private async validateAreaId(
     dto: CreateEducationalProgramDto | UpdateEducationalProgramDto,
   ): Promise<void> {
@@ -150,7 +193,9 @@ export class EducationalProgramsService {
 
     if (areaId !== undefined) {
       if (typeof areaId !== 'number') {
-        throw new Error(`Tipo de areaId inválido: se esperaba un número, se recibió ${typeof areaId}`);
+        throw new Error(
+          `Tipo de areaId inválido: se esperaba un número, se recibió ${typeof areaId}`,
+        );
       }
       validations.push(
         this.prisma.area.count({ where: { id: areaId } }).then((count) => {
