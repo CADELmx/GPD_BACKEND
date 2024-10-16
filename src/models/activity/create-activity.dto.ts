@@ -13,7 +13,7 @@ export class CreateActivityDto {
     activityDistribution: string;
     @IsOptional()
     @IsString({ message: 'El tipo de gestión tiene que ser un texto' })
-    managementType?: string;
+    managmentType?: string;
     @IsOptional()
     @IsString({ message: 'El tipo de estadía tiene que ser un texto' })
     stayType?: string;

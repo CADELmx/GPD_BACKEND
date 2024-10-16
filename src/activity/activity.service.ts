@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
+import { CreateActivityDto } from 'src/models/activity/create-activity.dto';
 import { PrismaService } from 'src/prisma.service';
 import { CreateActivityDto } from '../models/activity/create-activity.dto';
 
