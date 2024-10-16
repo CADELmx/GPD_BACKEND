@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
+import { CreateActivityDto } from 'src/models/activity/create-activity.dto';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -8,7 +9,7 @@ export class ActivityService {
         private readonly prisma: PrismaService,
         private readonly prismaErrorHandler: PrismaErrorHandler,
     ) { }
-    async create(createActivityDto: any): Promise<any> {
+    async create(createActivityDto: CreateActivityDto): Promise<any> {
         try {
             const activity = await this.prisma.activity.create({
                 data: createActivityDto
