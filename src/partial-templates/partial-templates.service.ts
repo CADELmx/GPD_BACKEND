@@ -75,12 +75,10 @@ export class PartialTemplatesService {
         },
       });
 
-      if (partialTemplates.length === 0) {
-        return {
-          message: 'No hay plantillas parciales para mostrar',
-          error: null,
-          data: [],
-        };
+      if (partialTemplates.length === 0) return {
+        message: 'No hay plantillas parciales para mostrar',
+        error: null,
+        data: [],
       }
       return {
         message: 'Plantillas Parciales obtenidas con exito',
@@ -190,11 +188,11 @@ export class PartialTemplatesService {
           }
         }
       })
-      if (partialTemplatesJoin.length === 0) return ({
+      if (partialTemplatesJoin.length === 0) return {
         message: 'No hay plantillas parciales para mostrar',
         error: null,
         data: null
-      })
+      }
       return {
         message: 'Plantillas parciales obtenidas con éxito',
         error: null,

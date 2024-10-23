@@ -24,15 +24,13 @@ export class ActivityService {
         }
     }
 
-    async findAll(): Promise<any> {
+    async findAll() {
         try {
             const activities = await this.prisma.activity.findMany()
-            if (activities.length === 0) {
-                return {
-                    message: 'No se encontraron actividades academicas',
-                    error: null,
-                    data: []
-                }
+            if (activities.length === 0) return {
+                message: 'No se encontraron actividades academicas',
+                error: null,
+                data: []
             }
             return {
                 message: 'Actividades academicas obtenidas con exito',
@@ -44,19 +42,17 @@ export class ActivityService {
         }
     }
 
-    async findOne(id: string): Promise<any> {
+    async findOne(id: string) {
         try {
             const activities = await this.prisma.activity.findMany({
                 where: {
                     id
                 }
             })
-            if (activities.length === 0) {
-                return {
-                    message: 'No se encontro la actividad academica',
-                    error: null,
-                    data: []
-                }
+            if (activities.length === 0) return {
+                message: 'No se encontro la actividad academica',
+                error: null,
+                data: []
             }
             return {
                 message: 'Actividad academica obtenida con exito',
@@ -75,11 +71,11 @@ export class ActivityService {
                     partialTemplateId: id
                 }
             })
-            if (activitiesByTemplate.length === 0) return ({
+            if (activitiesByTemplate.length === 0) return {
                 message: 'No hay actividades académicas para mostrar',
                 error: null,
                 data: null
-            })
+            }
             return {
                 message: 'Actividad académica obtenida con éxito',
                 error: null,
