@@ -85,7 +85,23 @@ export class CommentsService {
             )
         }
     }
-    async delete() {
-        
+    async delete(id: number) {
+        try {
+            const result = await this.prisma.comments.delete({
+                where: {
+                    id
+                }
+            })
+            return {
+                message: 'El comentario ha sido eliminado',
+                error: null,
+                data: result
+            }
+        } catch (error) {
+            return this.prismaErrorHandler.handleError(
+                error,
+                'Error al eliminar el comentario'
+            )
+        }
     }
 }
