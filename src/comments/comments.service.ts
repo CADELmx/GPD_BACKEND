@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { CreateCommentDto } from '../models/comments/create-comment.dto';
+import { UpdateCommentDto } from '../models/comments/update-comment.dto';
 
 @Injectable()
 export class CommentsService {
@@ -9,10 +11,10 @@ export class CommentsService {
         private readonly prismaErrorHandler: PrismaErrorHandler
     ) { }
 
-    async create(createCommnetDto: any) {
+    async create(createCommentDto: CreateCommentDto) {
         try {
             const response = await this.prisma.comments.create({
-                data: createCommnetDto
+                data: createCommentDto
             })
         } catch (error) {
             this.prismaErrorHandler.handleError(
@@ -65,7 +67,7 @@ export class CommentsService {
             )
         }
     }
-    async update(id: number, updateCommentDto: any) {
+    async update(id: number, updateCommentDto: UpdateCommentDto) {
         try {
             const result = await this.prisma.comments.update({
                 where: {
