@@ -106,4 +106,33 @@ export class CommentsService {
             )
         }
     }
+    /**
+     * Retrieves the comment of a specific 0partial template
+     * @param id The partial template ID
+     * @returns the comment of the partial template
+     */
+    async findByPartialTemplate(id: number) {
+        try {
+            const comment = await this.prisma.comments.findUnique({
+                where: {
+                    id
+                }
+            })
+            if (comment) return {
+                message: 'No hay comentario para mostrar',
+                error: null,
+                data: null
+            }
+            return {
+                message: 'Comentario obtenido con éxtio',
+                error: null,
+                data: comment
+            }
+        } catch (error) {
+            return this.prismaErrorHandler.handleError(
+                error,
+                'Error al obtener el comentario'
+            )
+        }
+    }
 }
