@@ -125,7 +125,7 @@ export class PartialTemplatesService {
    * @param {number} id Id of the partial template
    * @returns Partial template with all its activities
    */
-  async findOneJoin(id: number) {
+  async findOneJoinActivities(id: number) {
     await this.validateId(id)
     try {
       const partialTemplateAct = await this.prisma.partialTemplate.findUnique({
@@ -160,7 +160,7 @@ export class PartialTemplatesService {
     }
   }
 
-  async findAllJoin(status?: string) {
+  async findAllJoinActivities(status?: string) {
     try {
       const allowedStatuses = ['pendiente', 'aprobado', 'corrección'];
       const filter: any = {};
@@ -199,10 +199,73 @@ export class PartialTemplatesService {
         data: partialTemplatesJoin
       }
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al obtener las plantillas parciales')
+      return this.prismaErrorHandler.handleError(error, 'Error al obtener todas las plantillas parciales con sus actividades')
     }
   }
+  async findOneJoinComments(id: number) {
+    try {
+      const partialTemplate = await this.prisma.partialTemplate.findUnique({
+        where: { id },
+        include: {
+          comments: {
+            select: {
+              id: true,
+              comment: true,
+              createAt: true,
+            }
+          }
+        }
+      })
+      return {
+        message: 'Plantillas parciales obtenidas con éxito',
+        error: null,
+        data: partialTemplate
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al obtener las plantillas parciales con sus comentarios'
+      )
+    }
+  }
+  async findAllJoinComments(status?: string) {
+    try {
+      const allowedStatuses = ['pendiente', 'aprobado', 'corrección'];
+      const filter: any = {};
 
+      if (status && allowedStatuses.includes(status)) {
+        filter.status = status;
+      }
+
+      const partialTemplates = await this.prisma.partialTemplate.findMany({
+        where: filter,
+        include: {
+          comments: {
+            select: {
+              id: true,
+              comment: true,
+              createAt: true,
+            }
+          }
+        }
+      })
+      if (partialTemplates.length === 0) return {
+        message: 'No hay plantillas parciales para mostrar',
+        error: null,
+        data: null
+      }
+      return {
+        message: 'Plantillas parciales obtenidas con éxito',
+        error: null,
+        data: partialTemplates
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al obtener todas las plantillas parciales con sus comentarios'
+      )
+    }
+  }
   /**
    * Updates a partialTemplate by its ID
    * @param {number} id - ID of partialTemplate to update

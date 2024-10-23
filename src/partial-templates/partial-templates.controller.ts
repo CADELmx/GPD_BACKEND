@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import { PartialTemplatesService } from './partial-templates.service';
 import { CreatePartialTemplateDto } from '../models/partialTemplate/create-partial-template.dto';
@@ -33,16 +33,28 @@ export class PartialTemplatesController {
   find(
     @Query('id', customIdPipe) id?: number,
     @Query('status') status?: string,
-    @Query('activities') activities?: boolean
   ) {
-    if (activities) {
-      if (id) return this.partialTemplatesService.findOneJoin(id)
-      if (status) return this.partialTemplatesService.findAllJoin(status)
-      return this.partialTemplatesService.findAllJoin()
-    }
     if (id) return this.partialTemplatesService.findOne(id);
     if (status) return this.partialTemplatesService.findAll(status);
     return this.partialTemplatesService.findAll();
+  }
+  @Get('/activities')
+  findWithActivities(
+    @Query('id', customIdPipe) id?: number,
+    @Query('status') status?: string
+  ) {
+    if (id) return this.partialTemplatesService.findOneJoinActivities(id)
+    if (status) return this.partialTemplatesService.findAllJoinActivities(status)
+    return this.partialTemplatesService.findAllJoinActivities()
+  }
+  @Get('/comments')
+  findWithComments(
+    @Query('id', customIdPipe) id?: number,
+    @Query('status') status?: string
+  ) {
+    if (id) return this.partialTemplatesService.findOneJoinComments(id)
+    if (status) return this.partialTemplatesService.findAllJoinComments(status)
+    return this.partialTemplatesService.findAllJoinComments()
   }
 
   /**
@@ -51,7 +63,7 @@ export class PartialTemplatesController {
    * @param {UpdatePartialTemplateDto} updatePartialTemplateDto - The updated partialTemplate data traansfer object
    * @returns - The updated partialTemplate
    */
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id', customIdPipe) id: number,
     @Body() updatePartialTemplateDto: UpdatePartialTemplateDto,

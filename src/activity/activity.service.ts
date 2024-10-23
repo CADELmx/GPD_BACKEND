@@ -24,6 +24,21 @@ export class ActivityService {
         }
     }
 
+    async createMany(createActivityDtos: CreateActivityDto[]): Promise<any> {
+        try {
+            const activities = await this.prisma.activity.createMany({
+                data: createActivityDtos
+            })
+            return {
+                message: 'Actividades academicas registradas',
+                error: null,
+                data: activities
+            }
+        } catch (error) {
+            return this.prismaErrorHandler.handleError(error, 'Error al crear las actividades academicas')
+        }
+    }
+
     async findAll() {
         try {
             const activities = await this.prisma.activity.findMany()
