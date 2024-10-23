@@ -18,7 +18,7 @@ import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-parti
 export class PartialTemplatesController {
   constructor(
     private readonly partialTemplatesService: PartialTemplatesService,
-  ) {}
+  ) { }
 
   /**
    * Creates a new partialTemplate
@@ -29,11 +29,17 @@ export class PartialTemplatesController {
   create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
     return this.partialTemplatesService.create(createPartialTemplateDto);
   }
-
+  @Get()
   find(
     @Query('id', customIdPipe) id?: number,
     @Query('status') status?: string,
+    @Query('activities') activities?: boolean
   ) {
+    if (activities) {
+      if (id) return this.partialTemplatesService.findOneJoin(id)
+      if (status) return this.partialTemplatesService.findAllJoin(status)
+      return this.partialTemplatesService.findAllJoin()
+    }
     if (id) return this.partialTemplatesService.findOne(id);
     if (status) return this.partialTemplatesService.findAll(status);
     return this.partialTemplatesService.findAll();

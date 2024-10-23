@@ -14,8 +14,12 @@ export class ActivityController {
         return this.activityService.create(createActivityDto)
     }
     @Get()
-    find(@Query('id') id?: string) {
+    find(
+        @Query('id') id?: string,
+        @Query('template', customIdPipe) template?: number
+    ) {
         if (id) return this.activityService.findOne(id)
+        if (template) return this.activityService.findByPartialTemplate(template)
         return this.activityService.findAll()
     }
     @Put()
@@ -32,7 +36,7 @@ export class ActivityController {
         if (id) return this.activityService.remove(id)
     }
     @Delete('/tmpldel:id')
-    removeByTemplate(@Param('id', customIdPipe) id: number){
+    removeByTemplate(@Param('id', customIdPipe) id: number) {
         return this.activityService.removeMany(id)
     }
 }

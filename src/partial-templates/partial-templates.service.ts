@@ -16,7 +16,7 @@ export class PartialTemplatesService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) {}
+  ) { }
 
   /**
    * Rregisters a new PartialTemplate
@@ -110,7 +110,7 @@ export class PartialTemplatesService {
           },
         });
         return {
-          message: 'Plantilla parciale obtenida con éxito',
+          message: 'Plantilla parcial obtenida con éxito',
           error: null,
           data: partailTemplate,
         };
@@ -120,6 +120,88 @@ export class PartialTemplatesService {
         error,
         'Error al obtener la plantilla parcial',
       );
+    }
+  }
+  /**
+   * Retrieves a single partial template with all its activities
+   * @param {number} id Id of the partial template
+   * @returns Partial template with all its activities
+   */
+  async findOneJoin(id: number) {
+    await this.validateId(id)
+    try {
+      const partialTemplateAct = await this.prisma.partialTemplate.findUnique({
+        where: { id },
+        include: {
+          activities: {
+            select: {
+              id: true,
+              activityDistribution: true,
+              activityName: true,
+              educationalProgramId: true,
+              gradeGroups: true,
+              managmentType: true,
+              numberStudents: true,
+              stayType: true,
+              subtotalClassification: true,
+              weeklyHours: true
+            }
+          }
+        }
+      })
+      return {
+        message: 'Plantilla parcial obtenida de forma exitosa',
+        error: null,
+        data: partialTemplateAct
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al obtener plantilla parcial'
+      )
+    }
+  }
+
+  async findAllJoin(status?: string) {
+    try {
+      const allowedStatuses = ['pendiente', 'aprobado', 'corrección'];
+      const filter: any = {};
+
+      if (status && allowedStatuses.includes(status)) {
+        filter.status = status;
+      }
+
+      const partialTemplatesJoin = await this.prisma.partialTemplate.findMany({
+        where: filter,
+        include: {
+          activities: {
+            select: {
+              id: true,
+              activityDistribution: true,
+              activityName: true,
+              educationalProgramId: true,
+              gradeGroups: true,
+              managmentType: true,
+              numberStudents: true,
+              stayType: true,
+              subtotalClassification: true,
+              weeklyHours: true
+            }
+          }
+        }
+      })
+      if (partialTemplatesJoin.length === 0) return ({
+        message: 'No hay plantillas parciales para mostrar',
+        error: null,
+        data: null
+      })
+      return {
+        message: 'Plantillas parciales obtenidas con éxito',
+        error: null,
+        data: partialTemplatesJoin
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(error, 'Error al obtener las plantillas parciales')
     }
   }
 

@@ -51,7 +51,7 @@ export class ActivityService {
                     id
                 }
             })
-            if(activities.length === 0){
+            if (activities.length === 0) {
                 return {
                     message: 'No se encontro la actividad academica',
                     error: null,
@@ -65,6 +65,31 @@ export class ActivityService {
             }
         } catch (error) {
             return this.prismaErrorHandler.handleError(error, 'Error al obtener la actividad academica')
+        }
+    }
+
+    async findByPartialTemplate(id: number) {
+        try {
+            const activitiesByTemplate = await this.prisma.activity.findMany({
+                where: {
+                    partialTemplateId: id
+                }
+            })
+            if (activitiesByTemplate.length === 0) return ({
+                message: 'No hay actividades académicas para mostrar',
+                error: null,
+                data: null
+            })
+            return {
+                message: 'Actividad académica obtenida con éxito',
+                error: null,
+                data: activitiesByTemplate
+            }
+        } catch (error) {
+            this.prismaErrorHandler.handleError(
+                error,
+                'Error al obtener las actividades'
+            )
         }
     }
 
@@ -106,7 +131,7 @@ export class ActivityService {
     async removeMany(id: number): Promise<any> {
         try {
             const result = await this.prisma.activity.deleteMany({
-                where:{
+                where: {
                     partialTemplateId: id
                 }
             })

@@ -11,6 +11,7 @@ import { PrismaErrorHandler } from './common/validation/prisma-error-handler';
 import { PartialTemplatesModule } from './partial-templates/partial-templates.module';
 import { EducationalProgramsModule } from './educational-programs/educational-programs.module';
 import { ActivityModule } from './activity/activity.module';
+import { CommentsModule } from './comments/comments.module';
 
 
 @Module({
@@ -22,7 +23,8 @@ import { ActivityModule } from './activity/activity.module';
     PartialTemplatesModule,
     SubjectModule,
     AreasModule,
-    ActivityModule
+    ActivityModule,
+    CommentsModule
   ],
   controllers: [AppController],
   providers: [
