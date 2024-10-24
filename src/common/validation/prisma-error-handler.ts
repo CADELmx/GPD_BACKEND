@@ -17,7 +17,10 @@ export class PrismaErrorHandler {
   private readonly notHandledError = 'Error no manejado';
   private readonly errorText = 'Error en la operación';
 
-  public handleError(error: any | PrismaClientKnownRequestError, notPrismaError: string): {
+  public handleError(
+    error: any | PrismaClientKnownRequestError,
+    notPrismaError: string,
+  ): {
     error: string;
     message: string;
     data: null;

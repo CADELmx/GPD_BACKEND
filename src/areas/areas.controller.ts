@@ -11,13 +11,13 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { AreasService } from './areas.service';
-import { CreateAreaDto } from 'src/models/area/create-area.dto';
-import { UpdateAreaDto } from 'src/models/area/update-area.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { CreateAreaDto } from '../models/area/create-area.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { UpdateAreaDto } from '../models/area/update-area.dto';
 
 @Controller('areas')
 export class AreasController {
-  constructor(private readonly areasService: AreasService) { }
+  constructor(private readonly areasService: AreasService) {}
 
   /**
    * Creates a new area.
@@ -65,9 +65,7 @@ export class AreasController {
    * @returns The deleted area.
    */
   @Delete(':id')
-  remove(
-    @Param('id', customIdPipe) id: number,
-  ) {
+  remove(@Param('id', customIdPipe) id: number) {
     return this.areasService.remove(id);
   }
 }

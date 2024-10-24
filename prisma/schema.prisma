@@ -92,7 +92,7 @@ model Activity {
   educationalProgramId   BigInt?  @unique
   partialTemplateId      Int?     @unique
   activityDistribution   String?  @db.VarChar(120)
-  managmentType          String?  @db.VarChar(120)
+  managementType          String?  @db.VarChar(120)
   stayType               String?  @db.VarChar(120)
   activityName           String?  @db.VarChar(120)
   gradeGroups            String[] @db.VarChar(50)

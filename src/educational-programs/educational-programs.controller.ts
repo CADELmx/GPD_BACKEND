@@ -6,21 +6,19 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
-  UseGuards,
-  BadRequestException,
   Query,
 } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
-import { customIdPipe } from 'src/common/validation/custom-validation.pipe';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+
 
 @Controller('educational-programs')
 export class EducationalProgramsController {
   constructor(
     private readonly educationalProgramsService: EducationalProgramsService,
-  ) { }
+  ) {}
 
   /**
    * Create a new program
@@ -29,12 +27,12 @@ export class EducationalProgramsController {
    */
   @Post()
   create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
-    return this.educationalProgramsService.createProgram({ ...createEducationalProgramDto });
+    return this.educationalProgramsService.createProgram(createEducationalProgramDto);
   }
   /**
    * This method is used to find a program by its id or all programs if no query parameters are provided
    * @param id query parameter to find a program by its id
-   * @returns 
+   * @returns
    */
   @Get()
   find(@Query('id', customIdPipe) id?: number) {
@@ -51,8 +49,12 @@ export class EducationalProgramsController {
   @Patch(':id')
   update(
     @Param('id', customIdPipe) id: number,
-    @Body() updateEducationalProgramDto: UpdateEducationalProgramDto) {
-    return this.educationalProgramsService.updateProgram(id, updateEducationalProgramDto);
+    @Body() updateEducationalProgramDto: UpdateEducationalProgramDto,
+  ) {
+    return this.educationalProgramsService.updateProgram(
+      id,
+      updateEducationalProgramDto,
+    );
   }
 
   /**
@@ -64,13 +66,16 @@ export class EducationalProgramsController {
   @Delete(':id')
   async remove(
     @Param('id', customIdPipe) id: number,
-    @Body() body: { confirmado: boolean }
+    @Body() body: { confirmado: boolean },
   ) {
     if (!body.confirmado) {
       return { message: 'Operación no confirmada por el usuario' };
     }
 
-    const result = await this.educationalProgramsService.removeProgram(id, body.confirmado);
+    const result = await this.educationalProgramsService.removeProgram(
+      id,
+      body.confirmado,
+    );
 
     return result;
   }

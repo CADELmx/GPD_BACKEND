@@ -1,9 +1,9 @@
 import { Template } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTemplateDto } from 'src/models/template/create-template.dto';
-import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
-import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { CreateTemplateDto } from '../models/template/create-template.dto';
+import { UpdateTemplateDto } from '../models/template/update-template.dto';
 
 @Injectable()
 export class TemplatesService {
@@ -34,7 +34,10 @@ export class TemplatesService {
         data: template,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al crear la plantilla');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear la plantilla',
+      );
     }
   }
 
@@ -60,7 +63,10 @@ export class TemplatesService {
         data: templates,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al consultar las plantillas');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las plantillas',
+      );
     }
   }
 
@@ -93,7 +99,10 @@ export class TemplatesService {
         };
       }
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al consultar la plantilla');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar la plantilla',
+      );
     }
   }
 
@@ -128,9 +137,7 @@ export class TemplatesService {
         where: {
           id,
         },
-        data: {
-          ...updateTemplateDto,
-        },
+        data: updateTemplateDto,
       });
 
       return {
@@ -139,7 +146,10 @@ export class TemplatesService {
         data: updatedTemplate,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al actualizar la plantilla');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al actualizar la plantilla',
+      );
     }
   }
 
@@ -162,7 +172,10 @@ export class TemplatesService {
         data: null,
       };
     } catch (error) {
-      return this.prismaErrorHandler.handleError(error, 'Error al eliminar la plantilla');
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al eliminar la plantilla',
+      );
     }
   }
 
