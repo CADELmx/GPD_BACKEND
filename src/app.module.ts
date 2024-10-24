@@ -12,6 +12,7 @@ import { PartialTemplatesModule } from './partial-templates/partial-templates.mo
 import { EducationalProgramsModule } from './educational-programs/educational-programs.module';
 import { ActivityModule } from './activity/activity.module';
 import { CommentsModule } from './comments/comments.module';
+import { PersonalDataModule } from './personal-data/personal-data.module';
 
 
 @Module({
@@ -24,7 +25,8 @@ import { CommentsModule } from './comments/comments.module';
     SubjectModule,
     AreasModule,
     ActivityModule,
-    CommentsModule
+    CommentsModule,
+    PersonalDataModule
   ],
   controllers: [AppController],
   providers: [
