@@ -1,13 +1,21 @@
 import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from "class-validator";
 
 export class CreateActivityDto {
+    @IsString({
+        message:'El ID tiene que ser un texto UUID'
+    })
+    @IsNotEmpty({
+        message: 'El ID no puede estar vacío'
+    })
+    id: string
+    @IsOptional()
     @IsInt({ message: 'El ID de Programa educativo debe ser un número entero' })
     @Min(1, { message: 'El ID de Programa educativo debe ser mayor o igual a 1' })
     educationalProgramId?: number;
     @IsInt({ message: 'El ID de Plantilla parcial debe ser un número entero' })
     @Min(1, { message: 'El ID de Plantilla parcial debe ser mayor o igual a 1' })
     @IsNotEmpty({ message: 'El Id de Plantilla no puede estar vacío' })
-    partialTemplateId: number;
+    partialtemplateId: number;
     @IsString({ message: 'El distribución de actividades tiene que ser un texto' })
     @IsNotEmpty({ message: 'La distribución de actividades no puede estar vacía' })
     activityDistribution: string;

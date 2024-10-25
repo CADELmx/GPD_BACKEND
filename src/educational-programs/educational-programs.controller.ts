@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto } from '../models/educationalPrograms/create-educational-program.dto';
@@ -46,7 +46,7 @@ export class EducationalProgramsController {
    * @param updateEducationalProgramDto Program data to update
    * @returns Returns the updated program
    */
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id', customIdPipe) id: number,
     @Body() updateEducationalProgramDto: UpdateEducationalProgramDto,

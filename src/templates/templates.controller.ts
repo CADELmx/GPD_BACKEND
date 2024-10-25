@@ -2,11 +2,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Controller,
   Query,
+  Put,
 } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
 import { CreateTemplateDto } from '../models/template/create-template.dto';
@@ -41,7 +41,7 @@ export class TemplatesController {
    * @param {UpdateTemplateDto} updateTemplateDto - The updated template data traansfer object
    * @returns - The updated template
    */
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id', customIdPipe) id: number,
     @Body() updateTemplateDto: UpdateTemplateDto,

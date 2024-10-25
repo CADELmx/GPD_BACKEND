@@ -10,7 +10,12 @@ export class ActivityController {
         private readonly activityService: ActivityService
     ) { }
     @Post()
-    create(@Body() createActivityDto: CreateActivityDto) {
+    create(
+        @Query() many: boolean,
+        @Body() createActivityDto: CreateActivityDto,
+        @Body() createManyActivitiesDto: CreateActivityDto[]
+    ) {
+        if(many) return this.activityService.createMany(createManyActivitiesDto)
         return this.activityService.create(createActivityDto)
     }
     @Get()

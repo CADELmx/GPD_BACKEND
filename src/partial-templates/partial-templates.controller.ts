@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import { PartialTemplatesService } from './partial-templates.service';
 import { CreatePartialTemplateDto } from '../models/partialTemplate/create-partial-template.dto';
@@ -44,6 +44,24 @@ export class PartialTemplatesController {
     if (status) return this.partialTemplatesService.findAll(status);
     return this.partialTemplatesService.findAll();
   }
+  @Get('/activities')
+  findWithActivities(
+    @Query('id', customIdPipe) id?: number,
+    @Query('status') status?: string
+  ) {
+    if (id) return this.partialTemplatesService.findOneJoinActivities(id)
+    if (status) return this.partialTemplatesService.findAllJoinActivities(status)
+    return this.partialTemplatesService.findAllJoinActivities()
+  }
+  @Get('/comments')
+  findWithComments(
+    @Query('id', customIdPipe) id?: number,
+    @Query('status') status?: string
+  ) {
+    if (id) return this.partialTemplatesService.findOneJoinComments(id)
+    if (status) return this.partialTemplatesService.findAllJoinComments(status)
+    return this.partialTemplatesService.findAllJoinComments()
+  }
 
   /**
    * Updates a partialTemplate by ID
@@ -51,7 +69,7 @@ export class PartialTemplatesController {
    * @param {UpdatePartialTemplateDto} updatePartialTemplateDto - The updated partialTemplate data traansfer object
    * @returns - The updated partialTemplate
    */
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id', customIdPipe) id: number,
     @Body() updatePartialTemplateDto: UpdatePartialTemplateDto,
