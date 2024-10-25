@@ -233,6 +233,7 @@ export class PartialTemplatesService {
       const allowedStatuses = ['pendiente', 'aprobado', 'corrección'];
       const filter: any = {};
 
+
       if (status && allowedStatuses.includes(status)) {
         filter.status = status;
       }

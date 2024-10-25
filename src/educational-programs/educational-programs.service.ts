@@ -2,8 +2,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
-import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
+import { CreateEducationalProgramDto } from '../models/educationalPrograms/create-educational-program.dto';
+import { UpdateEducationalProgramDto } from '../models/educationalPrograms/update-educational-program.dto';
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { EducationalPrograms } from '@prisma/client';

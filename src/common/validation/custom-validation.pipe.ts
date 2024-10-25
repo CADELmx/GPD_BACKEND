@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  ParseBoolPipe,
   ParseIntPipe,
   ValidationPipe,
 } from '@nestjs/common';
@@ -44,4 +45,8 @@ export class validateForeignKeys {
 export const customIdPipe = new ParseIntPipe({
   optional: true,
   exceptionFactory: () => new BadRequestException('El ID debe ser un número'),
+});
+export const customBoolPipe = new ParseBoolPipe({
+  optional: true,
+  exceptionFactory: () => new BadRequestException('El valor debe ser un booleano'),
 });

@@ -9,8 +9,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
-import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
-import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
+import { CreateEducationalProgramDto } from '../models/educationalPrograms/create-educational-program.dto';
+import { UpdateEducationalProgramDto } from '../models/educationalPrograms/update-educational-program.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 
 
