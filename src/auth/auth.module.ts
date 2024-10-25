@@ -1,22 +1,23 @@
-import { Module } from '@nestjs/common';
+
 import { AuthService } from './auth.service';
-import { UsersModule } from 'src/users/users.module';
-import { PrismaService } from 'src/prisma.service';
+import { UsersModule } from '../users/users.module';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { PrismaService } from '../prisma.service';
+import { UsersController } from '../users/users.controller';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
-import { UsersController } from 'src/users/users.controller';
+import { Module } from '@nestjs/common';
 
 @Module({
   imports: [
     UsersModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '24h' },
     }),
   ],
-  providers: [AuthService, PrismaService],
+  providers: [AuthService, PrismaService, PrismaErrorHandler],
   exports: [AuthService],
   controllers: [AuthController, UsersController],
 })
