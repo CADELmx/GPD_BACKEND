@@ -2,13 +2,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Query,
   Delete,
   Controller,
-  ParseIntPipe,
-  BadRequestException,
+  Put,
 } from '@nestjs/common';
 import { AreasService } from './areas.service';
 import { CreateAreaDto } from '../models/area/create-area.dto';
@@ -51,7 +49,7 @@ export class AreasController {
    * @param updateAreaDto - Data Transfer Object for updating an area.
    * @returns The updated area.
    */
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id', customIdPipe) id: number,
     @Body() updateAreaDto: UpdateAreaDto,

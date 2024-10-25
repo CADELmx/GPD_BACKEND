@@ -92,7 +92,7 @@ model Activity {
   educationalProgramId   BigInt?  @unique
   partialTemplateId      Int?     @unique
   activityDistribution   String?  @db.VarChar(120)
-  managementType          String?  @db.VarChar(120)
+  managementType         String?  @db.VarChar(120)
   stayType               String?  @db.VarChar(120)
   activityName           String?  @db.VarChar(120)
   gradeGroups            String[] @db.VarChar(50)
@@ -126,12 +126,12 @@ model Area {
 }
 
 model EducationalPrograms {
-  id           BigInt  @id @unique @default(autoincrement())
+  id           BigInt @id @unique @default(autoincrement())
   abbreviation String @db.VarChar(20)
   description  String @db.VarChar(255)
 
   areaId     BigInt
-  area       Area      @relation(fields: [areaId], references: [id], onUpdate: Cascade)
+  area       Area       @relation(fields: [areaId], references: [id], onUpdate: Cascade)
   activities Activity[]
   subjects   Subject[]
 }
