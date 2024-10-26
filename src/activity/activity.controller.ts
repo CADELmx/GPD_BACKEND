@@ -11,12 +11,13 @@ export class ActivityController {
     ) { }
     @Post()
     create(
-        @Query() many: boolean,
-        @Body() createActivityDto: CreateActivityDto,
-        @Body() createManyActivitiesDto: CreateActivityDto[]
+        @Body() createActivityDto: CreateActivityDto
     ) {
-        if(many) return this.activityService.createMany(createManyActivitiesDto)
         return this.activityService.create(createActivityDto)
+    }
+    @Post('many')
+    createMany(@Body() createManyActivitiesDto: CreateActivityDto[]) {
+        return this.activityService.createMany(createManyActivitiesDto)
     }
     @Get()
     find(
@@ -27,7 +28,7 @@ export class ActivityController {
         if (template) return this.activityService.findByPartialTemplate(template)
         return this.activityService.findAll()
     }
-    @Put()
+    @Put(':id')
     update(
         @Param('id') id: string,
         @Body() updateActivityDto: UpdateActivityDto

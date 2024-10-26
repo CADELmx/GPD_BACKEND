@@ -89,7 +89,7 @@ export class ActivityService {
             if (activitiesByTemplate.length === 0) return {
                 message: 'No hay actividades académicas para mostrar',
                 error: null,
-                data: null
+                data: []
             }
             return {
                 message: 'Actividad académica obtenida con éxito',

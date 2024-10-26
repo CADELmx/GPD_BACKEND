@@ -53,15 +53,11 @@ export class AreasService {
           name: 'asc',
         },
       });
-
-      if (areas.length === 0) {
-        return {
-          message: 'No hay áreas registradas',
-          error: null,
-          data: [],
-        };
+      if (areas.length === 0) return {
+        message: 'No hay áreas registradas',
+        error: null,
+        data: [],
       }
-
       return {
         message: 'Áreas encontradas',
         error: null,
