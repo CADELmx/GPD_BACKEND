@@ -9,18 +9,22 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-  .setTitle('GPD API')
-  .setDescription('Descirpción de uso de la API del proyecto GPD')
-  .setVersion('1.0')
-  .addBearerAuth()
-  .addTag('gpd')
-  .build();
+    .setTitle('GPD API')
+    .setDescription('Descirpción de uso de la API del proyecto GPD')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .addTag('gpd')
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalInterceptors(new BigIntInterceptor());
   app.useGlobalPipes(new CustomValidationPipe());
   app.useGlobalFilters(new CustomExceptionFilter());
+  app.enableCors({
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: '*',
+  });
   await app.listen(3000);
 }
 bootstrap();
