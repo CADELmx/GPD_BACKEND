@@ -11,7 +11,7 @@ export class AreasService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) {}
+  ) { }
 
   /**
    * Creates a new area.
@@ -37,7 +37,23 @@ export class AreasService {
       );
     }
   }
-
+  async createMany(createAreaDto: CreateAreaDto[]) {
+    try {
+      const areas = await this.prisma.area.createMany({
+        data: createAreaDto,
+      })
+      return {
+        message: 'Áreas registradas',
+        error: null,
+        data: areas,
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear las áreas',
+      )
+    }
+  }
   /**
    * Retrieves all areas.
    * @returns A promise that resolves with a message, any error encountered, and a list of areas.
