@@ -1,12 +1,10 @@
-import { Controller, Get, Request, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/strategies/guards/jwt-auth.guard';
+import { Controller, Get, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('/profile')
   async getProfile(@Request() req) {
     const userId = BigInt(req.user.id);

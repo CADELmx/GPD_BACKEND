@@ -1,14 +1,21 @@
 import { Template } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTemplateDto } from 'src/models/template/create-template.dto';
-import { UpdateTemplateDto } from 'src/models/template/update-template.dto';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { CreateTemplateDto } from '../models/template/create-template.dto';
+import { UpdateTemplateDto } from '../models/template/update-template.dto';
 
 @Injectable()
 export class TemplatesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly prismaErrorHandler: PrismaErrorHandler,
+  ) { }
 
   /**
+   * Registers a new template.
+   * @param {CreateTemplateDto} createTemplateDto - The template data to register.
+   * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The registered template.
    * Registers a new template.
    * @param {CreateTemplateDto} createTemplateDto - The template data to register.
    * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The registered template.
@@ -20,9 +27,7 @@ export class TemplatesService {
       await this.validateRevisedById(createTemplateDto);
 
       const template = await this.prisma.template.create({
-        data: {
-          ...createTemplateDto,
-        },
+        data: createTemplateDto,
       });
       return {
         message: 'Plantilla registrada',
@@ -30,15 +35,16 @@ export class TemplatesService {
         data: template,
       };
     } catch (error) {
-      return {
-        message: 'Error al registrar la plantilla',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear la plantilla',
+      );
     }
   }
 
   /**
+   * Lists all templates.
+   * @returns {Promise<{ message: string; error: string | null; data: Template[] | null }>} - All registered templates.
    * Lists all templates.
    * @returns {Promise<{ message: string; error: string | null; data: Template[] | null }>} - All registered templates.
    */
@@ -46,25 +52,21 @@ export class TemplatesService {
     // return await this.prisma.personalData.findMany();
     try {
       const templates = await this.prisma.template.findMany();
-      if (templates.length === 0) {
-        return {
-          message: 'No se encontraron plantillas',
-          error: null,
-          data: [],
-        };
+      if (templates.length === 0) return {
+        message: 'No se encontraron plantillas',
+        error: null,
+        data: [],
       }
-
       return {
         message: 'Plantillas obtenidas con exito',
         error: null,
         data: templates,
       };
     } catch (error) {
-      return {
-        message: 'Error al obtener las plantillas',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las plantillas',
+      );
     }
   }
 
@@ -97,11 +99,10 @@ export class TemplatesService {
         };
       }
     } catch (error) {
-      return {
-        message: 'Error al obtener la plantilla',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar la plantilla',
+      );
     }
   }
 
@@ -136,9 +137,7 @@ export class TemplatesService {
         where: {
           id,
         },
-        data: {
-          ...updateTemplateDto,
-        },
+        data: updateTemplateDto,
       });
 
       return {
@@ -147,11 +146,10 @@ export class TemplatesService {
         data: updatedTemplate,
       };
     } catch (error) {
-      return {
-        message: 'Error al actualizar la plantilla',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al actualizar la plantilla',
+      );
     }
   }
 
@@ -174,11 +172,10 @@ export class TemplatesService {
         data: null,
       };
     } catch (error) {
-      return {
-        message: 'Error al eliminar la plantilla',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al eliminar la plantilla',
+      );
     }
   }
 

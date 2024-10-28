@@ -3,22 +3,17 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
-  ParseIntPipe,
-  UseGuards,
-  BadRequestException,
+  Query,
+  Put,
 } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
-import { CreateEducationalProgramDto } from '../models/EducationalPrograms/create-educational-program.dto';
-import { UpdateEducationalProgramDto } from '../models/EducationalPrograms/update-educational-program.dto';
-import { LocalAuthGuard } from 'src/auth/strategies/guards/local-auth.guard';
+import { CreateEducationalProgramDto } from '../models/educationalPrograms/create-educational-program.dto';
+import { UpdateEducationalProgramDto } from '../models/educationalPrograms/update-educational-program.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
 
-/**
- * Program root path
- * *http://localhost:3000/educational-programs
- */
+
 @Controller('educational-programs')
 export class EducationalProgramsController {
   constructor(
@@ -32,27 +27,17 @@ export class EducationalProgramsController {
    */
   @Post()
   create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
-    return this.educationalProgramsService.createProgram({ ...createEducationalProgramDto});
+    return this.educationalProgramsService.createProgram(createEducationalProgramDto);
   }
-
   /**
-   * Get all programs
-   * @returns Return the programs
+   * This method is used to find a program by its id or all programs if no query parameters are provided
+   * @param id query parameter to find a program by its id
+   * @returns
    */
-  @UseGuards(LocalAuthGuard)
   @Get()
-  findAll() {
+  find(@Query('id', customIdPipe) id?: number) {
+    if (id) return this.educationalProgramsService.findProgramById(id);
     return this.educationalProgramsService.findAllPrograms();
-  }
-
-  /**
-   * Get a program using its id
-   * @param id id of the program to obtain
-   * @returns Returns the found program
-   */
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.educationalProgramsService.findProgramById(id);
   }
 
   /**
@@ -61,35 +46,37 @@ export class EducationalProgramsController {
    * @param updateEducationalProgramDto Program data to update
    * @returns Returns the updated program
    */
-
-  @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateEducationalProgramDto: UpdateEducationalProgramDto) {
-    return this.educationalProgramsService.updateProgram(id, updateEducationalProgramDto);
+  @Put(':id')
+  update(
+    @Param('id', customIdPipe) id: number,
+    @Body() updateEducationalProgramDto: UpdateEducationalProgramDto,
+  ) {
+    return this.educationalProgramsService.updateProgram(
+      id,
+      updateEducationalProgramDto,
+    );
   }
 
- /**
-  * Method to delete a program
-  * @param id id of the program to delete
-  * @param body Wait for confirmation from the user
-  * @returns Return a message after deleting a program
-  */
-   @Delete(':id')
-   async remove(
-     @Param('id') id: string,
-     @Body() body: { confirmado: boolean }
-   ) {
-     const idNumber = parseInt(id, 10);
- 
-     if (isNaN(idNumber)) {
-       throw new BadRequestException('Formato de ID no válido');
-     }
- 
-     if (!body.confirmado) {
-       return { message: 'Operación no confirmada por el usuario' };
-     }
- 
-     const result = await this.educationalProgramsService.removeProgram(idNumber, body.confirmado);
-     
-     return result;
-   }
- }
+  /**
+   * Method to delete a program
+   * @param id id of the program to delete
+   * @param body Wait for confirmation from the user
+   * @returns Return a message after deleting a program
+   */
+  @Delete(':id')
+  async remove(
+    @Param('id', customIdPipe) id: number,
+    @Body() body: { confirmado: boolean },
+  ) {
+    if (!body.confirmado) {
+      return { message: 'Operación no confirmada por el usuario' };
+    }
+
+    const result = await this.educationalProgramsService.removeProgram(
+      id,
+      body.confirmado,
+    );
+
+    return result;
+  }
+}

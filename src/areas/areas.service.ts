@@ -1,12 +1,17 @@
-import { Area } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
+
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateAreaDto } from 'src/models/area/create-area.dto';
-import { UpdateAreaDto } from 'src/models/area/update-area.dto';
+import { PrismaService } from '../prisma.service';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { Area } from '@prisma/client';
+import { CreateAreaDto } from '../models/area/create-area.dto';
+import { UpdateAreaDto } from '../models/area/update-area.dto';
 
 @Injectable()
 export class AreasService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly prismaErrorHandler: PrismaErrorHandler,
+  ) { }
 
   /**
    * Creates a new area.
@@ -26,14 +31,29 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al registrar el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear el área',
+      );
     }
   }
-
+  async createMany(createAreaDto: CreateAreaDto[]) {
+    try {
+      const areas = await this.prisma.area.createMany({
+        data: createAreaDto,
+      })
+      return {
+        message: 'Áreas registradas',
+        error: null,
+        data: areas,
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear las áreas',
+      )
+    }
+  }
   /**
    * Retrieves all areas.
    * @returns A promise that resolves with a message, any error encountered, and a list of areas.
@@ -49,26 +69,21 @@ export class AreasService {
           name: 'asc',
         },
       });
-
-      if (areas.length === 0) {
-        return {
-          message: 'No hay áreas registradas',
-          error: null,
-          data: [],
-        };
+      if (areas.length === 0) return {
+        message: 'No hay áreas registradas',
+        error: null,
+        data: [],
       }
-
       return {
         message: 'Áreas encontradas',
         error: null,
         data: areas,
       };
     } catch (error) {
-      return {
-        message: 'Error al obtener las áreas',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las áreas',
+      );
     }
   }
 
@@ -106,11 +121,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al obtener el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar el área',
+      );
     }
   }
 
@@ -149,11 +163,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al obtener el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar el área',
+      );
     }
   }
 
@@ -181,11 +194,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al actualizar el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al actualizar el área',
+      );
     }
   }
 
@@ -211,11 +223,10 @@ export class AreasService {
         data: area,
       };
     } catch (error) {
-      return {
-        message: 'Error al eliminar el área',
-        error: error.message,
-        data: null,
-      };
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al eliminar el área',
+      );
     }
   }
 

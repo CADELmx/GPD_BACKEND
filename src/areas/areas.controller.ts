@@ -2,21 +2,20 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Query,
   Delete,
   Controller,
-  ParseIntPipe,
-  BadRequestException,
+  Put,
 } from '@nestjs/common';
 import { AreasService } from './areas.service';
-import { CreateAreaDto } from 'src/models/area/create-area.dto';
-import { UpdateAreaDto } from 'src/models/area/update-area.dto';
+import { CreateAreaDto } from '../models/area/create-area.dto';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { UpdateAreaDto } from '../models/area/update-area.dto';
 
 @Controller('areas')
 export class AreasController {
-  constructor(private readonly areasService: AreasService) {}
+  constructor(private readonly areasService: AreasService) { }
 
   /**
    * Creates a new area.
@@ -27,7 +26,15 @@ export class AreasController {
   create(@Body() createAreaDto: CreateAreaDto) {
     return this.areasService.create(createAreaDto);
   }
-
+  /**
+   * Creates multiple new areas.
+   * @param createAreaDto - Array of Data Transfer Objects for creating new areas.
+   * @returns The number of created areas.
+   */
+  @Post('many')
+  createMany(@Body() createAreaDto: CreateAreaDto[]) {
+    return this.areasService.createMany(createAreaDto)
+  }
   /**
    * Retrieves an area by ID or name, or all areas if no query parameters are provided.
    * @param id - The ID of the area to retrieve (optional).
@@ -36,16 +43,7 @@ export class AreasController {
    */
   @Get()
   async find(
-    @Query(
-      'id',
-      new ParseIntPipe({
-        optional: true,
-        exceptionFactory: () => {
-          return new BadRequestException('El ID debe ser un número');
-        },
-      }),
-    )
-    id?: number,
+    @Query('id', customIdPipe) id?: number,
     @Query('name') name?: string,
   ) {
     if (id) return this.areasService.findOneById(id);
@@ -59,17 +57,9 @@ export class AreasController {
    * @param updateAreaDto - Data Transfer Object for updating an area.
    * @returns The updated area.
    */
-  @Patch(':id')
+  @Put(':id')
   update(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: () => {
-          return new BadRequestException('El ID debe ser un número');
-        },
-      }),
-    )
-    id: number,
+    @Param('id', customIdPipe) id: number,
     @Body() updateAreaDto: UpdateAreaDto,
   ) {
     return this.areasService.update(id, updateAreaDto);
@@ -81,17 +71,7 @@ export class AreasController {
    * @returns The deleted area.
    */
   @Delete(':id')
-  remove(
-    @Param(
-      'id',
-      new ParseIntPipe({
-        exceptionFactory: () => {
-          return new BadRequestException('El ID debe ser un número');
-        },
-      }),
-    )
-    id: number,
-  ) {
+  remove(@Param('id', customIdPipe) id: number) {
     return this.areasService.remove(id);
   }
 }
