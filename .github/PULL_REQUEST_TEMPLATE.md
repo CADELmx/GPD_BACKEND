@@ -25,7 +25,7 @@ This pull request implements the functionalities for the `ExampleOfModule` modul
 if is related to an issue or can close an issue
 - Closes #IssueNumber
 
-## Notes
-- Some extra context or importante information for testing, linting or deploy and mantain the code, such as necessary .env file or extra configuration for the code to work properly.
+> [!NOTE]
+> Some extra context or important information for testing, linting or deploy and mantain the code, such as necessary .env file or extra configuration for the code to work properly.
 
 Thank you for reviewing this pull request. I look forward to your feedback.

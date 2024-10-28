@@ -3,6 +3,11 @@ import {
   NotAcceptableException,
   NotFoundException,
 } from '@nestjs/common';
+import {
+  Injectable,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Users } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 

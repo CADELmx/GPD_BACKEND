@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString, Min, min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
 
 export class CreateEducationalProgramDto {
   @IsString({ message: 'La abreviatura debe ser una cadena de texto' })
@@ -14,3 +14,4 @@ export class CreateEducationalProgramDto {
   @Min(1, { message: 'El Id del area debe ser un dato válido' })
   areaId: number;
 }
+
