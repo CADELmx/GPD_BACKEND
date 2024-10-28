@@ -10,7 +10,7 @@ export class TemplatesService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) {}
+  ) { }
 
   /**
    * Registers a new template.
@@ -24,9 +24,7 @@ export class TemplatesService {
       await this.validateRevisedById(createTemplateDto);
 
       const template = await this.prisma.template.create({
-        data: {
-          ...createTemplateDto,
-        },
+        data: createTemplateDto,
       });
       return {
         message: 'Plantilla registrada',
@@ -49,14 +47,11 @@ export class TemplatesService {
     // return await this.prisma.personalData.findMany();
     try {
       const templates = await this.prisma.template.findMany();
-      if (templates.length === 0) {
-        return {
-          message: 'No se encontraron plantillas',
-          error: null,
-          data: [],
-        };
+      if (templates.length === 0) return {
+        message: 'No se encontraron plantillas',
+        error: null,
+        data: [],
       }
-
       return {
         message: 'Plantillas obtenidas con exito',
         error: null,

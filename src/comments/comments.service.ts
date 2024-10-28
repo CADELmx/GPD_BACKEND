@@ -13,9 +13,14 @@ export class CommentsService {
 
     async create(createCommentDto: CreateCommentDto) {
         try {
-            const response = await this.prisma.comments.create({
+            const comment = await this.prisma.comments.create({
                 data: createCommentDto
             })
+            return {
+                message: 'Comentario registrado con éxito',
+                error: null,
+                data: comment
+            }
         } catch (error) {
             this.prismaErrorHandler.handleError(
                 error,
@@ -53,7 +58,7 @@ export class CommentsService {
             if (comments.length === 0) return {
                 message: 'No hay comentarios para mostrar',
                 error: null,
-                data: null
+                data: []
             }
             return {
                 message: 'Comentarios obtenidos con éxito',

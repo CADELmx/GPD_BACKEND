@@ -15,7 +15,7 @@ import { UpdateAreaDto } from '../models/area/update-area.dto';
 
 @Controller('areas')
 export class AreasController {
-  constructor(private readonly areasService: AreasService) {}
+  constructor(private readonly areasService: AreasService) { }
 
   /**
    * Creates a new area.
@@ -26,7 +26,15 @@ export class AreasController {
   create(@Body() createAreaDto: CreateAreaDto) {
     return this.areasService.create(createAreaDto);
   }
-
+  /**
+   * Creates multiple new areas.
+   * @param createAreaDto - Array of Data Transfer Objects for creating new areas.
+   * @returns The number of created areas.
+   */
+  @Post('many')
+  createMany(@Body() createAreaDto: CreateAreaDto[]) {
+    return this.areasService.createMany(createAreaDto)
+  }
   /**
    * Retrieves an area by ID or name, or all areas if no query parameters are provided.
    * @param id - The ID of the area to retrieve (optional).

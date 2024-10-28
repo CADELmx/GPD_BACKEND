@@ -13,7 +13,7 @@ export class EducationalProgramsService {
   constructor(
     private prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) {}
+  ) { }
 
   /**
    * Method for creating a new educational program.
@@ -54,10 +54,9 @@ export class EducationalProgramsService {
     try {
       const programs = await this.prisma.educationalPrograms.findMany();
 
-      if (programs.length === 0) {
-        return { message: 'Sin programas educativos', error: null, data: null };
+      if (programs.length === 0) return {
+        message: 'Sin programas educativos', error: null, data: []
       }
-
       return {
         message: 'Programas educativos encontrados',
         error: null,
@@ -88,12 +87,11 @@ export class EducationalProgramsService {
           where: { id },
         });
 
-      if (!educationalProgram) {
-        throw new NotFoundException(
-          `Programa educativo con ID ${id} no encontrado`,
-        );
+      if (!educationalProgram) return {
+        message: 'Programa educativo no encontrado',
+        error: null,
+        data: null,
       }
-
       return {
         data: educationalProgram,
         error: null,

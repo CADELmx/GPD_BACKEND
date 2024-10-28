@@ -36,9 +36,9 @@ export class PartialTemplatesController {
     @Query('activities') activities?: boolean
   ) {
     if (activities) {
-      if (id) return this.partialTemplatesService.findOneJoin(id)
-      if (status) return this.partialTemplatesService.findAllJoin(status)
-      return this.partialTemplatesService.findAllJoin()
+      if (id) return this.partialTemplatesService.findOneJoinActivities(id)
+      if (status) return this.partialTemplatesService.findAllJoinActivities(status)
+      return this.partialTemplatesService.findAllJoinActivities()
     }
     if (id) return this.partialTemplatesService.findOne(id);
     if (status) return this.partialTemplatesService.findAll(status);

@@ -63,6 +63,11 @@ export class PersonalDataService {
                 where: filter,
                 select: this.personalDataSelector
             })
+            if (personalData.length === 0) return {
+                message: 'No se encontraron trabajadores',
+                error: null,
+                data: personalData
+            }
             return {
                 message: 'Trabajadores obtenidos con éxito',
                 error: null,
