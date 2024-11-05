@@ -28,7 +28,7 @@ export class EducationalProgramsService {
     data: EducationalPrograms | null;
   }> {
     try {
-      await this.validateAreaId(educationalProgram);
+      await this.validateAreaId(educationalProgram.areaId);
       const newPartialTemplate = await this.prisma.educationalPrograms.create({
         data: educationalProgram,
       });
@@ -46,6 +46,22 @@ export class EducationalProgramsService {
     }
   }
 
+  async createManyPrograms(educationalPrograms: CreateEducationalProgramDto[], id: number) {
+    try {
+      await this.validateAreaId(id)
+      const createdEducationalPrograms = await this.prisma.educationalPrograms.createMany({
+        data: educationalPrograms
+      })
+      return {
+        message: 'Programas educativos registrados con éxito'
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al registrar los programas educativos'
+      )
+    }
+  }
   /**
    * Method to consult all programs
    * @returns Returns all registered educational programs
@@ -121,7 +137,7 @@ export class EducationalProgramsService {
     data: EducationalPrograms | null;
   }> {
     try {
-      await this.validateAreaId(updateEducationalProgramDto);
+      await this.validateAreaId(updateEducationalProgramDto.areaId);
 
       await this.findProgramById(id);
 
@@ -180,29 +196,27 @@ export class EducationalProgramsService {
 
   /**
    * Validates if foreign keys (areaId, responsibleId, revisedById)
-   * @param {CreateEducationalProgramDto | UpdateEducationalProgramDto} dto - Data to validate
+   * @param {areaId} id - if
    * @throws {NotFoundException} - If any foreign keys is not found
    */
   private async validateAreaId(
-    dto: CreateEducationalProgramDto | UpdateEducationalProgramDto,
+    areaId: number
   ): Promise<void> {
-    const { areaId } = dto;
     const validations = [];
 
-    if (areaId !== undefined) {
-      if (typeof areaId !== 'number') {
-        throw new Error(
-          `Tipo de areaId inválido: se esperaba un número, se recibió ${typeof areaId}`,
-        );
-      }
-      validations.push(
-        this.prisma.area.count({ where: { id: areaId } }).then((count) => {
-          if (count === 0) {
-            throw new NotFoundException(`Área con ID ${areaId} no existe`);
-          }
-        }),
+    if (typeof areaId !== 'number') {
+      throw new Error(
+        `Tipo de areaId inválido: se esperaba un número, se recibió ${typeof areaId}`,
       );
     }
+    validations.push(
+      this.prisma.area.count({ where: { id: areaId } }).then((count) => {
+        if (count === 0) {
+          throw new NotFoundException(`Área con ID ${areaId} no existe`);
+        }
+      }),
+    );
+  }
 
     await Promise.all(validations);
   }
