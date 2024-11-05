@@ -46,14 +46,16 @@ export class EducationalProgramsService {
     }
   }
 
-  async createManyPrograms(educationalPrograms: CreateEducationalProgramDto[], id: number) {
+  async createManyPrograms(id: number, educationalPrograms: CreateEducationalProgramDto[]) {
     try {
       await this.validateAreaId(id)
       const createdEducationalPrograms = await this.prisma.educationalPrograms.createMany({
         data: educationalPrograms
       })
       return {
-        message: 'Programas educativos registrados con éxito'
+        message: 'Programas educativos registrados con éxito',
+        data: createdEducationalPrograms,
+        error: null
       }
     } catch (error) {
       return this.prismaErrorHandler.handleError(
@@ -216,8 +218,8 @@ export class EducationalProgramsService {
         }
       }),
     );
-  }
-
     await Promise.all(validations);
   }
+
 }
+
