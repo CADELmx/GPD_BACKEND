@@ -29,7 +29,7 @@ export class ActivityService {
             const activities: CreateActivityDto[] = createActivities.map((dto) => {
                 return ({
                     ...dto,
-                    partialtemplateId: id
+                    partialTemplateId: id
                 })
             })
             const registeredActivities = await this.prisma.activity.createMany({
@@ -38,7 +38,7 @@ export class ActivityService {
             return {
                 message: 'Actividades academicas registradas',
                 error: null,
-                data: activities
+                data: registeredActivities
             }
         } catch (error) {
             return this.prismaErrorHandler.handleError(error, 'Error al crear las actividades academicas')

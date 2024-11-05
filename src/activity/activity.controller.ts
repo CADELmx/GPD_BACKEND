@@ -17,8 +17,8 @@ export class ActivityController {
     }
     @Post('many')
     createMany(
+        @Query('id') id: number,
         @Body() createManyActivities: CreateActivitiesDto[]
-        @Query('id') id: number
     ) {
         return this.activityService.createMany(id, createManyActivities)
     }

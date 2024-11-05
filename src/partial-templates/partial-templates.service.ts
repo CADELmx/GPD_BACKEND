@@ -6,7 +6,7 @@ import {
 import { PartialTemplate } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
-import { CreatePartialTemplateDto } from '../models/partialTemplate/create-partial-template.dto';
+import { CreatePartialTemplateDto, CreatePartialTemplatesDto } from '../models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-partial-template.dto';
 
 
@@ -45,6 +45,31 @@ export class PartialTemplatesService {
         error,
         'Error al crear la plantilla parcial',
       );
+    }
+  }
+
+  async createMany(id: number, createPartialTemplates: CreatePartialTemplatesDto[]) {
+    try {
+      await this.validateId(id);
+      const partialTemplates: CreatePartialTemplateDto[] = createPartialTemplates.map((partialTemplate) => {
+        return {
+          ...partialTemplate,
+          templateId: id
+        }
+      })
+      const newPartialTemplates = await this.prisma.partialTemplate.createMany({
+        data: partialTemplates
+      })
+      return {
+        message: 'Plantillas parciales creadas con éxito',
+        error: null,
+        data: newPartialTemplates
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear las plantillas parciales'
+      )
     }
   }
 
