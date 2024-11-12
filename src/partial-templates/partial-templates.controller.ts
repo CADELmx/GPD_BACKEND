@@ -9,7 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { PartialTemplatesService } from './partial-templates.service';
-import { CreatePartialTemplateDto } from '../models/partialTemplate/create-partial-template.dto';
+import { CreatePartialTemplateDto, CreatePartialTemplatesDto } from '../models/partialTemplate/create-partial-template.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-partial-template.dto';
 
@@ -28,6 +28,12 @@ export class PartialTemplatesController {
   @Post()
   create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
     return this.partialTemplatesService.create(createPartialTemplateDto);
+  }
+  @Post('/many')
+  createMany(
+    @Query('id', customIdPipe) id: number,
+    @Body() createPartialTemplatesDto: CreatePartialTemplatesDto[]) {
+    return this.partialTemplatesService.createMany(id, createPartialTemplatesDto);
   }
   @Get()
   find(

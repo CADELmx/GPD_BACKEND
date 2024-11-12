@@ -18,7 +18,7 @@ import { customIdPipe } from '../common/validation/custom-validation.pipe';
 export class EducationalProgramsController {
   constructor(
     private readonly educationalProgramsService: EducationalProgramsService,
-  ) {}
+  ) { }
 
   /**
    * Create a new program
@@ -28,6 +28,13 @@ export class EducationalProgramsController {
   @Post()
   create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
     return this.educationalProgramsService.createProgram(createEducationalProgramDto);
+  }
+  @Post()
+  createMany(
+    @Query('id', customIdPipe) id: number,
+    @Body() createPrograms: CreateEducationalProgramDto[]
+  ) {
+    return this.educationalProgramsService.createManyPrograms(id, createPrograms)
   }
   /**
    * This method is used to find a program by its id or all programs if no query parameters are provided
@@ -71,12 +78,10 @@ export class EducationalProgramsController {
     if (!body.confirmado) {
       return { message: 'Operación no confirmada por el usuario' };
     }
-
     const result = await this.educationalProgramsService.removeProgram(
       id,
       body.confirmado,
     );
-
     return result;
   }
 }

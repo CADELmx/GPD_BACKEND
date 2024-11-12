@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateActivityDto } from '../models/activity/create-activity.dto';
+import { CreateActivitiesDto, CreateActivityDto } from '../models/activity/create-activity.dto';
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 
@@ -24,15 +24,21 @@ export class ActivityService {
         }
     }
 
-    async createMany(createActivityDtos: CreateActivityDto[]): Promise<any> {
+    async createMany(id: number, createActivities: CreateActivitiesDto[]): Promise<any> {
         try {
-            const activities = await this.prisma.activity.createMany({
-                data: createActivityDtos
+            const activities: CreateActivityDto[] = createActivities.map((dto) => {
+                return ({
+                    ...dto,
+                    partialTemplateId: id
+                })
+            })
+            const registeredActivities = await this.prisma.activity.createMany({
+                data: createActivities
             })
             return {
                 message: 'Actividades academicas registradas',
                 error: null,
-                data: activities
+                data: registeredActivities
             }
         } catch (error) {
             return this.prismaErrorHandler.handleError(error, 'Error al crear las actividades academicas')
