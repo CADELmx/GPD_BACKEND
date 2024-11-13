@@ -169,16 +169,8 @@ export class EducationalProgramsService {
 
   async removeProgram(
     id: number,
-    confirmed: boolean,
   ): Promise<{ message: string; error: string | null; data: null }> {
     try {
-      if (!confirmed) {
-        return {
-          data: null,
-          error: 'No confirmado',
-          message: 'No se ha confirmado la eliminación',
-        };
-      }
       await this.findProgramById(id);
       await this.prisma.educationalPrograms.delete({
         where: { id },

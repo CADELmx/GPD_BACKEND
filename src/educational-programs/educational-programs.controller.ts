@@ -73,14 +73,9 @@ export class EducationalProgramsController {
   @Delete(':id')
   async remove(
     @Param('id', customIdPipe) id: number,
-    @Body() body: { confirmado: boolean },
   ) {
-    if (!body.confirmado) {
-      return { message: 'Operación no confirmada por el usuario' };
-    }
     const result = await this.educationalProgramsService.removeProgram(
-      id,
-      body.confirmado,
+      id
     );
     return result;
   }
