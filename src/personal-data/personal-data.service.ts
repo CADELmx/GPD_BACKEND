@@ -50,6 +50,7 @@ export class PersonalDataService {
                 data: newPersonalData
             }
         } catch (error) {
+            console.log(error)
             return this.prismaErrorHandler.handleError(
                 error,
                 'Error al registrar trabajadores',
