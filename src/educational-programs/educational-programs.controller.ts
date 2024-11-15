@@ -9,7 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { EducationalProgramsService } from './educational-programs.service';
-import { CreateEducationalProgramDto } from '../models/educationalPrograms/create-educational-program.dto';
+import { CreateEducationalProgramDto, CreateEducationalProgramsDto } from '../models/educationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/educationalPrograms/update-educational-program.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 
@@ -29,10 +29,10 @@ export class EducationalProgramsController {
   create(@Body() createEducationalProgramDto: CreateEducationalProgramDto) {
     return this.educationalProgramsService.createProgram(createEducationalProgramDto);
   }
-  @Post()
+  @Post('many')
   createMany(
     @Query('id', customIdPipe) id: number,
-    @Body() createPrograms: CreateEducationalProgramDto[]
+    @Body() createPrograms: CreateEducationalProgramsDto[]
   ) {
     return this.educationalProgramsService.createManyPrograms(id, createPrograms)
   }

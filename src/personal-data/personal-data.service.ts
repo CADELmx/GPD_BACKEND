@@ -15,6 +15,7 @@ export class PersonalDataService {
         name: true,
         active: true,
         area: true,
+        position: true,
     }
     partialTemplateSelector = {
         id: true,
@@ -85,7 +86,7 @@ export class PersonalDataService {
         try {
             const personalData = await this.prisma.personalData.findUnique({
                 where: {
-                    id
+                    ide: id
                 },
                 select: this.personalDataSelector
             })
@@ -110,7 +111,7 @@ export class PersonalDataService {
         try {
             const personalDataWithPartialTemplate = this.prisma.personalData.findUnique({
                 where: {
-                    id
+                    ide: id
                 },
                 include: {
                     partialTemplates: {
@@ -167,7 +168,7 @@ export class PersonalDataService {
         try {
             const updatedPersonalData = await this.prisma.personalData.update({
                 where: {
-                    id
+                    ide: id
                 },
                 data
             })

@@ -2,7 +2,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateEducationalProgramDto } from '../models/educationalPrograms/create-educational-program.dto';
+import { CreateEducationalProgramDto, CreateEducationalProgramsDto } from '../models/educationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/educationalPrograms/update-educational-program.dto';
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
@@ -46,11 +46,12 @@ export class EducationalProgramsService {
     }
   }
 
-  async createManyPrograms(id: number, educationalPrograms: CreateEducationalProgramDto[]) {
+  async createManyPrograms(id: number, educationalPrograms: CreateEducationalProgramsDto[]) {
     try {
       await this.validateAreaId(id)
+      const newEducationalPrograms: CreateEducationalProgramDto[] = educationalPrograms.map(program => ({ ...program, areaId: id }))
       const createdEducationalPrograms = await this.prisma.educationalPrograms.createMany({
-        data: educationalPrograms
+        data: newEducationalPrograms
       })
       return {
         message: 'Programas educativos registrados con éxito',
@@ -60,7 +61,7 @@ export class EducationalProgramsService {
     } catch (error) {
       return this.prismaErrorHandler.handleError(
         error,
-        'Error al registrar los programas educativos'
+        'Error al crear los programas educativos'
       )
     }
   }
@@ -70,8 +71,12 @@ export class EducationalProgramsService {
    */
   async findAllPrograms(): Promise<any> {
     try {
-      const programs = await this.prisma.educationalPrograms.findMany();
-
+      const programs = await this.prisma.educationalPrograms.findMany({
+        orderBy: [
+          { areaId: 'asc', },
+          { abbreviation: 'asc' }
+        ]
+      });
       if (programs.length === 0) return {
         message: 'Sin programas educativos', error: null, data: []
       }
