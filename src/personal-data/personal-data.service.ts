@@ -81,9 +81,9 @@ export class PersonalDataService {
             )
         }
     }
-    findOne(id: number) {
+    async findOne(id: number) {
         try {
-            const personalData = this.prisma.personalData.findUnique({
+            const personalData = await this.prisma.personalData.findUnique({
                 where: {
                     id
                 },
