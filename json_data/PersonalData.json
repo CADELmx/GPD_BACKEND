@@ -1,2141 +1,1987 @@
 [
     {
-        "nt": 127,
+        "ide": 127,
         "name": "Marina Cruz Cárdenas",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 128,
+        "ide": 128,
         "name": "Diana Carolina Gutiérrez Figueroa",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 134,
+        "ide": 134,
         "name": "Patricia Pérez Ballinas",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 268,
+        "ide": 268,
         "name": "Narciso Castillo Sanguino",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 308,
+        "ide": 308,
         "name": "Elizabeth García Luís",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 381,
+        "ide": 381,
         "name": "Luis Alberto Riaño Domínguez",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 527,
+        "ide": 527,
         "name": "Fabiola Flores Trejo",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 549,
+        "ide": 549,
         "name": "Erandi Yutzil Luisillo Torrealba",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 563,
+        "ide": 563,
         "name": "Miguelina García Herrera",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 33,
+        "ide": 33,
         "name": "Juana Grisel Casarrubias Hernández",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 85,
+        "ide": 85,
         "name": "María del Socorro Ramírez Ramírez",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 6,
+        "ide": 6,
         "name": "Celina Rincón Muñiz",
         "position": "Directora de Programa Educativo",
         "department": "P.E. De Procesos Alimentarios y paramédico",
         "active": true
     },
     {
-        "nt": 9,
+        "ide": 9,
         "name": "Silvestre Martínez Reyes",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 12,
+        "ide": 12,
         "name": "Laura Adriana Cadena Salgado",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 15,
+        "ide": 15,
         "name": "Miguel Fidel Vázquez Solís",
         "position": "Jefe de Departamento",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 18,
+        "ide": 18,
         "name": "Félix Martín Peña Cruz Archundia",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 27,
+        "ide": 27,
         "name": "Antonio Soriano Hernández",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 28,
+        "ide": 28,
         "name": "Justina Sierra Moctezuma",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 30,
+        "ide": 30,
         "name": "Francisco Javier Rodríguez Vazquez",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 34,
+        "ide": 34,
         "name": "Janet Cabrera García",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 36,
+        "ide": 36,
         "name": "Cristóbal Sosa López",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 37,
+        "ide": 37,
         "name": "Virginia García Meneses",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 38,
+        "ide": 38,
         "name": "Socorro Isabel Diego Estudillo",
         "position": "Coordinadora",
         "department": "Subdirección de Extensión Universitaria",
         "active": true
     },
     {
-        "nt": 39,
+        "ide": 39,
         "name": "Noe Flores Infante",
         "position": "Jefe de Oficina",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 40,
+        "ide": 40,
         "name": "Alicia Lima Sánchez",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 41,
+        "ide": 41,
         "name": "Daniel Aguilar Jiménez",
         "position": "Profesor de Tiempo Completo Asociado \"A\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 42,
+        "ide": 42,
         "name": "Dominga Madero Arriola",
         "position": "Investigadora especializada",
         "department": "Subdirección de Servicios Administrativos",
         "active": true
     },
     {
-        "nt": 43,
+        "ide": 43,
         "name": "Jenny Jaimes González",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 46,
+        "ide": 46,
         "name": "Victorina Soriano Narveza",
         "position": "Jefa de Oficina",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 49,
+        "ide": 49,
         "name": "Lorena Vázquez Campos",
         "position": "Coordinador",
         "department": "P.E. Tecnologías de la Información y Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 51,
+        "ide": 51,
         "name": "Ariadna Urusquieta Santiago",
         "position": "Secretaria de Rector",
         "department": "Rectoría",
         "active": true
     },
     {
-        "nt": 52,
+        "ide": 52,
         "name": "Josué Jiménez Rojas",
         "position": "Analista Administrativo",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 55,
+        "ide": 55,
         "name": "Fernando Flores Aguilar",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 58,
+        "ide": 58,
         "name": "Fernando Antonio Sierra Moctezuma",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 60,
+        "ide": 60,
         "name": "Elena Palapa Primor",
         "position": "Analista Administrativo",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 61,
+        "ide": 61,
         "name": "Yoeli Mirena Merino Muñoz",
         "position": "Secretaria de Director de área",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 62,
+        "ide": 62,
         "name": "Socorro González Manjarrez",
         "position": "Analista Administrativo",
         "department": "Departamento de Servicios Médicos",
         "active": true
     },
     {
-        "nt": 63,
+        "ide": 63,
         "name": "Elidio Martínez Reyes",
         "position": "Coordinador",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 64,
+        "ide": 64,
         "name": "María del Carmen Roman Garzón",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 65,
+        "ide": 65,
         "name": "Ana María Aguilar Vázquez",
         "position": "Jefa de Oficina",
         "department": "Rectoría",
         "active": true
     },
     {
-        "nt": 66,
+        "ide": 66,
         "name": "Anahí Medina Ramírez",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 67,
+        "ide": 67,
         "name": "Luz María Rosas Castro",
         "position": "Jefa de Oficina",
         "department": "Dirección de Vinculación",
         "active": true
     },
     {
-        "nt": 69,
+        "ide": 69,
         "name": "Dalia Cruz Hernández",
         "position": "Jefa de Oficina",
         "department": "Departamento de Recursos Humanos",
         "active": true
     },
     {
-        "nt": 70,
+        "ide": 70,
         "name": "Lorena Cuevas Mendieta",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 72,
+        "ide": 72,
         "name": "Mauricio Bernardo Torres Sánchez",
         "position": "Chofer de Rector",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 76,
+        "ide": 76,
         "name": "Amado Enrique Navarro Frómeta",
         "position": "Profesor de Tiempo Completo Titular \"B\"",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 77,
+        "ide": 77,
         "name": "Alfonso Monterrosas Fuentes",
         "position": "Encargado de Despacho del P.E. Tecnologías de la Información y Lengua Inglesa",
         "department": "P.E. de Tecnologías de la Información y Lengua Inglesa ",
         "active": true
     },
     {
-        "nt": 78,
+        "ide": 78,
         "name": "Carlos Artemio Ortíz Ramírez",
         "position": "Profesor de Tiempo Completo Titular \"A\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 80,
+        "ide": 80,
         "name": "Sandro Cid Ortega",
         "position": "Profesor de Tiempo Completo Titular \"A\"",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 91,
+        "ide": 91,
         "name": "Sonia Guerrero Mentado",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 92,
+        "ide": 92,
         "name": "Lucia Reyes Martínez",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 94,
+        "ide": 94,
         "name": "Janet Merino Viazcán",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 95,
+        "ide": 95,
         "name": "Maria de Lourdes Beltrán Romero",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 97,
+        "ide": 97,
         "name": "Herendira Vicuña Tapia",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 98,
+        "ide": 98,
         "name": "José Luis Leana Acevedo",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 99,
+        "ide": 99,
         "name": "Humberto Herrera López",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 110,
+        "ide": 110,
         "name": "Iván Antonio Flores Trujillo",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 115,
+        "ide": 115,
         "name": "Oscar Esteban Guerrero Hernández",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 116,
+        "ide": 116,
         "name": "Erick Mario López Méndez",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 117,
+        "ide": 117,
         "name": "Juan Tufiño Barco",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 118,
+        "ide": 118,
         "name": "Reyna Trinidad Reyes Rodríguez",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 119,
+        "ide": 119,
         "name": "Catalina Edith Ortíz Martínez",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 121,
+        "ide": 121,
         "name": "Patricia Mendoza Crisóstomo",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 122,
+        "ide": 122,
         "name": "Miriam Muñoz Flores",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 126,
+        "ide": 126,
         "name": "David García Pacheco",
         "position": "Profesor de Tiempo Completo Asociado \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 129,
+        "ide": 129,
         "name": "Eulalio Rivera López",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 135,
+        "ide": 135,
         "name": "Silvia Edith Cortes Martínez",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 139,
+        "ide": 139,
         "name": "Soledad Hernández Morales",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 142,
+        "ide": 142,
         "name": "Yetzabel Palma Bermejo",
         "position": "Profesora de Tiempo Completo Asociado \"B\"",
         "department": "P.E. de Contaduría ",
         "active": true
     },
     {
-        "nt": 144,
+        "ide": 144,
         "name": "Leticia Díaz Rincón",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 146,
+        "ide": 146,
         "name": "Arturo Gutiérrez Salgado",
         "position": "Técnico Bibliotecario",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 147,
+        "ide": 147,
         "name": "Rodolfo Alejandro Gómez Gutiérrez",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 151,
+        "ide": 151,
         "name": "Isaúl Herrera Vélez",
         "position": "Profesor de asignatura \"B\"",
         "department": "Actividades culturales y deportivas",
         "active": true
     },
     {
-        "nt": 162,
+        "ide": 162,
         "name": "Sandra Mónica Romero Leal",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 165,
+        "ide": 165,
         "name": "Gustavo García Rojas",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Contaduría (Tulcingo)",
         "active": true
     },
     {
-        "nt": 170,
+        "ide": 170,
         "name": "Elizabeth Fortozo Tapia",
         "position": "Jefa de Departamento",
         "department": "Departamento de Planeación y Evaluación",
         "active": true
     },
     {
-        "nt": 174,
+        "ide": 174,
         "name": "Jesus Avila Valle",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Contaduría (tulcingo)",
         "active": true
     },
     {
-        "nt": 179,
+        "ide": 179,
         "name": "Sergio Carlos Delgado Reyes",
         "position": "Profesor de Tiempo Completo Asociado \"A\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 187,
+        "ide": 187,
         "name": "Fernando Luna Cano",
         "position": "Profesor de asignatura \"B\"",
         "department": "Actividades culturales y deportivas",
         "active": true
     },
     {
-        "nt": 188,
+        "ide": 188,
         "name": "Mario Quiñones Mendoza",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 189,
+        "ide": 189,
         "name": "Mario Romero Moranchel",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 193,
+        "ide": 193,
         "name": "Alicia Esthela Vidal Mejía",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 212,
+        "ide": 212,
         "name": "Fernando Díaz de la Rosa",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 216,
+        "ide": 216,
         "name": "Cupertino Lucero Álvarez",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 221,
+        "ide": 221,
         "name": "Elva Patricia Ramírez Cortes",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 224,
+        "ide": 224,
         "name": "Eva María Sánchez Camacho",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 227,
+        "ide": 227,
         "name": "Carlos Alberto González González",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 229,
+        "ide": 229,
         "name": "Ariadna Guadalupe Bravo Aguirre",
         "position": "Profesora de Tiempo Completo Asociado \"A\"",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 243,
+        "ide": 243,
         "name": "José Ángel Rosas Alatriste",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 246,
+        "ide": 246,
         "name": "Angela Hernández Ríos",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 248,
+        "ide": 248,
         "name": "Ma. Del Carmen Tzoni Cantellano",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 249,
+        "ide": 249,
         "name": "Susana Gabriela Toribio Perez",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 251,
+        "ide": 251,
         "name": "María Vázquez Vázquez",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 256,
+        "ide": 256,
         "name": "Miguel Ángel Marín Méndez",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 261,
+        "ide": 261,
         "name": "Maria Magdalena Rojas Nando",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 262,
+        "ide": 262,
         "name": "Lorenzo Morales Morales",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 265,
+        "ide": 265,
         "name": "Conrado Castro Bravo",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 267,
+        "ide": 267,
         "name": "Benito Rodriguez Soriano",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 277,
+        "ide": 277,
         "name": "Jorge Antonio Herrera Cárdenas",
         "position": "Jefe de Departamento",
         "department": "Departamento de investigación y Desarrollo",
         "active": true
     },
     {
-        "nt": 279,
+        "ide": 279,
         "name": "Rosa Delfina González Vicente",
         "position": "Profesora de Tiempo Completo Asociado \"A\"",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 284,
+        "ide": 284,
         "name": "Pedro García Martínez",
         "position": "Técnico Especializado en Mantenimiento",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 289,
+        "ide": 289,
         "name": "Mariza González Vicente",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 300,
+        "ide": 300,
         "name": "Verónica Barragán Ramales",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría (Tulcingo)",
         "active": true
     },
     {
-        "nt": 302,
+        "ide": 302,
         "name": "Yarismin Montiel Colin",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 303,
+        "ide": 303,
         "name": "Cesar Lucero Ayala",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 305,
+        "ide": 305,
         "name": "Alfonso Felipe Lima Cortes",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 307,
+        "ide": 307,
         "name": "Edith Vargas Morales",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 309,
+        "ide": 309,
         "name": "Christian Gamez Valencia",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 311,
+        "ide": 311,
         "name": "Nathaly Solano Palapa",
         "position": "Profesora de Tiempo Completo Asociado \"A\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 315,
+        "ide": 315,
         "name": "Maritza Aguilar Pérez",
         "position": "Técnica Bibliotecaria",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 319,
+        "ide": 319,
         "name": "Monserrat Fernández Carrera",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 335,
+        "ide": 335,
         "name": "Oscar Diego Estudillo",
         "position": "Profesor de Tiempo Completo Asociado \"B\"",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 338,
+        "ide": 338,
         "name": "Jaime Bazán Herrera",
         "position": "Jefe de Oficina",
         "department": "Departamento de Planeación y Evaluación",
         "active": true
     },
     {
-        "nt": 340,
+        "ide": 340,
         "name": "Antonio Aguilar Galicia",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 341,
+        "ide": 341,
         "name": "Monserrat Maritza Alonso Guzmán",
         "position": "Jefa de Oficina",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 345,
+        "ide": 345,
         "name": "Agustín Vargas Vidals",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 346,
+        "ide": 346,
         "name": "Leonardo Pérez Rosas",
         "position": "Encargado de Despacho del P.E. de Administración y Contaduría",
         "department": "P.E. de Administración y Contaduría",
         "active": true
     },
     {
-        "nt": 348,
+        "ide": 348,
         "name": "Verónica Gobea Hernández",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 349,
+        "ide": 349,
         "name": "Adulfa Guerrero Martínez",
         "position": "Profesora de Tiempo Completo Asociado \"A\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 352,
+        "ide": 352,
         "name": "Cesar Merino Vega",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 353,
+        "ide": 353,
         "name": "Carlos Manuel Peralta Benítez",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 358,
+        "ide": 358,
         "name": "Jorge Vázquez Toribio",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Tecnologías de la Información (tulcingo)",
         "active": true
     },
     {
-        "nt": 359,
+        "ide": 359,
         "name": "Mario Alberto Ramírez Salas",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 360,
+        "ide": 360,
         "name": "Pablo Cantorán Ramos",
         "position": "Ingeniero en sistemas",
         "department": "Subdirección de Servicios Administrativos",
         "active": true
     },
     {
-        "nt": 365,
+        "ide": 365,
         "name": "José Galiel Solano Torres",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 367,
+        "ide": 367,
         "name": "María de la Luz Ortega Barrera",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 373,
+        "ide": 373,
         "name": "José Manuel Hernández Delgado",
         "position": "Analista Administrativo",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 375,
+        "ide": 375,
         "name": "Patricia Díaz Rincón",
         "position": "Secretaria de Director de área",
         "department": "P.E. Tecnologías de la Información y Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 384,
+        "ide": 384,
         "name": "Violeta Méndez Cardoso",
         "position": "Jefa de Oficina",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 385,
+        "ide": 385,
         "name": "Luz Maria Acosta Gómez",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 395,
+        "ide": 395,
         "name": "Rafael Ponce Ortíz",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 396,
+        "ide": 396,
         "name": "Luis Roberto Vergara Guevara",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 400,
+        "ide": 400,
         "name": "Iván Hernández Peregrina",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Contaduría (Tulcingo)",
         "active": true
     },
     {
-        "nt": 401,
+        "ide": 401,
         "name": "Mariana Rodríguez Ramales",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 403,
+        "ide": 403,
         "name": "Araceli Nava Rocha",
         "position": "Jefa de Oficina",
         "department": "P. E. Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 407,
+        "ide": 407,
         "name": "Ángel Venancio Luna Vazquez",
         "position": "Profesor de asignatura \"B\"",
         "department": "Actividades culturales y deportivas",
         "active": true
     },
     {
-        "nt": 411,
+        "ide": 411,
         "name": "Hilario Toribio Romero",
         "position": "Profesor de Tiempo Completo Asociado \"A\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 412,
+        "ide": 412,
         "name": "Julio Cesar López Calderón",
         "position": "Profesor de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 413,
+        "ide": 413,
         "name": "Rosalva Salgado Bravo",
         "position": "Directora de Programa Educativo",
         "department": "P.E. de Agrobiotecnología y Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 415,
+        "ide": 415,
         "name": "Arturo Márquez Hernández",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 416,
+        "ide": 416,
         "name": "Eusebio Vega Tenorio",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 421,
+        "ide": 421,
         "name": "Dulce María Sosa García",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 422,
+        "ide": 422,
         "name": "Oscar Morales Barranco",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 423,
+        "ide": 423,
         "name": "Lorena García Flores",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 425,
+        "ide": 425,
         "name": "Edgar Felipe Rendon",
         "position": "Abogado General",
         "department": "Abogado General",
         "active": true
     },
     {
-        "nt": 426,
+        "ide": 426,
         "name": "Erik Reyes Moreno",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 448,
+        "ide": 448,
         "name": "Omar Martínez Isidoro",
         "position": "Jefe de Oficina",
         "department": "Abogado General",
         "active": true
     },
     {
-        "nt": 449,
+        "ide": 449,
         "name": "Cesar Enríquez Orea",
         "position": "Profesor de asignatura \"B\"",
         "department": "Actividades culturales y deportivas",
         "active": true
     },
     {
-        "nt": 479,
+        "ide": 479,
         "name": "Aurora Rocío Alonso Guzmán",
         "position": "Jefa de Oficina",
         "department": "Secretaría Académica",
         "active": true
     },
     {
-        "nt": 480,
+        "ide": 480,
         "name": "Deyanira Meredith Alarcón Bravo",
         "position": "Jefa de Oficina",
         "department": "Departamento de Contabilida",
         "active": true
     },
     {
-        "nt": 484,
+        "ide": 484,
         "name": "Pedro García Pérez",
         "position": "Asistente de servicios y mantenimiento",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 489,
+        "ide": 489,
         "name": "Efidelia Reyes Aquino",
         "position": "Jefa de Oficina",
         "department": "Departamento de Contabilida",
         "active": true
     },
     {
-        "nt": 490,
+        "ide": 490,
         "name": "José Eduardo Pineda Pérez",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 495,
+        "ide": 495,
         "name": "Edwin Hernández Vázquez",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 505,
+        "ide": 505,
         "name": "Gerardo González Adan",
         "position": "Profesor de Tiempo Completo Asociado \"A\"",
         "department": "P.E. de Contaduría ",
         "active": true
     },
     {
-        "nt": 520,
+        "ide": 520,
         "name": "Grecia Maritza Montes Vázquez",
         "position": "Jefa de Departamento",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 521,
+        "ide": 521,
         "name": "Elizabeth Balderas Domínguez",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 523,
+        "ide": 523,
         "name": "Virginia Silva Díaz",
         "position": "Profesora de Tiempo Completo Asociado \"C\"",
         "department": "P.E. de Agricultura Sustentable y Protegida",
         "active": true
     },
     {
-        "nt": 524,
+        "ide": 524,
         "name": "Gabriela Campos González",
         "position": "Encargada de Despacho de la Subdirección de Servicios Administrativos",
         "department": "Subdirección de Servicios Administrativos",
         "active": true
     },
     {
-        "nt": 525,
+        "ide": 525,
         "name": "Olaf Flores Aguilar",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de contaduría",
         "active": true
     },
     {
-        "nt": 528,
+        "ide": 528,
         "name": "Elizabeth Diaz Álvarez",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Procesos Alimentarios",
         "active": true
     },
     {
-        "nt": 532,
+        "ide": 532,
         "name": "Yucelli Osmara Menchaca Castillo",
         "position": "Secretaria de Jefe de Departamento",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 537,
+        "ide": 537,
         "name": "Bardomiano Zenteno Hernández",
         "position": "Jefe de Servicios y Mantenimiento",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 538,
+        "ide": 538,
         "name": "Agustina Guadalupe Ponce Quiroz",
         "position": "Técnica en Contabilidad",
         "department": "Departamento de Recursos Humanos",
         "active": true
     },
     {
-        "nt": 539,
+        "ide": 539,
         "name": "Roberto Mendoza Domínguez",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 541,
+        "ide": 541,
         "name": "Teodoro Ponce Gutiérrez",
         "position": "Profesor de asignatura \"B\"",
         "department": "Actividades culturales y deportivas",
         "active": true
     },
     {
-        "nt": 548,
+        "ide": 548,
         "name": "Iván Geovanni Reyes Díaz",
         "position": "Profesor de asignatura \"B\"",
         "department": "Actividades culturales y deportivas",
         "active": true
     },
     {
-        "nt": 556,
+        "ide": 556,
         "name": "Fanny Galeno Reyes",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 559,
+        "ide": 559,
         "name": "Salomón Tapia Aguilar",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 583,
+        "ide": 583,
         "name": "Andrea Rebeca Chavez Alcaide",
         "position": "Secretaria de Director de Área",
         "department": "Secretaría de Administración y Finanzas",
         "active": true
     },
     {
-        "nt": 605,
+        "ide": 605,
         "name": "Francisco Arriaga Herrera",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 614,
+        "ide": 614,
         "name": "Homero Alberto Santos Arguelles",
         "position": "Chofer Administrativo",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 617,
+        "ide": 617,
         "name": "Erika Herrera Enrriquez",
         "position": "Secretaria de Jefe de Departamento",
         "department": "Departamento de Contabilida",
         "active": true
     },
     {
-        "nt": 618,
+        "ide": 618,
         "name": "Karla Ariana Flores Aguilar",
         "position": "Técnica en Contabilidad",
         "department": "Departamento de Contabilida",
         "active": true
     },
     {
-        "nt": 620,
+        "ide": 620,
         "name": "Maritza Gómez Salamanca",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría (Tulcingo)",
         "active": true
     },
     {
-        "nt": 622,
+        "ide": 622,
         "name": "Blanca Margarita Alcaraz Espino",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 625,
+        "ide": 625,
         "name": "Ana Marlene Gallegos Magaña",
         "position": "Secretaria de Jefe de Departamento",
         "department": "Departamento de Recursos Humanos",
         "active": true
     },
     {
-        "nt": 633,
+        "ide": 633,
         "name": "Erandi Vázquez Reyes",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Administración",
         "active": true
     },
     {
-        "nt": 635,
+        "ide": 635,
         "name": "Miguel Ángel Enríquez Orea",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 636,
+        "ide": 636,
         "name": "Samuel Eduardo Niño Hernández",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Contaduría",
         "active": true
     },
     {
-        "nt": 637,
+        "ide": 637,
         "name": "Julio Cesar Cisneros Ramírez",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 639,
+        "ide": 639,
         "name": "Alexis Medina Neri",
         "position": "Técnico de Apoyo",
         "department": "P.E. De Contaduría (Tulcingo)",
         "active": true
     },
     {
-        "nt": 640,
+        "ide": 640,
         "name": "Santiago Rafael Fuentes Márquez",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Lengua Inglesa",
         "active": true
     },
     {
-        "nt": 644,
+        "ide": 644,
         "name": "Cyndi Huerta Pérez",
         "position": "Secretaria de Jefe de Departamento",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 645,
+        "ide": 645,
         "name": "Elizabeth Luna Aguilar",
         "position": "Secretaria  de Director de Área",
         "department": "Dirección de Vinculación",
         "active": true
     },
     {
-        "nt": 646,
+        "ide": 646,
         "name": "Yareli Carranza Gutiérrez",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 650,
+        "ide": 650,
         "name": "Izchel Cordero Rodríguez",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 651,
+        "ide": 651,
         "name": "Yessica Rodríguez Monfil",
         "position": "Técnica de Apoyo",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 653,
+        "ide": 653,
         "name": "Manuel Isidro Galeno Tenorio",
         "position": "Técnico de Apoyo",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 655,
+        "ide": 655,
         "name": "Mariano Erasto Castro Morán",
         "position": "Jefe de Servicios y Mantenimiento",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 657,
+        "ide": 657,
         "name": "Lucía Salvador Mora",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 658,
+        "ide": 658,
         "name": "Magnolia Morelos Gómez",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría (Tulcingo)",
         "active": true
     },
     {
-        "nt": 659,
+        "ide": 659,
         "name": "Erika Policao Avilés",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría (Tulcingo)",
         "active": true
     },
     {
-        "nt": 660,
+        "ide": 660,
         "name": "Zuleyma Reyes Flores",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Contaduría (Tulcingo)",
         "active": true
     },
     {
-        "nt": 661,
+        "ide": 661,
         "name": "Jonathan Hernández Infante",
         "position": "Chofer Administrativo",
         "department": "Departamento de Recursos Materiales y Servicios Generales",
         "active": true
     },
     {
-        "nt": 662,
+        "ide": 662,
         "name": "Rodolfo Jorge Jarquín Rodríguez",
         "position": "Secretario de Jefe de Departamento",
         "department": "Departamento de Prens",
         "active": true
     },
     {
-        "nt": 663,
+        "ide": 663,
         "name": "Jennyfer Andrea Mejía Madero",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 665,
+        "ide": 665,
         "name": "Gonzalo González López",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Paramédico",
         "active": true
     },
     {
-        "nt": 666,
+        "ide": 666,
         "name": "Javier Santiago Reyes",
         "position": "Rector",
         "department": "Rectoría",
         "active": true
     },
     {
-        "nt": 667,
+        "ide": 667,
         "name": "Roel Abraham Morales Vázquez",
         "position": "Secretario de Administración y Finanzas",
         "department": "Secretaría de Administración y Finanzas",
         "active": true
     },
     {
-        "nt": 669,
+        "ide": 669,
         "name": "Diana Karen Miguel Sánchez",
         "position": "Secretaria Académica",
         "department": "Secretaría Académica",
         "active": true
     },
     {
-        "nt": 670,
+        "ide": 670,
         "name": "Eduardo Estanislao Sosa Negrete",
         "position": "Jefe de Departamento",
         "department": "Departamento de Prácticas y Estadías",
         "active": true
     },
     {
-        "nt": 672,
+        "ide": 672,
         "name": "Edwin Oswaldo Ávila Morales",
         "position": "Encargado de Despacho de la Dirección de Vinculación",
         "department": "Dirección de Vinculación",
         "active": true
     },
     {
-        "nt": 673,
+        "ide": 673,
         "name": "Héctor Gatica Guevara",
         "position": "Jefe de Departamento",
         "department": "Departamento de Actividades Culturales",
         "active": true
     },
     {
-        "nt": 674,
+        "ide": 674,
         "name": "Josefina Contreras González",
         "position": "Jefa de Departamento",
         "department": "Departamento de Servicios Médicos",
         "active": true
     },
     {
-        "nt": 677,
+        "ide": 677,
         "name": "Anel Selene Castillo Castillo",
         "position": "Jefa de Departamento",
         "department": "Departamento de Contabilida",
         "active": true
     },
     {
-        "nt": 678,
+        "ide": 678,
         "name": "Dulce María Oliver Vázquez",
         "position": "Secretaria de Secretario",
         "department": "Secretaría de Administración y Finanzas",
         "active": true
     },
     {
-        "nt": 679,
+        "ide": 679,
         "name": "María Asucena Solano Torres",
         "position": "Jefa de Departamento",
         "department": "Jefa del Departamento de información y Estadística",
         "active": true
     },
     {
-        "nt": 681,
+        "ide": 681,
         "name": "Alexis Emmanuel Martínez Lezama",
         "position": "Coordinador",
         "department": "Departamento de Servicios Escolares",
         "active": true
     },
     {
-        "nt": 682,
+        "ide": 682,
         "name": "Leonel Hernández Barrales",
         "position": "Jefe de Oficina",
         "department": "Departamento de Prens",
         "active": true
     },
     {
-        "nt": 683,
+        "ide": 683,
         "name": "Marco Antonio Hernández España",
         "position": "Analista Administrativo",
         "department": "Departamento de Prens",
         "active": true
     },
     {
-        "nt": 684,
+        "ide": 684,
         "name": "Natanahel Jaimes Herrera",
         "position": "Secretario de Jefe de Departamento",
         "department": "Departamento de Servicios Médicos",
         "active": true
     },
     {
-        "nt": 685,
+        "ide": 685,
         "name": "Aldair Alfonso Castaneira Castillo",
         "position": "Jefe de Oficina",
         "department": "Secretaría de Administración y Finanzas",
         "active": true
     },
     {
-        "nt": 686,
+        "ide": 686,
         "name": "Lizbeth Rodríguez Martínez",
         "position": "Secretaria de Jefe de Departamento",
         "department": "Departamento de información y Estadística",
         "active": true
     },
     {
-        "nt": 687,
+        "ide": 687,
         "name": "Yahadira Ruíz Martínez",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Agrobiotecnología",
         "active": true
     },
     {
-        "nt": 688,
+        "ide": 688,
         "name": "Miroslava Juliana Mendieta Sanchez",
         "position": "Encargada de Despacho de la Subdirección de Extencion ",
         "department": "Subdirección de Extencion ",
         "active": true
     },
     {
-        "nt": 689,
+        "ide": 689,
         "name": "Eva Lucero Romero",
         "position": "Profesora de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información (Tulcingo)",
         "active": true
     },
     {
-        "nt": 690,
+        "ide": 690,
         "name": "Giovanni Galeno Reyes",
         "position": "Profesor de asignatura \"B\"",
         "department": "P.E. de Tecnologías de la Información",
         "active": true
     },
     {
-        "nt": 691,
+        "ide": 691,
         "name": "MIREYA IBOND ORTEGA BALBUENA",
         "position": "PROFESOR DE ASIGNATURA \"B\"",
         "department": "ACTIVIDADES CULTURALES Y DEPORTIVAS",
         "active": true
     },
     {
-        "nt": 692,
+        "ide": 692,
         "name": "MARIO ALBERTO ROJAS MAGAÑA",
         "position": "PROFESOR DE ASIGNATURA \"B\"",
         "department": "ACTIVIDADES CULTURALES Y DEPORTIVAS",
         "active": true
     },
     {
-        "nt": 693,
+        "ide": 693,
         "name": "JULIO LEÓN MIJANGOS",
         "position": "PROFESOR DE ASIGNATURA \"B\"",
         "department": "ACTIVIDADES CULTURALES Y DEPORTIVAS",
         "active": true
     },
     {
-        "nt": 694,
+        "ide": 694,
         "name": "GERMÁN PACHECO SÁNCHEZ",
         "position": "PROFESOR DE ASIGNATURA \"B\"",
         "department": "ACTIVIDADES CULTURALES Y DEPORTIVAS",
         "active": true
     },
     {
-        "nt": 643,
+        "ide": 643,
         "name": "MIRAM FLORES DE LA ROSA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 647,
+        "ide": 647,
         "name": "CLAUDIO RUBERN CADENA AMARO",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 20,
+        "ide": 20,
         "name": "ALBERTO ALEJANDRO HERNANDO MORALES",
         "position": "DEPARTAMENTO DE RECURSOS MATERIALES Y SERVICIOS GENERALE",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 25,
+        "ide": 25,
         "name": "MARÍA EUGENIA ANDRADE BERNABÉ",
         "position": "DEPARTAMENTO DE PRÁCTICAS Y ESTADÍAS\r",
         "department": "JEFE (A) DE OFICINA\r",
         "active": true
     },
     {
-        "nt": 32,
+        "ide": 32,
         "name": "YONATAN ERIC CRUZ HERNÁNDEZ",
         "position": "P.E. DE TIC. ÁREA DE SISTEMAS INFORMÁTICOS",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 53,
+        "ide": 53,
         "name": "ELIZABETH MUÑOZ RENDÓN",
         "position": "DEPARTAMENTO DE INFORMACIÓN Y ESTADÍSTICA\r",
         "department": "JEFE DE DEPARTAMENTO\r",
         "active": true
     },
     {
-        "nt": 87,
+        "ide": 87,
         "name": "MARCELA GARCÍA ALONSO",
         "position": "SECRETARÍA ACADÉMICA\r",
         "department": "SECRETARIO  (A) ACADÉMICO\r",
         "active": true
     },
     {
-        "nt": 90,
+        "ide": 90,
         "name": "ENRIQUE ROMERO JIMENEZ",
         "position": "SUBDIRECCION DE SERVICIOS ADMINISTRATIVO",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 93,
+        "ide": 93,
         "name": "MARGARITO BARBOZA CARRASCO",
         "position": "RECTORI",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 153,
+        "ide": 153,
         "name": "JAIR MENDOZA ALTAMIRANO",
         "position": "DEPARTAMENTO DE ACTIVIDADES CULTURALES Y DEPORTIVAS",
         "department": "JEFE DE DEPARTAMENTO\r",
         "active": true
     },
     {
-        "nt": 159,
+        "ide": 159,
         "name": "NAVOR NAVARRO ROMERO",
         "position": "DEPARTAMENTO DE SERVICIOS MEDICO",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "ndefine",
-        "position": "ndefine",
-        "department": "ndefine",
-        "active": true
-    },
-    {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 198,
+        "ide": 198,
         "name": "ROCIO JUÁREZ URAGA",
         "position": "DEPARTAMENTO DE CONTABILIDA",
         "department": "ROGRAMACIÓN Y PRESUPUESTO",
         "active": true
     },
     {
-        "nt": 270,
+        "ide": 270,
         "name": "MARÍA DEL SOCORRO PEÑA VEGA",
         "position": "SUBDIRECCION DE EXTENSIÓN UNIVERSITARI",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 273,
+        "ide": 273,
         "name": "JUAN CARLOS PARRA GUZMAN",
         "position": "SUBDIRECCION DE EXTENSIÓN UNIVERSITARI",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 286,
+        "ide": 286,
         "name": "DULCE MARIA CORONEL SORIANO",
         "position": "DEPARTAMENTO DE SERVICIOS ESCOLARE",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "ndefine",
-        "position": "ndefine",
-        "department": "ndefine",
-        "active": true
-    },
-    {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 325,
+        "ide": 325,
         "name": "MARÍA GUADALUPE BARRAGAN RAMÍREZ",
         "position": "P.E. DE PARAMÉDICO\r",
         "department": "SECRETARIA (O) DE DIRECTOR DE Area\r",
         "active": true
     },
     {
-        "nt": 369,
+        "ide": 369,
         "name": "JOSÉ ROBERTO AMBRIZ VARGAS",
         "position": "P.E. DE PARAMÉDICO\r",
         "department": "TÉCNICO DE APOY",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 454,
+        "ide": 454,
         "name": "JULIO GUADALUPE LOPEZ PICHARDO",
         "position": "UNIDAD ACADÉMICA DE TULCINGO DE VALL",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 530,
+        "ide": 530,
         "name": "FERNANDO  HERRERA ALVAREZ",
         "position": "P.E. DE AGROBIOTECNOLOGÍA\r",
         "department": "TÉCNICO DE APOY",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 612,
+        "ide": 612,
         "name": "CESAR ALEJANDRO LOPEZ SANTOS",
         "position": "DEPARTAMENTO DE PRENSA COMUNICACIÓN Y DIFUSIÓN\r",
         "department": "JEFE DE DEPARTAMENTO\r",
         "active": true
     },
     {
-        "nt": 615,
+        "ide": 615,
         "name": "NESTOR JORGE GONZALEZ ESTRADA",
         "position": "DEPARTAMENTO DE RECURSOS MATERIALES Y SERVICIOS GENERALE",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 626,
+        "ide": 626,
         "name": "JAIRO MORAN RODRIGUEZ",
         "position": "P.E. DE ADMINISTRACIÓN\r",
         "department": "TÉCNICO DE APOY",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 628,
+        "ide": 628,
         "name": "JORGE HUMBERTO LEYVA GARCIA",
         "position": "P.E. DE TIC. ÁREA DE SISTEMAS INFORMÁTICOS",
-        "department": "ndefine",
+        "department": "",
         "active": true
     },
     {
-        "nt": null,
-        "name": "ndefine",
-        "position": "ndefine",
-        "department": "ndefine",
-        "active": true
-    },
-    {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 631,
+        "ide": 631,
         "name": "JOSÉFRANCISCO RODRÍGUEZ DOMÍNGUEZ",
         "position": "ABOGADO GENERAL",
         "department": "ABOGADO GENERAL\r",
         "active": true
     },
     {
-        "nt": 648,
+        "ide": 648,
         "name": "JOSÉ ORTEGA CAAMAÑO",
         "position": "DIRECCIÓN DE VINCULACIÓN\r",
         "department": "SECRETARIA (O) DE DIRECTOR DE Area\r",
         "active": true
     },
     {
-        "nt": 652,
+        "ide": 652,
         "name": "EMELIA MARLEY AVENDAÑO RAMÍREZ",
         "position": "DEPARTAMENTO DE SERVICIOS ESCOLARE",
-        "department": "ndefine",
+        "department": "",
         "active": true
     },
     {
-        "nt": null,
-        "name": "ndefine",
-        "position": "ndefine",
-        "department": "ndefine",
-        "active": true
-    },
-    {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 654,
+        "ide": 654,
         "name": "SAMUEL GONZÁLEZ ROMANO",
-        "position": "DEPARTAMENTO DE RECURSOS MATERIALES Y SERVICIOS GENERALE",
-        "department": "ndefine",
+        "position": "DEPARTAMENTO DE RECURSOS MATERIALES Y SERVICIOS GENERALES",
+        "department": "",
         "active": true
     },
     {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 668,
+        "ide": 668,
         "name": "HÉCTOR GUEVARA  DELGADILLO",
         "position": "DIRECCIÓN DE VINCULACIÓN\r",
         "department": "DIRECTOR (A) DE VINCULACIÓN\r",
         "active": true
     },
     {
-        "nt": 675,
+        "ide": 675,
         "name": "ALFONSO  TORRES  MEJÍA",
         "position": "DIRECCIÓN DE VINCULACIÓN\r",
         "department": "COORDINADOR (A)\r",
         "active": true
     },
     {
-        "nt": 676,
+        "ide": 676,
         "name": "DIEGO ISAID LIMÓN  HUERTA",
         "position": "SECRETARÍA DE ADMINISTRACIÓN Y FINANZAS",
         "department": "JEFE (A) DE OFICINA\r",
         "active": true
     },
     {
-        "nt": 680,
+        "ide": 680,
         "name": "CARLOS ALBERTO MARTINEZ TRIGO",
         "position": "DEPARTAMENTO DE RECURSOS HUMANO",
         "department": "ndefine",
         "active": true
     },
     {
-        "nt": null,
-        "name": "ndefine",
-        "position": "ndefine",
-        "department": "ndefine",
-        "active": true
-    },
-    {
-        "nt": null,
-        "name": "UL",
-        "position": "UL",
-        "department": "UL",
-        "active": true
-    },
-    {
-        "nt": 84,
+        "ide": 84,
         "name": "VERONICA GUTIERREZ OCAMPO",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 114,
+        "ide": 114,
         "name": "JOSÉ RAYMUNDO CEJA VAZQUEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 86,
+        "ide": 86,
         "name": "GONZALO ROSAS CABRERA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 195,
+        "ide": 195,
         "name": "ALEJANDRA MORAN RODRIGUEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 82,
+        "ide": 82,
         "name": "SERGIO VALERO OREA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 621,
+        "ide": 621,
         "name": "MARIA ANGELICA HERRERA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 31,
+        "ide": 31,
         "name": "CESAR ESPINOZA JIMENEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 321,
+        "ide": 321,
         "name": "JOSE ANTONIO ALONSO GOMEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 219,
+        "ide": 219,
         "name": "ISAIS FORTOSO TAPIA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 327,
+        "ide": 327,
         "name": "AGUSTIN ARRIAGA CORTEZANO",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 254,
+        "ide": 254,
         "name": "LIDUVINA PEREZ ROSENDO",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 185,
+        "ide": 185,
         "name": "JAIME VAZQUEZ MARTINEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 154,
+        "ide": 154,
         "name": "JOSE VARGAS HERNANDEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 156,
+        "ide": 156,
         "name": "CECILIA AZUCENA RODRIGUEZ ESPINOZA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 290,
+        "ide": 290,
         "name": "PATRICIA GARCIA MORUA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 363,
+        "ide": 363,
         "name": "CARMEN CERVANTES RAMIREZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 291,
+        "ide": 291,
         "name": "JAIR MEDINA DELGADO",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 13,
+        "ide": 13,
         "name": "VICTOR ALEJANDRO LUNA DIAZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 616,
+        "ide": 616,
         "name": "JUAN CARLOS CASTILLO VALENCIA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 619,
+        "ide": 619,
         "name": "SAMANTHA RODRIGUEZ ZARATE",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 624,
+        "ide": 624,
         "name": "JAHAZIEL JEUH  BALTAZAR ISIDORO",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 629,
+        "ide": 629,
         "name": "LEONOR SARAI MELLON RAMOS",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 630,
+        "ide": 630,
         "name": "ROLANDO TAPIA LOPEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 376,
+        "ide": 376,
         "name": "MARILU GUADALUPE HERNANDEZ CABRERA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 324,
+        "ide": 324,
         "name": "MARIA CECILIA LOPEZ CIELO",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 485,
+        "ide": 485,
         "name": "ANGELICA MARIA VALES CORTES",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 462,
+        "ide": 462,
         "name": "GAUDENCIO HERRERA GARCIA",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 649,
+        "ide": 649,
         "name": "ENRIQUE NAVARRETE RODRIGUEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 106,
+        "ide": 106,
         "name": "SERGIO GARZON RODRIGUEZ",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 656,
+        "ide": 656,
         "name": "MARIA DE LOS ANGELES BLAS GERMAN",
         "position": "",
         "department": "",
         "active": true
     },
     {
-        "nt": 664,
+        "ide": 664,
         "name": "DELIA ENRIQUEZ OREA",
         "position": "",
         "department": "",
