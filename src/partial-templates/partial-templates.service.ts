@@ -94,6 +94,7 @@ export class PartialTemplatesService {
       const partialTemplates = await this.prisma.partialTemplate.findMany({
         where: filter,
         select: {
+          id: true,
           name: true,
           total: true,
           status: true,
