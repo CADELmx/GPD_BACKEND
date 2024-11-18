@@ -20,11 +20,11 @@ export class CommentsController {
         if (id) return this.commentService.findOne(id)
         return this.commentService.findAll()
     }
-    @Put()
+    @Put(':id')
     update(@Param('id') id: number, @Body() updateCommentDto: UpdateCommentDto) {
         return this.commentService.update(id, updateCommentDto)
     }
-    @Delete()
+    @Delete(':id')
     delete(@Param('id') id: number) {
         return this.commentService.delete(id)
     }

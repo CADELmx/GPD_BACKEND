@@ -170,6 +170,39 @@ export class AreasService {
     }
   }
 
+  async findAllJoinEducationalPrograms() {
+    try {
+      const areas = await this.prisma.area.findMany({
+        include: {
+          educationalPrograms: {
+            select: {
+              id: true,
+              abbreviation: true,
+              description: true,
+            }
+          },
+        },
+        orderBy: {
+          name: 'asc',
+        },
+      })
+      if (areas.length === 0) return {
+        message: 'No hay áreas registradas',
+        error: null,
+        data: [],
+      }
+      return {
+        message: 'Áreas encontradas',
+        error: null,
+        data: areas,
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las áreas',
+      );
+    }
+  }
   /**
    * Updates an area by its ID.
    * @param id - The ID of the area to update.

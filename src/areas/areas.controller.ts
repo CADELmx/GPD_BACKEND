@@ -50,6 +50,14 @@ export class AreasController {
     if (name) return this.areasService.findOneByName(name);
     return this.areasService.findAll();
   }
+  /**
+   * Retrive all areas with their educational programs.
+   * @returns The found areas with their educational programs.
+   */
+  @Get('educational-programs')
+  async findWithJoin() {
+    return this.areasService.findAllJoinEducationalPrograms()
+  }
 
   /**
    * Updates an area by its ID.

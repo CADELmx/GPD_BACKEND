@@ -33,7 +33,7 @@ export class ActivityService {
                 })
             })
             const registeredActivities = await this.prisma.activity.createMany({
-                data: createActivities
+                data: activities
             })
             return {
                 message: 'Actividades academicas registradas',
