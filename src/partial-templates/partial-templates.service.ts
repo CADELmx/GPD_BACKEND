@@ -104,7 +104,7 @@ export class PartialTemplatesService {
       if (partialTemplates.length === 0) return {
         message: 'No hay plantillas parciales para mostrar',
         error: null,
-        data: [],
+        data: partialTemplates,
       }
       return {
         message: 'Plantillas Parciales obtenidas con exito',
@@ -217,7 +217,7 @@ export class PartialTemplatesService {
       if (partialTemplatesJoin.length === 0) return {
         message: 'No hay plantillas parciales para mostrar',
         error: null,
-        data: null
+        data: partialTemplatesJoin
       }
       return {
         message: 'Plantillas parciales obtenidas con éxito',
@@ -279,7 +279,7 @@ export class PartialTemplatesService {
       if (partialTemplates.length === 0) return {
         message: 'No hay plantillas parciales para mostrar',
         error: null,
-        data: null
+        data: partialTemplates
       }
       return {
         message: 'Plantillas parciales obtenidas con éxito',
