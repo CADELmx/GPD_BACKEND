@@ -6,15 +6,17 @@ import {
 import { Users } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import { CreateUserDto } from 'src/models/user/create-user.dto';
-import { compare, hashSync } from 'bcrypt';
 import { createCipheriv, createDecipheriv, randomBytes, scrypt } from 'crypto';
 import { jwtConstants } from 'src/auth/constants';
 import { promisify } from 'util';
+import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
-
+  constructor(
+    private prisma: PrismaService,
+    private prismaErrorHandler: PrismaErrorHandler
+  ) { }
   async getUserByEmail(email: string): Promise<Users | null> {
     const user = await this.prisma.users.findUnique({
       where: {
@@ -40,22 +42,22 @@ export class UsersService {
     }
     return user;
   }
-  async encryptPassword(password: string): Promise<string> {
-    const iv = randomBytes(16);
-    const secret = jwtConstants.secret
+  async encryptPassword(password: string) {
+    const secret = process.env.JWT_SECRET;
+    const iv = Buffer.from(secret.slice(0, 16), 'binary')
     const key = (await promisify(scrypt)(secret, 'salt', 32)) as Buffer;
     const cipher = createCipheriv('aes-256-cbc', key, iv);
     const encryptedPassword = Buffer.concat([
       cipher.update(password),
       cipher.final(),
     ]);
-    return encryptedPassword.toString('hex');
+    return encryptedPassword.toString('hex')
   }
   async decryptPassword(
     encryptedPassword: string,
   ): Promise<string> {
-    const iv = randomBytes(16);
-    const secret = jwtConstants.secret
+    const secret = process.env.JWT_SECRET;
+    const iv = Buffer.from(secret.slice(0, 16), 'binary')
     const key = (await promisify(scrypt)(secret, 'salt', 32)) as Buffer;
     const decipher = createDecipheriv('aes-256-cbc', key, iv);
     const decryptedPassword = Buffer.concat([
@@ -64,13 +66,25 @@ export class UsersService {
     ]);
     return decryptedPassword.toString();
   }
-  async createUser(user: CreateUserDto): Promise<Users> {
-    const encriptedPassword = await this.encryptPassword(user.password);
-    return this.prisma.users.create({
-      data: {
-        ...user,
-        password: encriptedPassword,
-      },
-    });
+  async createUser(user: CreateUserDto) {
+    try {
+      const encryptedPassword = await this.encryptPassword(user.password);
+      const createdUser = await this.prisma.users.create({
+        data: {
+          ...user,
+          password: encryptedPassword,
+        },
+      });
+      return {
+        data: createdUser,
+        error: null,
+        message: 'Usuario creado con éxito',
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear el usuario'
+      );
+    }
   }
 }
