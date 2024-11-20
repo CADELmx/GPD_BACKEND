@@ -1,9 +1,10 @@
-import { Controller, Get, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDto } from 'src/models/user/create-user.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Get('/profile')
   async getProfile(@Request() req) {
