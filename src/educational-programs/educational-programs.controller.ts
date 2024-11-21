@@ -48,6 +48,7 @@ export class EducationalProgramsController {
     if (id) return this.educationalProgramsService.findProgramById(id);
     return this.educationalProgramsService.findAllPrograms();
   }
+  @Public()
   @Get('/area')
   findByArea(@Query('id', customIdPipe) id: number) {
     return this.educationalProgramsService.findByArea(id);
