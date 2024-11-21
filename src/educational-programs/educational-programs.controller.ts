@@ -48,6 +48,10 @@ export class EducationalProgramsController {
     if (id) return this.educationalProgramsService.findProgramById(id);
     return this.educationalProgramsService.findAllPrograms();
   }
+  @Get('/area')
+  findByArea(@Query('id', customIdPipe) id: number) {
+    return this.educationalProgramsService.findByArea(id);
+  }
 
   /**
    * Update a program using its id

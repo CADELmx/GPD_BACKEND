@@ -128,13 +128,41 @@ export class EducationalProgramsService {
     }
   }
 
+  async findByArea(areaId: number): Promise<{
+    error: string | null;
+    data: EducationalPrograms[];
+    message: string;
+  }> {
+    try {
+      const educationalPrograms = await this.prisma.educationalPrograms.findMany({
+        where: { areaId },
+        orderBy: [
+          { abbreviation: 'asc' }
+        ]
+      });
+      if (educationalPrograms.length === 0) return {
+        message: 'Sin programas educativos',
+        error: null,
+        data: educationalPrograms
+      }
+      return {
+        message: 'Programas educativos encontrados',
+        error: null,
+        data: educationalPrograms,
+      };
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar el programa educativo',
+      );
+    }
+  }
   /**
    * Method to update a program using its id
    * @param id id of the program to update
    * @param updateEducationalProgramDto Program data to update
    * @returns Returns the updated program
    */
-
   async updateProgram(
     id: number,
     updateEducationalProgramDto: UpdateEducationalProgramDto,
