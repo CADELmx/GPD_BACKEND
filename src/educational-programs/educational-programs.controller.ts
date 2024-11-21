@@ -12,6 +12,7 @@ import { EducationalProgramsService } from './educational-programs.service';
 import { CreateEducationalProgramDto, CreateEducationalProgramsDto } from '../models/educationalPrograms/create-educational-program.dto';
 import { UpdateEducationalProgramDto } from '../models/educationalPrograms/update-educational-program.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { Public } from '../auth/decorators/public.decorator';
 
 
 @Controller('educational-programs')
@@ -41,6 +42,7 @@ export class EducationalProgramsController {
    * @param id query parameter to find a program by its id
    * @returns
    */
+  @Public()
   @Get()
   find(@Query('id', customIdPipe) id?: number) {
     if (id) return this.educationalProgramsService.findProgramById(id);

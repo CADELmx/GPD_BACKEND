@@ -15,6 +15,7 @@ import { CreateSubjectDto } from '../models/subject/create-subject.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
 import { ApiBody, ApiCreatedResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('subject')
 export class SubjectController {
@@ -46,17 +47,13 @@ export class SubjectController {
   @ApiCreatedResponse({ type: CreateSubjectDto, isArray: true })
   @ApiQuery({ name: 'id', required: false, type: Number })
   @ApiQuery({ name: 'programid', required: false, type: Number })
+  @Public()
   @Get()
   find(
     @Query('id', customIdPipe) id?: number,
     @Query(
       'programid',
-      new ParseIntPipe({
-        optional: true,
-        exceptionFactory: () => {
-          return new BadRequestException('El id del programa no es un número');
-        },
-      }),
+      customIdPipe
     )
     programId?: number,
   ) {

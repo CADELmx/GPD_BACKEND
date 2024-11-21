@@ -12,6 +12,7 @@ import { PartialTemplatesService } from './partial-templates.service';
 import { CreatePartialTemplateDto, CreatePartialTemplatesDto } from '../models/partialTemplate/create-partial-template.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-partial-template.dto';
+import { Public } from '../auth/decorators/public.decorator';
 
 
 @Controller('partial-templates')
@@ -35,6 +36,7 @@ export class PartialTemplatesController {
     @Body() createPartialTemplatesDto: CreatePartialTemplatesDto[]) {
     return this.partialTemplatesService.createMany(id, createPartialTemplatesDto);
   }
+  @Public()
   @Get()
   find(
     @Query('id', customIdPipe) id?: number,
@@ -50,6 +52,7 @@ export class PartialTemplatesController {
     if (status) return this.partialTemplatesService.findAll(status);
     return this.partialTemplatesService.findAll();
   }
+  @Public()
   @Get('/activities')
   findWithActivities(
     @Query('id', customIdPipe) id?: number,
@@ -59,6 +62,7 @@ export class PartialTemplatesController {
     if (status) return this.partialTemplatesService.findAllJoinActivities(status)
     return this.partialTemplatesService.findAllJoinActivities()
   }
+  @Public()
   @Get('/comments')
   findWithComments(
     @Query('id', customIdPipe) id?: number,

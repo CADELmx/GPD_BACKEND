@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/
 import { CreateCommentDto } from '../models/comments/create-comment.dto';
 import { CommentsService } from './comments.service';
 import { UpdateCommentDto } from '../models/comments/update-comment.dto';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('comments')
 export class CommentsController {
@@ -13,6 +14,7 @@ export class CommentsController {
     create(@Body() createCommentDto: CreateCommentDto) {
         return this.commentService.create(createCommentDto)
     }
+    @Public()
     @Get()
     find(
         @Query('id') id?: number

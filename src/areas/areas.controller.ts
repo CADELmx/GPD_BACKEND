@@ -12,6 +12,7 @@ import { AreasService } from './areas.service';
 import { CreateAreaDto } from '../models/area/create-area.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateAreaDto } from '../models/area/update-area.dto';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('areas')
 export class AreasController {
@@ -41,6 +42,7 @@ export class AreasController {
    * @param name - The name of the area to retrieve (optional).
    * @returns The found area(s).
    */
+  @Public()
   @Get()
   async find(
     @Query('id', customIdPipe) id?: number,
@@ -54,6 +56,7 @@ export class AreasController {
    * Retrive all areas with their educational programs.
    * @returns The found areas with their educational programs.
    */
+  @Public()
   @Get('educational-programs')
   async findWithJoin() {
     return this.areasService.findAllJoinEducationalPrograms()
