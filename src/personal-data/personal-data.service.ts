@@ -192,6 +192,7 @@ export class PersonalDataService {
               }
             : undefined,
         },
+        select: this.personalDataSelector,
       });
       if (personalDataFiltered.length === 0) {
         return {
