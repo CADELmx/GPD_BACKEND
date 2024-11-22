@@ -8,7 +8,7 @@ export class PersonalDataService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) {}
+  ) { }
   personalDataSelector = {
     id: true,
     ide: true,
@@ -179,15 +179,15 @@ export class PersonalDataService {
         where: {
           position: position
             ? {
-                contains: position,
-                mode: 'insensitive',
-              }
+              contains: position,
+              mode: 'insensitive',
+            }
             : undefined,
           area: area
             ? {
-                contains: area,
-                mode: 'insensitive',
-              }
+              contains: area,
+              mode: 'insensitive',
+            }
             : undefined,
         },
         select: this.personalDataSelector,
@@ -196,7 +196,7 @@ export class PersonalDataService {
         return {
           message: 'No se encontraron trabajadores',
           error: null,
-          data: null,
+          data: [],
         };
       }
       return {
