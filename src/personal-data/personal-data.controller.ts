@@ -36,6 +36,7 @@ export class PersonalDataController {
     if (id) return this.personalDataService.findOne(id);
     return this.personalDataService.findAll(active);
   }
+  @Public()
   @Get('insensitive')
   findInsensitive(
     @Query('position') position?: string,
