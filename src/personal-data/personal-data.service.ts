@@ -171,14 +171,12 @@ export class PersonalDataService {
     }
   }
   async filterByFieldInsensitive(
-    active: boolean,
     position: string,
     area: string,
   ) {
     try {
       const personalDataFiltered = await this.prisma.personalData.findMany({
         where: {
-          active,
           position: position
             ? {
                 contains: position,

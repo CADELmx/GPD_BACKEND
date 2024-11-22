@@ -18,7 +18,7 @@ import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('personal-data')
 export class PersonalDataController {
-  constructor(private readonly personalDataService: PersonalDataService) {}
+  constructor(private readonly personalDataService: PersonalDataService) { }
   @Post()
   create(@Body() createPersonalDataDto: CreatePersonalDataDto) {
     return this.personalDataService.create(createPersonalDataDto);
@@ -32,18 +32,19 @@ export class PersonalDataController {
   find(
     @Query('id', customIdPipe) id?: number,
     @Query('active', customBoolPipe) active?: boolean,
+  ) {
+    if (id) return this.personalDataService.findOne(id);
+    return this.personalDataService.findAll(active);
+  }
+  @Get('insensitive')
+  findInsensitive(
     @Query('position') position?: string,
     @Query('area') area?: string,
   ) {
-    if (id) return this.personalDataService.findOne(id);
-    if (active || position || area) {
-      return this.personalDataService.filterByFieldInsensitive(
-        active,
-        position,
-        area,
-      );
-    }
-    return this.personalDataService.findAll(active);
+    return this.personalDataService.filterByFieldInsensitive(
+      position,
+      area,
+    );
   }
   @Put(':id')
   update(
