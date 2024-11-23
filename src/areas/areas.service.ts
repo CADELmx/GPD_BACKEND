@@ -169,11 +169,53 @@ export class AreasService {
       );
     }
   }
-
-  async findAllJoinEducationalPrograms() {
+  async findAllEducationalProgramsCount() {
     try {
       const areas = await this.prisma.area.findMany({
         include: {
+          _count: {
+            select: {
+              educationalPrograms: true,
+            }
+          }
+        },
+        orderBy: [
+          {
+            educationalPrograms: {
+              _count: 'desc'
+            }
+          },
+          {
+            name: 'asc',
+          },
+        ],
+      })
+      if (areas.length === 0) return {
+        message: 'No hay áreas registradas',
+        error: null,
+        data: [],
+      }
+      return {
+        message: 'Áreas encontradas',
+        error: null,
+        data: areas,
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las áreas',
+      )
+    }
+  }
+  async findAllJoinEducationalPrograms() {
+    try {
+      const areas = await this.prisma.area.findMany({
+        select: {
+          _count: {
+            select: {
+              educationalPrograms: true,
+            }
+          },
           educationalPrograms: {
             select: {
               id: true,
@@ -181,10 +223,19 @@ export class AreasService {
               description: true,
             }
           },
+          name: true,
+          id: true,
         },
-        orderBy: {
-          name: 'asc',
-        },
+        orderBy: [
+          {
+            educationalPrograms: {
+              _count: 'desc'
+            }
+          },
+          {
+            name: 'asc',
+          }
+        ],
       })
       if (areas.length === 0) return {
         message: 'No hay áreas registradas',
