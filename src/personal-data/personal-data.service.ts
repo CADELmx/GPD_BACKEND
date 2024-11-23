@@ -8,7 +8,7 @@ export class PersonalDataService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) {}
+  ) { }
   personalDataSelector = {
     id: true,
     ide: true,
@@ -171,33 +171,32 @@ export class PersonalDataService {
     }
   }
   async filterByFieldInsensitive(
-    active: boolean,
     position: string,
     area: string,
   ) {
     try {
       const personalDataFiltered = await this.prisma.personalData.findMany({
         where: {
-          active,
           position: position
             ? {
-                contains: position,
-                mode: 'insensitive',
-              }
+              contains: position,
+              mode: 'insensitive',
+            }
             : undefined,
           area: area
             ? {
-                contains: area,
-                mode: 'insensitive',
-              }
+              contains: area,
+              mode: 'insensitive',
+            }
             : undefined,
         },
+        select: this.personalDataSelector,
       });
       if (personalDataFiltered.length === 0) {
         return {
           message: 'No se encontraron trabajadores',
           error: null,
-          data: null,
+          data: [],
         };
       }
       return {

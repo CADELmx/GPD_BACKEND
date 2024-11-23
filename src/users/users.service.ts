@@ -21,7 +21,7 @@ export class UsersService {
     const user = await this.prisma.users.findUnique({
       where: {
         email: email,
-      },
+      }
     });
 
     if (!user) {
@@ -29,6 +29,45 @@ export class UsersService {
     }
     return user;
   }
+  async findUserJoinPersonalData(email: string): Promise<{
+    data: Users | null,
+    error: any,
+    message: string
+  }> {
+    try {
+      const user = await this.prisma.users.findUnique({
+        where: {
+          email: email,
+        },
+        include: {
+          personalData: {
+            select: {
+              ide: true,
+              name: true,
+              position: true,
+              area: true,
+            }
+          }
+        }
+      });
+      if (!user) return {
+        data: null,
+        error: null,
+        message: 'Usuario no encontrado'
+      }
+      return {
+        data: user,
+        error: null,
+        message: 'Usuario encontrado con éxito'
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al obtener el usuario'
+      )
+    }
+  }
+
 
   async findUserById(userId: bigint): Promise<Users> {
     const user = await this.prisma.users.findUnique({

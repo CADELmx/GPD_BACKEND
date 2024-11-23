@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { AreasService } from './areas.service';
 import { CreateAreaDto } from '../models/area/create-area.dto';
-import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { customBoolPipe, customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateAreaDto } from '../models/area/update-area.dto';
 import { Public } from '../auth/decorators/public.decorator';
 
@@ -58,7 +58,10 @@ export class AreasController {
    */
   @Public()
   @Get('educational-programs')
-  async findWithJoin() {
+  async findWithJoin(
+    @Query('count', customBoolPipe) count?: boolean,
+  ) {
+    if (count) return this.areasService.findAllEducationalProgramsCount()
     return this.areasService.findAllJoinEducationalPrograms()
   }
 
