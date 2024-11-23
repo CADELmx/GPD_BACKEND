@@ -36,6 +36,9 @@ export class PersonalDataController {
     @Query('area') area?: string,
   ) {
     if (id) return this.personalDataService.findOne(id);
+    if (active && area) {
+      return this.personalDataService.filterByArea(active, area);
+    }
     if (active || position || area) {
       return this.personalDataService.filterByFieldInsensitive(
         active,

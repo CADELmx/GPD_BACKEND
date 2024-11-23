@@ -212,6 +212,41 @@ export class PersonalDataService {
       );
     }
   }
+  async filterByArea(active: boolean, area: string) {
+    try {
+      const filteredAreas = await this.prisma.personalData.findMany({
+        where: {
+          active,
+          area: area
+            ? {
+                contains: area,
+                mode: 'insensitive',
+              }
+            : undefined,
+        },
+      });
+      const lingAreas = await this.prisma.personalData.findMany({
+        where: {
+          active,
+          area: 'HR',
+        },
+      });
+      const areasWithLing = filteredAreas.map((area) => ({
+        ...area,
+        relatedAreas: lingAreas.filter((ling) => ling.area !== area.area),
+      }));
+      return {
+        message: 'Trabajadores encontrados con éxito',
+        error: null,
+        data: areasWithLing,
+      };
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al buscar trabajadores',
+      );
+    }
+  }
   async update(id: number, data: CreatePersonalDataDto) {
     try {
       const updatedPersonalData = await this.prisma.personalData.update({
