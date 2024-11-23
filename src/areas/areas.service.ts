@@ -210,7 +210,12 @@ export class AreasService {
   async findAllJoinEducationalPrograms() {
     try {
       const areas = await this.prisma.area.findMany({
-        include: {
+        select: {
+          _count: {
+            select: {
+              educationalPrograms: true,
+            }
+          },
           educationalPrograms: {
             select: {
               id: true,
@@ -218,10 +223,19 @@ export class AreasService {
               description: true,
             }
           },
+          name: true,
+          id: true,
         },
-        orderBy: {
-          name: 'asc',
-        },
+        orderBy: [
+          {
+            educationalPrograms: {
+              _count: 'desc'
+            }
+          },
+          {
+            name: 'asc',
+          }
+        ],
       })
       if (areas.length === 0) return {
         message: 'No hay áreas registradas',
