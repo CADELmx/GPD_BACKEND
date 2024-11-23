@@ -181,13 +181,13 @@ export class AreasService {
         },
         orderBy: [
           {
-            name: 'asc',
-          },
-          {
             educationalPrograms: {
               _count: 'desc'
             }
-          }
+          },
+          {
+            name: 'asc',
+          },
         ],
       })
       if (areas.length === 0) return {
