@@ -169,7 +169,7 @@ export class AreasService {
       );
     }
   }
-  async findAllEeducationalProgramsCount() {
+  async findAllEducationalProgramsCount() {
     try {
       const areas = await this.prisma.area.findMany({
         include: {
@@ -179,9 +179,16 @@ export class AreasService {
             }
           }
         },
-        orderBy: {
-          name: 'asc',
-        },
+        orderBy: [
+          {
+            name: 'asc',
+          },
+          {
+            educationalPrograms: {
+              _count: 'desc'
+            }
+          }
+        ],
       })
       if (areas.length === 0) return {
         message: 'No hay áreas registradas',

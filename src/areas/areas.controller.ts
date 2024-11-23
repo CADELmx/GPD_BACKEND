@@ -61,7 +61,7 @@ export class AreasController {
   async findWithJoin(
     @Query('count', customBoolPipe) count?: boolean,
   ) {
-    if (count) return this.areasService.findAllEeducationalProgramsCount()
+    if (count) return this.areasService.findAllEducationalProgramsCount()
     return this.areasService.findAllJoinEducationalPrograms()
   }
 
