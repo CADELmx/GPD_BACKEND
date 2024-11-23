@@ -169,7 +169,37 @@ export class AreasService {
       );
     }
   }
-
+  async findAllEeducationalProgramsCount() {
+    try {
+      const areas = await this.prisma.area.findMany({
+        include: {
+          _count: {
+            select: {
+              educationalPrograms: true,
+            }
+          }
+        },
+        orderBy: {
+          name: 'asc',
+        },
+      })
+      if (areas.length === 0) return {
+        message: 'No hay áreas registradas',
+        error: null,
+        data: [],
+      }
+      return {
+        message: 'Áreas encontradas',
+        error: null,
+        data: areas,
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las áreas',
+      )
+    }
+  }
   async findAllJoinEducationalPrograms() {
     try {
       const areas = await this.prisma.area.findMany({
