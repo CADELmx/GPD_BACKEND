@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Subject } from '@prisma/client';
-import { CreateSubjectDto } from '../models/subject/create-subject.dto';
+import { CreateSubjectDto, CreateSubjectsDto } from '../models/subject/create-subject.dto';
 import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
 import { PrismaService } from '../prisma.service';
 import { validateForeignKeys } from '../common/validation/custom-validation.pipe';
@@ -39,7 +39,7 @@ export class SubjectService implements SubjectResult {
     private readonly prisma: PrismaService,
     private readonly foreign: validateForeignKeys,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) {}
+  ) { }
   /**
    * Creates a new subject
    * @param createSubjectDto data to create a new subject
@@ -66,6 +66,27 @@ export class SubjectService implements SubjectResult {
       return this.prismaErrorHandler.handleError(
         error,
         'Error al crear la materia',
+      );
+    }
+  }
+  async createMany(id: number, createSubjectsDto: CreateSubjectsDto[]) {
+    try {
+      const newSubjects: CreateSubjectDto[] = createSubjectsDto.map((subject) => ({
+        ...subject,
+        educationalProgramId: id,
+      }));
+      const subjects = await this.prisma.subject.createMany({
+        data: newSubjects,
+      });
+      return {
+        data: subjects,
+        error: null,
+        message: 'Materias registradas',
+      };
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear las materias',
       );
     }
   }

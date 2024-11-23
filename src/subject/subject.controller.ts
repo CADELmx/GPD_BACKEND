@@ -11,7 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { SubjectService } from './subject.service';
-import { CreateSubjectDto } from '../models/subject/create-subject.dto';
+import { CreateSubjectDto, CreateSubjectsDto } from '../models/subject/create-subject.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
 import { ApiBody, ApiCreatedResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -34,6 +34,13 @@ export class SubjectController {
   @Post()
   create(@Body() createSubjectDto: CreateSubjectDto) {
     return this.subjectService.create(createSubjectDto);
+  }
+  @Post('many/')
+  createMany(
+    @Query('id', customIdPipe) id: number,
+    @Body() createSubjectsDto: CreateSubjectsDto[]
+  ) {
+    return this.subjectService.createMany(id, createSubjectsDto);
   }
   /**
    * Handles the get request to get all subjects
