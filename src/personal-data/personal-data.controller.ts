@@ -39,6 +39,8 @@ export class PersonalDataController {
   @Public()
   @Get('insensitive')
   findInsensitive(
+    @Query('id', customIdPipe) id?: number,
+    @Query('active', customBoolPipe) active?: boolean,
     @Query('position') position?: string,
     @Query('area') area?: string,
   ) {
@@ -48,7 +50,6 @@ export class PersonalDataController {
     }
     if (active || position || area) {
       return this.personalDataService.filterByFieldInsensitive(
-        active,
         position,
         area,
       );
