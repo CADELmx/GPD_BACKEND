@@ -53,16 +53,28 @@ export class AreasController {
     return this.areasService.findAll();
   }
   /**
-   * Retrive all areas with their educational programs.
-   * @returns The found areas with their educational programs.
+   * Retrive all areas with their educational programs or the count of educational programs.
+   * @param count - If true, returns the count of educational programs instead of educationalPrograms.
+   * @returns The found areas with their educational programs or the count of educational programs.
    */
   @Public()
   @Get('educational-programs')
-  async findWithJoin(
+  findWithJoin(
     @Query('count', customBoolPipe) count?: boolean,
   ) {
     if (count) return this.areasService.findAllEducationalProgramsCount()
     return this.areasService.findAllJoinEducationalPrograms()
+  }
+  /**
+   * Retrieves an area based on the educational program ID.
+   * @param id id of the educational program
+   * @returns the area that contains the educational program including their educational programs.
+   */
+  @Get('educational-programs/:id')
+  findByEducationalProgram(
+    @Param('id', customIdPipe) id: number
+  ) {
+    return this.areasService.findAreaBasedOnEducationalProgramId(id)
   }
 
   /**

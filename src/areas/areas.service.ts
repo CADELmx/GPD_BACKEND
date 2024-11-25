@@ -207,6 +207,37 @@ export class AreasService {
       )
     }
   }
+  async findAreaBasedOnEducationalProgramId(id: number) {
+    try {
+      const area = await this.prisma.area.findFirst({
+        where: {
+          educationalPrograms: {
+            some: {
+              id,
+            }
+          }
+        },
+        include: {
+          educationalPrograms: true,
+        }
+      })
+      if (!area) return {
+        message: 'No se encontró el área',
+        error: null,
+        data: null,
+      }
+      return {
+        message: 'Área encontrada',
+        error: null,
+        data: area,
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar el área',
+      )
+    }
+  }
   async findAllJoinEducationalPrograms() {
     try {
       const areas = await this.prisma.area.findMany({
