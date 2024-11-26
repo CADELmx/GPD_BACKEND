@@ -12,6 +12,7 @@ import { TemplatesService } from './templates.service';
 import { CreateTemplateDto } from '../models/template/create-template.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateTemplateDto } from '../models/template/update-template.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('templates')
 export class TemplatesController {
@@ -30,6 +31,7 @@ export class TemplatesController {
    * Retrieves all templates
    * @returns . An array of all templates
    */
+  @Public()
   @Get()
   find(@Query('id', customIdPipe) id?: number) {
     if (id) return this.templatesService.findOne(id);

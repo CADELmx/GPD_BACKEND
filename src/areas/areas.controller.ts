@@ -70,6 +70,7 @@ export class AreasController {
    * @param id id of the educational program
    * @returns the area that contains the educational program including their educational programs.
    */
+  @Public()
   @Get('educational-programs/:id')
   findByEducationalProgram(
     @Param('id', customIdPipe) id: number
