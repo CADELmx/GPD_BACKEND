@@ -78,22 +78,21 @@ export class TemplatesService {
   async findOne(id: number): Promise<any> {
     try {
       if (id) {
-        await this.validateId(id);
-        const template = await this.prisma.template.findMany({
+        const template = await this.prisma.template.findUnique({
           where: {
             id,
           },
         });
 
-        if (template.length === 0) {
+        if (template) {
           return {
-            message: 'Aún no existen plantillas para este área',
+            message: 'Plantilla inexistente',
             error: null,
             data: template,
           };
         }
         return {
-          message: 'Plantillas obtenidas con éxito',
+          message: 'Plantilla obtenidas con éxito',
           error: null,
           data: template,
         };
@@ -105,7 +104,38 @@ export class TemplatesService {
       );
     }
   }
-
+  async findByArea(id: number) {
+    try {
+      if (!id) {
+        return {
+          message: 'El id del area es requerido',
+          error: null,
+          data: null,
+        }
+      }
+      await this.validateAreaId({ areaId: id });
+      const templates = await this.prisma.template.findMany({
+        where: {
+          areaId: id
+        }
+      });
+      if (templates.length === 0) return {
+        message: 'No se encontraron plantillas para este area',
+        error: null,
+        data: [],
+      }
+      return {
+        message: 'Plantillas obtenidas con exito',
+        error: null,
+        data: templates
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar la plantilla',
+      )
+    }
+  }
   /**
    * Updates a template by its ID.
    * @param {number} id - The ID of the template to update.
