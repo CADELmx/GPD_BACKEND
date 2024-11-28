@@ -119,6 +119,47 @@ export class SubjectService implements SubjectResult {
       );
     }
   }
+  async findByProgramGroupedByPeriod(id: number) {
+    try {
+      const periods = await this.prisma.subject.groupBy({
+        by: ['monthPeriod'],
+        where: {
+          educationalProgramId: id,
+        },
+        orderBy: {
+          monthPeriod: 'asc'
+        }
+      })
+      const subjectPromises = periods.map(period => {
+        return this.prisma.subject.findMany({
+          where: {
+            educationalProgramId: id,
+            monthPeriod: period.monthPeriod,
+          },
+          orderBy: {
+            totalHours: 'desc'
+          }
+        })
+      })
+      const subjectResults = await Promise.all(subjectPromises)
+      const subjects = subjectResults.map((subject, index) => {
+        return {
+          period: periods[index].monthPeriod,
+          subjects: subject
+        }
+      })
+      return {
+        data: subjects,
+        error: null,
+        message: 'Materias agrupadas por periodo'
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al buscar la materia',
+      );
+    }
+  }
   /**
    * Returns a subject by its id
    * @param id id of the subject

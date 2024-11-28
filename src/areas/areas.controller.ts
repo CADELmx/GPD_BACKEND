@@ -65,6 +65,14 @@ export class AreasController {
     if (count) return this.areasService.findAllEducationalProgramsCount()
     return this.areasService.findAllJoinEducationalPrograms()
   }
+  @Public()
+  @Get('workers')
+  findNotEmpty(
+    @Query('director', customBoolPipe) director?: boolean,
+  ) {
+    if (director) return this.areasService.findDirectorAreas()
+    return this.areasService.findNotEmptyAreas()
+  }
   /**
    * Retrieves an area based on the educational program ID.
    * @param id id of the educational program

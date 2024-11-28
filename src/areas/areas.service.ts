@@ -6,13 +6,34 @@ import { Area } from '@prisma/client';
 import { CreateAreaDto } from '../models/area/create-area.dto';
 import { UpdateAreaDto } from '../models/area/update-area.dto';
 
+export interface AreasResult {
+  message: string;
+  error: string | null;
+  data: Area[];
+}
+
+export interface AreaResult {
+  message: string,
+  error: string | null,
+  data: Area | null
+}
+
 @Injectable()
 export class AreasService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
   ) { }
-
+  notFoundAreasResult = {
+    message: 'Sin areas encontradas' as string,
+    error: null as string,
+    data: [] as Area[],
+  }
+  notFoundAreaResult = {
+    message: 'Área no encontrada' as string,
+    error: null as null,
+    data: null as null,
+  }
   /**
    * Creates a new area.
    * @param createAreaDto - Data Transfer Object for creating a new area.
@@ -20,7 +41,7 @@ export class AreasService {
    */
   async create(
     createAreaDto: CreateAreaDto,
-  ): Promise<{ message: string; error: string | null; data: Area | null }> {
+  ): Promise<AreaResult> {
     try {
       const area = await this.prisma.area.create({
         data: createAreaDto,
@@ -37,6 +58,11 @@ export class AreasService {
       );
     }
   }
+  /**
+   * Creates multiple new areas.
+   * @param createAreaDto - Array of Data Transfer Objects for creating new areas.
+   * @returns A promise that resolves with a message,any error encountered, and the counter of the created areas.
+   */
   async createMany(createAreaDto: CreateAreaDto[]) {
     try {
       const areas = await this.prisma.area.createMany({
@@ -58,22 +84,14 @@ export class AreasService {
    * Retrieves all areas.
    * @returns A promise that resolves with a message, any error encountered, and a list of areas.
    */
-  async findAll(): Promise<{
-    message: string;
-    error: string | null;
-    data: Area[] | null;
-  }> {
+  async findAll(): Promise<AreasResult> {
     try {
       const areas = await this.prisma.area.findMany({
         orderBy: {
           name: 'asc',
         },
       });
-      if (areas.length === 0) return {
-        message: 'No hay áreas registradas',
-        error: null,
-        data: [],
-      }
+      if (areas.length === 0) return this.notFoundAreasResult
       return {
         message: 'Áreas encontradas',
         error: null,
@@ -94,27 +112,14 @@ export class AreasService {
    */
   async findOneById(
     id: number,
-  ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
+  ): Promise<AreaResult> {
     try {
-      await this.validateIfExistsAreaId(id);
-
-      const area = await this.prisma.area.findMany({
+      const area = await this.prisma.area.findUnique({
         where: {
           id,
         },
-        orderBy: {
-          name: 'asc',
-        },
       });
-
-      if (area.length === 0) {
-        return {
-          message: 'Area no encontrada',
-          error: null,
-          data: area,
-        };
-      }
-
+      if (!area) return this.notFoundAreaResult
       return {
         message: 'Área obtenida con éxito',
         error: null,
@@ -135,7 +140,7 @@ export class AreasService {
    */
   async findOneByName(
     name: string,
-  ): Promise<{ message: string; error: string | null; data: Area[] | null }> {
+  ): Promise<AreasResult> {
     try {
       const area = await this.prisma.area.findMany({
         where: {
@@ -149,14 +154,7 @@ export class AreasService {
         },
       });
 
-      if (area.length === 0) {
-        return {
-          message: 'Área no encontrada',
-          error: null,
-          data: area,
-        };
-      }
-
+      if (area.length === 0) return this.notFoundAreasResult
       return {
         message: 'Área obtenida con éxito',
         error: null,
@@ -169,7 +167,94 @@ export class AreasService {
       );
     }
   }
-  async findAllEducationalProgramsCount() {
+  /**
+   * Returns areas that have only one worker (director).
+   * @returns A promise that resolves with a message, any error encountered, and a list of areas that have only one worker (director).
+   */
+  async findDirectorAreas(): Promise<AreasResult> {
+    const areas = await this.prisma.area.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    })
+    if (areas.length === 0) return this.notFoundAreasResult
+    const personalDataPromises = areas.map((area) => {
+      return this.prisma.personalData.findMany({
+        where: {
+          area: {
+            contains: area.name,
+            mode: 'insensitive',
+          },
+        },
+        orderBy: {
+          name: 'asc',
+        },
+        select: {
+          name: true,
+          ide: true,
+          area: true,
+          position: true,
+        },
+      })
+    })
+    const personalDataResults = await Promise.all(personalDataPromises)
+    const personalData = personalDataResults
+      .filter(personalData => personalData.length === 1)
+      .map(personalData => personalData[0].area)
+    const filteredAreas = areas.filter(area => personalData
+      .map(str => str.toLowerCase().trim())
+      .includes(area.name.toLowerCase().trim())
+    )
+    return {
+      message: 'Áreas encontradas',
+      error: null,
+      data: filteredAreas,
+    }
+  }
+  /**
+   * Returns areas that have more than one worker.
+   * @returns A promise that resolves with a message, any error encountered, and a list of areas that have more than one worker.
+   */
+  async findNotEmptyAreas(): Promise<AreasResult> {
+    const areas = await this.prisma.area.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    })
+    if (areas.length === 0) return this.notFoundAreasResult
+    const personalDataPromises = areas.map((area) => {
+      return this.prisma.personalData.findMany({
+        where: {
+          area: area.name,
+        },
+        orderBy: {
+          name: 'asc',
+        },
+        select: {
+          name: true,
+          ide: true,
+          area: true,
+          position: true,
+        },
+      })
+    })
+    const personalDataResults = await Promise.all(personalDataPromises)
+    const personalData = personalDataResults
+      .filter(personalData => personalData.length > 1)
+      .map(personalData => personalData[0].area)
+    const filteredAreas = areas.filter(area => personalData.includes(area.name))
+    if (filteredAreas.length === 0) return this.notFoundAreasResult
+    return {
+      message: 'Áreas encontradas',
+      error: null,
+      data: filteredAreas,
+    }
+  }
+  /**
+   * Returns the count of educational programs per area.
+   * @returns A promise that resolves with a message, any error encountered, and the count of educational programs per area.
+   */
+  async findAllEducationalProgramsCount(): Promise<AreasResult> {
     try {
       const areas = await this.prisma.area.findMany({
         include: {
@@ -190,11 +275,7 @@ export class AreasService {
           },
         ],
       })
-      if (areas.length === 0) return {
-        message: 'No hay áreas registradas',
-        error: null,
-        data: [],
-      }
+      if (areas.length === 0) return this.notFoundAreasResult
       return {
         message: 'Áreas encontradas',
         error: null,
@@ -207,7 +288,12 @@ export class AreasService {
       )
     }
   }
-  async findAreaBasedOnEducationalProgramId(id: number) {
+  /**
+   * Retrieves an area based on the educational program ID.
+   * @param id ID of the educational program
+   * @returns a promise that resolves with a message, any error encountered, and the area that contains the educational program including their educational programs.
+   */
+  async findAreaBasedOnEducationalProgramId(id: number): Promise<AreaResult> {
     try {
       const area = await this.prisma.area.findFirst({
         where: {
@@ -221,11 +307,7 @@ export class AreasService {
           educationalPrograms: true,
         }
       })
-      if (!area) return {
-        message: 'No se encontró el área',
-        error: null,
-        data: null,
-      }
+      if (!area) return this.notFoundAreaResult
       return {
         message: 'Área encontrada',
         error: null,
@@ -238,7 +320,11 @@ export class AreasService {
       )
     }
   }
-  async findAllJoinEducationalPrograms() {
+  /**
+   * Returns all areas with their educational programs or the count of educational programs.
+   * @returns A promise that resolves with a message, any error encountered, and the found areas with their educational programs or the count of educational programs.
+   */
+  async findAllJoinEducationalPrograms(): Promise<AreasResult> {
     try {
       const areas = await this.prisma.area.findMany({
         select: {
@@ -268,11 +354,7 @@ export class AreasService {
           }
         ],
       })
-      if (areas.length === 0) return {
-        message: 'No hay áreas registradas',
-        error: null,
-        data: [],
-      }
+      if (areas.length === 0) return this.notFoundAreasResult
       return {
         message: 'Áreas encontradas',
         error: null,
@@ -294,7 +376,8 @@ export class AreasService {
   async update(
     id: number,
     updateAreaDto: UpdateAreaDto,
-  ): Promise<{ message: string; error: string | null; data: Area | null }> {
+  ): Promise<AreaResult> {
+    await this.validateIfExistsAreaId(id);
     try {
       const area = await this.prisma.area.update({
         where: {
@@ -302,7 +385,6 @@ export class AreasService {
         },
         data: updateAreaDto,
       });
-
       return {
         message: 'Área actualizada',
         error: null,
@@ -323,7 +405,7 @@ export class AreasService {
    */
   async remove(
     id: number,
-  ): Promise<{ message: string; error: string | null; data: Area | null }> {
+  ): Promise<AreaResult> {
     await this.validateIfExistsAreaId(id);
     try {
       const area = await this.prisma.area.delete({
@@ -331,7 +413,6 @@ export class AreasService {
           id,
         },
       });
-
       return {
         message: 'Área eliminada',
         error: null,

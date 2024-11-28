@@ -109,10 +109,10 @@ export class PersonalDataService {
       );
     }
   }
-  findOneJoinPartialTemplate(id: number) {
+  async findOneJoinPartialTemplate(id: number) {
     try {
       const personalDataWithPartialTemplate =
-        this.prisma.personalData.findUnique({
+        await this.prisma.personalData.findUnique({
           where: {
             ide: id,
           },
@@ -140,6 +140,11 @@ export class PersonalDataService {
       );
     }
   }
+  /**
+   * Returns a list of personal data with their partial templates
+   * @param active Active status
+   * @returns a list of personal data with their partial templates
+   */
   async findAllJoinPartialTemplate(active?: boolean) {
     const filter = active ? { active } : {};
     try {
@@ -170,6 +175,12 @@ export class PersonalDataService {
       );
     }
   }
+  /**
+   * Returns a list of personal data filtered by position and area
+   * @param position The name of the position to filter by
+   * @param area The name of the area to filter by
+   * @returns A list of personal data that match the filters
+   */
   async filterByFieldInsensitive(
     position: string,
     area: string,
@@ -190,15 +201,16 @@ export class PersonalDataService {
             }
             : undefined,
         },
+        orderBy: {
+          name: 'asc',
+        },
         select: this.personalDataSelector,
       });
-      if (personalDataFiltered.length === 0) {
-        return {
-          message: 'No se encontraron trabajadores',
-          error: null,
-          data: [],
-        };
-      }
+      if (personalDataFiltered.length === 0) return {
+        message: 'No se encontraron trabajadores',
+        error: null,
+        data: [],
+      };
       return {
         message: 'Trabajadores encontrados con éxito',
         error: null,

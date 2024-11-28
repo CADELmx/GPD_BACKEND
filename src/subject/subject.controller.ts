@@ -69,6 +69,18 @@ export class SubjectController {
     return this.subjectService.findAll();
   }
   /**
+   * Returns subjects grouped by period for a specific educational program
+   * @param id the educational program id
+   * @returns subjects grouped by period
+   */
+  @Public()
+  @Get('grouped')
+  findGrouped(
+    @Query('id', customIdPipe) id: number,
+  ) {
+    return this.subjectService.findByProgramGroupedByPeriod(id);
+  }
+  /**
    * Handles the patch request to update a subject
    * @param id
    * @param updateSubjectDto
