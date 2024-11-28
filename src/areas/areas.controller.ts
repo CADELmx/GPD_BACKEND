@@ -65,6 +65,11 @@ export class AreasController {
     if (count) return this.areasService.findAllEducationalProgramsCount()
     return this.areasService.findAllJoinEducationalPrograms()
   }
+  /**
+   * Retrieves all areas that have at least one worker or all areas that have a director.
+   * @param director A boolean value to filter the areas by director.
+   * @returns The found areas.
+   */
   @Public()
   @Get('workers')
   findNotEmpty(
