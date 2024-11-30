@@ -33,6 +33,7 @@ export class PersonalDataController {
    * @param createPersonalDataDto The list of data transfer objects
    * @returns the number of created personal data
    */
+  @Public()
   @Post('many')
   createMany(@Body() createPersonalDataDto: CreatePersonalDataDto[]) {
     return this.personalDataService.createMany(createPersonalDataDto);
