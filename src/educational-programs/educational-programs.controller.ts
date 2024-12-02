@@ -53,6 +53,11 @@ export class EducationalProgramsController {
   findByArea(@Query('id', customIdPipe) id: number) {
     return this.educationalProgramsService.findByArea(id);
   }
+  @Public()
+  @Get('/subject')
+  findJoinSubject(@Query('id', customIdPipe) id: number) {
+    return this.educationalProgramsService.findJoinSubject(id);
+  }
 
   /**
    * Update a program using its id

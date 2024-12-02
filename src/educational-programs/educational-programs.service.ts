@@ -157,6 +157,19 @@ export class EducationalProgramsService {
       );
     }
   }
+  async findOneJoinSubject(id: number) {
+    try {
+      const educationalProgram = await this.prisma.educationalPrograms.findUnique({
+        where: { id },
+        include: { subjects: true }
+      })
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar el programa educativo',
+      );
+    }
+  }
   /**
    * Method to update a program using its id
    * @param id id of the program to update

@@ -84,13 +84,11 @@ export class TemplatesService {
           },
         });
 
-        if (template) {
-          return {
-            message: 'Plantilla inexistente',
-            error: null,
-            data: template,
-          };
-        }
+        if (!template) return {
+          message: 'Plantilla inexistente',
+          error: null,
+          data: template,
+        };
         return {
           message: 'Plantilla obtenidas con éxito',
           error: null,
