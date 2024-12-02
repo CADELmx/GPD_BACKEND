@@ -56,7 +56,8 @@ export class EducationalProgramsController {
   @Public()
   @Get('/subject')
   findJoinSubject(@Query('id', customIdPipe) id: number) {
-    return this.educationalProgramsService.findJoinSubject(id);
+    if (id) return this.educationalProgramsService.findOneJoinSubject(id);
+    return this.educationalProgramsService.findAllJoinSubject();
   }
 
   /**

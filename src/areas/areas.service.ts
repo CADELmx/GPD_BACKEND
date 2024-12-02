@@ -5,18 +5,7 @@ import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { Area } from '@prisma/client';
 import { CreateAreaDto } from '../models/area/create-area.dto';
 import { UpdateAreaDto } from '../models/area/update-area.dto';
-
-export interface AreasResult {
-  message: string;
-  error: string | null;
-  data: Area[];
-}
-
-export interface AreaResult {
-  message: string,
-  error: string | null,
-  data: Area | null
-}
+import { APIResult } from '../common/api-results-interface';
 
 @Injectable()
 export class AreasService {
@@ -24,15 +13,15 @@ export class AreasService {
     private readonly prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
   ) { }
-  notFoundAreasResult = {
-    message: 'Sin areas encontradas' as string,
-    error: null as string,
-    data: [] as Area[],
+  notFoundAreasResult = <APIResult<Area[]>>{
+    message: 'Sin areas encontradas',
+    error: null,
+    data: [],
   }
-  notFoundAreaResult = {
-    message: 'Área no encontrada' as string,
-    error: null as null,
-    data: null as null,
+  notFoundAreaResult = <APIResult<Area>>{
+    message: 'Área no encontrada',
+    error: null,
+    data: null,
   }
   /**
    * Creates a new area.
@@ -41,7 +30,7 @@ export class AreasService {
    */
   async create(
     createAreaDto: CreateAreaDto,
-  ): Promise<AreaResult> {
+  ): Promise<APIResult<Area>> {
     try {
       const area = await this.prisma.area.create({
         data: createAreaDto,
@@ -84,7 +73,7 @@ export class AreasService {
    * Retrieves all areas.
    * @returns A promise that resolves with a message, any error encountered, and a list of areas.
    */
-  async findAll(): Promise<AreasResult> {
+  async findAll(): Promise<APIResult<Area[]>> {
     try {
       const areas = await this.prisma.area.findMany({
         orderBy: {
@@ -112,7 +101,7 @@ export class AreasService {
    */
   async findOneById(
     id: number,
-  ): Promise<AreaResult> {
+  ): Promise<APIResult<Area>> {
     try {
       const area = await this.prisma.area.findUnique({
         where: {
@@ -140,7 +129,7 @@ export class AreasService {
    */
   async findOneByName(
     name: string,
-  ): Promise<AreasResult> {
+  ): Promise<APIResult<Area[]>> {
     try {
       const area = await this.prisma.area.findMany({
         where: {
@@ -171,7 +160,7 @@ export class AreasService {
    * Returns areas that have only one worker (director).
    * @returns A promise that resolves with a message, any error encountered, and a list of areas that have only one worker (director).
    */
-  async findDirectorAreas(): Promise<AreasResult> {
+  async findDirectorAreas(): Promise<APIResult<Area[]>> {
     const areas = await this.prisma.area.findMany({
       orderBy: {
         name: 'asc',
@@ -215,7 +204,7 @@ export class AreasService {
    * Returns areas that have more than one worker.
    * @returns A promise that resolves with a message, any error encountered, and a list of areas that have more than one worker.
    */
-  async findNotEmptyAreas(): Promise<AreasResult> {
+  async findNotEmptyAreas(): Promise<APIResult<Area[]>> {
     const areas = await this.prisma.area.findMany({
       orderBy: {
         name: 'asc',
@@ -254,7 +243,7 @@ export class AreasService {
    * Returns the count of educational programs per area.
    * @returns A promise that resolves with a message, any error encountered, and the count of educational programs per area.
    */
-  async findAllEducationalProgramsCount(): Promise<AreasResult> {
+  async findAllEducationalProgramsCount(): Promise<APIResult<Area[]>> {
     try {
       const areas = await this.prisma.area.findMany({
         include: {
@@ -293,7 +282,7 @@ export class AreasService {
    * @param id ID of the educational program
    * @returns a promise that resolves with a message, any error encountered, and the area that contains the educational program including their educational programs.
    */
-  async findAreaBasedOnEducationalProgramId(id: number): Promise<AreaResult> {
+  async findAreaBasedOnEducationalProgramId(id: number): Promise<APIResult<Area>> {
     try {
       const area = await this.prisma.area.findFirst({
         where: {
@@ -324,7 +313,7 @@ export class AreasService {
    * Returns all areas with their educational programs or the count of educational programs.
    * @returns A promise that resolves with a message, any error encountered, and the found areas with their educational programs or the count of educational programs.
    */
-  async findAllJoinEducationalPrograms(): Promise<AreasResult> {
+  async findAllJoinEducationalPrograms(): Promise<APIResult<Area[]>> {
     try {
       const areas = await this.prisma.area.findMany({
         select: {
@@ -376,7 +365,7 @@ export class AreasService {
   async update(
     id: number,
     updateAreaDto: UpdateAreaDto,
-  ): Promise<AreaResult> {
+  ): Promise<APIResult<Area>> {
     await this.validateIfExistsAreaId(id);
     try {
       const area = await this.prisma.area.update({
@@ -405,7 +394,7 @@ export class AreasService {
    */
   async remove(
     id: number,
-  ): Promise<AreaResult> {
+  ): Promise<APIResult<Area>> {
     await this.validateIfExistsAreaId(id);
     try {
       const area = await this.prisma.area.delete({

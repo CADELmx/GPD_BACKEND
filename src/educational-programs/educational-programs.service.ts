@@ -7,6 +7,7 @@ import { UpdateEducationalProgramDto } from '../models/educationalPrograms/updat
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { EducationalPrograms } from '@prisma/client';
+import { APIResult } from '../common/api-results-interface';
 
 @Injectable()
 export class EducationalProgramsService {
@@ -14,7 +15,16 @@ export class EducationalProgramsService {
     private prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
   ) { }
-
+  notFoundEducationalProgram = <APIResult<EducationalPrograms>>{
+    message: 'Programa educativo no encontrado',
+    error: null,
+    data: null,
+  }
+  notFoundEducationalPrograms = <APIResult<EducationalPrograms[]>>{
+    message: 'Programas educativos no encontrados',
+    error: null,
+    data: [],
+  }
   /**
    * Method for creating a new educational program.
    * @param data Program data to register
@@ -22,11 +32,7 @@ export class EducationalProgramsService {
    */
   async createProgram(
     educationalProgram: CreateEducationalProgramDto,
-  ): Promise<{
-    message: string | null;
-    error: string | null;
-    data: EducationalPrograms | null;
-  }> {
+  ): Promise<APIResult<EducationalPrograms>> {
     try {
       await this.validateAreaId(educationalProgram.areaId);
       const newPartialTemplate = await this.prisma.educationalPrograms.create({
@@ -69,7 +75,7 @@ export class EducationalProgramsService {
    * Method to consult all programs
    * @returns Returns all registered educational programs
    */
-  async findAllPrograms(): Promise<any> {
+  async findAllPrograms(): Promise<APIResult<EducationalPrograms[]>> {
     try {
       const programs = await this.prisma.educationalPrograms.findMany({
         orderBy: [
@@ -77,9 +83,7 @@ export class EducationalProgramsService {
           { abbreviation: 'asc' }
         ]
       });
-      if (programs.length === 0) return {
-        message: 'Sin programas educativos', error: null, data: []
-      }
+      if (programs.length === 0) return this.notFoundEducationalPrograms
       return {
         message: 'Programas educativos encontrados',
         error: null,
@@ -99,22 +103,14 @@ export class EducationalProgramsService {
    * @returns Educational program
    * @throws NotFoundException if program is not found
    */
-  async findProgramById(id: number): Promise<{
-    data: EducationalPrograms | null;
-    error: string | null;
-    message: string;
-  }> {
+  async findProgramById(id: number): Promise<APIResult<EducationalPrograms>> {
     try {
       const educationalProgram =
         await this.prisma.educationalPrograms.findUnique({
           where: { id },
         });
 
-      if (!educationalProgram) return {
-        message: 'Programa educativo no encontrado',
-        error: null,
-        data: null,
-      }
+      if (!educationalProgram) return this.notFoundEducationalProgram
       return {
         data: educationalProgram,
         error: null,
@@ -128,11 +124,7 @@ export class EducationalProgramsService {
     }
   }
 
-  async findByArea(areaId: number): Promise<{
-    error: string | null;
-    data: EducationalPrograms[];
-    message: string;
-  }> {
+  async findByArea(areaId: number): Promise<APIResult<EducationalPrograms[]>> {
     try {
       const educationalPrograms = await this.prisma.educationalPrograms.findMany({
         where: { areaId },
@@ -140,11 +132,7 @@ export class EducationalProgramsService {
           { abbreviation: 'asc' }
         ]
       });
-      if (educationalPrograms.length === 0) return {
-        message: 'Sin programas educativos',
-        error: null,
-        data: educationalPrograms
-      }
+      if (educationalPrograms.length === 0) return this.notFoundEducationalPrograms
       return {
         message: 'Programas educativos encontrados',
         error: null,
@@ -157,16 +145,40 @@ export class EducationalProgramsService {
       );
     }
   }
-  async findOneJoinSubject(id: number) {
+  async findOneJoinSubject(id: number): Promise<APIResult<EducationalPrograms>> {
     try {
       const educationalProgram = await this.prisma.educationalPrograms.findUnique({
         where: { id },
         include: { subjects: true }
       })
+      if (!educationalProgram) return this.notFoundEducationalProgram
+      return {
+        message: 'Programa educativo encontrado',
+        error: null,
+        data: educationalProgram
+      }
     } catch (error) {
       return this.prismaErrorHandler.handleError(
         error,
         'Error al consultar el programa educativo',
+      );
+    }
+  }
+  async findAllJoinSubject(): Promise<APIResult<EducationalPrograms[]>> {
+    try {
+      const educationalPrograms = await this.prisma.educationalPrograms.findMany({
+        include: { subjects: true }
+      })
+      if (educationalPrograms.length === 0) return this.notFoundEducationalPrograms
+      return {
+        message: 'Programas educativos encontrados',
+        error: null,
+        data: educationalPrograms
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar los programas educativos',
       );
     }
   }
@@ -179,11 +191,7 @@ export class EducationalProgramsService {
   async updateProgram(
     id: number,
     updateEducationalProgramDto: UpdateEducationalProgramDto,
-  ): Promise<{
-    message: string | null;
-    error: string | null;
-    data: EducationalPrograms | null;
-  }> {
+  ): Promise<APIResult<EducationalPrograms>> {
     try {
       if (updateEducationalProgramDto.areaId) {
         await this.validateAreaId(updateEducationalProgramDto.areaId);
@@ -216,16 +224,16 @@ export class EducationalProgramsService {
 
   async removeProgram(
     id: number,
-  ): Promise<{ message: string; error: string | null; data: null }> {
+  ): Promise<APIResult<EducationalPrograms>> {
     try {
       await this.findProgramById(id);
-      await this.prisma.educationalPrograms.delete({
+      const deletedEducationalProgram = await this.prisma.educationalPrograms.delete({
         where: { id },
       });
       return {
-        data: null,
+        data: deletedEducationalProgram,
         error: null,
-        message: 'Eliminada Correctamente',
+        message: 'Eliminado Correctamente',
       };
     } catch (error) {
       return this.prismaErrorHandler.handleError(
