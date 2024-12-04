@@ -9,7 +9,7 @@ export class UsersController {
 
   @Get('/profile')
   async getProfile(@Request() req) {
-    const userId = BigInt(req.user.id);
+    const userId = Number(req.user.id);
     const user = await this.usersService.findUserById(userId);
     const { password, ...result } = user;
     return result;
@@ -31,7 +31,7 @@ export class UsersController {
     @Request() req,
     @Body() data: UpdateUserDto
   ) {
-    const userId = BigInt(req.user.id);
+    const userId = Number(req.user.id);
     return this.usersService.updateUser(userId, data);
   }
   @Post('update/password')
@@ -39,12 +39,12 @@ export class UsersController {
     @Request() req,
     @Body() newPassword: string
   ) {
-    const userId = BigInt(req.user.id);
+    const userId = Number(req.user.id);
     return this.usersService.updatePassword(userId, newPassword);
   }
   @Delete(':id')
   remove(@Request() req) {
-    const userId = BigInt(req.user.id);
+    const userId = Number(req.user.id);
     return this.usersService.remove(userId);
   }
   @Public()

@@ -69,7 +69,7 @@ export class UsersService {
     }
   }
 
-  async updateUser(userId: bigint, data: UpdateUserDto) {
+  async updateUser(userId: number, data: UpdateUserDto) {
     try {
       const selectedUser = await this.prisma.users.findUnique({
         where: {
@@ -97,7 +97,7 @@ export class UsersService {
       )
     }
   }
-  async updatePassword(userId: bigint, data: string) {
+  async updatePassword(userId: number, data: string) {
     try {
       const selectedUser = await this.prisma.users.findUnique({
         where: {
@@ -131,7 +131,7 @@ export class UsersService {
       )
     }
   }
-  async findUserById(userId: bigint): Promise<Users> {
+  async findUserById(userId: number): Promise<Users> {
     const user = await this.prisma.users.findUnique({
       where: {
         id: userId,
@@ -188,7 +188,7 @@ export class UsersService {
       );
     }
   }
-  async remove(userId: bigint) {
+  async remove(userId: number) {
     try {
       const deletedUser = await this.prisma.users.delete({
         where: {
