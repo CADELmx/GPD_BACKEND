@@ -332,9 +332,6 @@ export class PartialTemplatesService {
   ): Promise<any> {
     try {
       await this.validateId(id);
-      await this.validateIfExistsTemplateId(updatePartialTemplateDto);
-      await this.validateTotalByPosition(updatePartialTemplateDto);
-
       const updatePartialTemplate = await this.prisma.partialTemplate.update({
         data: { ...updatePartialTemplateDto } as any,
         where: {
