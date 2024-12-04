@@ -74,7 +74,7 @@ model PartialTemplate {
   templateId Int     @db.Integer
 
   personalData PersonalData @relation(fields: [nt], references: [ide])
-  template     Template     @relation(fields: [templateId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  template     Template     @relation(fields: [templateId], references: [id], onUpdate: Cascade)
   activities   Activity[]
   comments     Comments[]
 }
@@ -84,7 +84,7 @@ model Comments {
   createAt          DateTime        @default(now())
   comment           String          @db.VarChar(200)
   partialtemplateId Int             @unique
-  partialTemplate   PartialTemplate @relation(fields: [partialtemplateId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  partialTemplate   PartialTemplate @relation(fields: [partialtemplateId], references: [id], onUpdate: Cascade)
 }
 
 model Activity {
@@ -100,7 +100,7 @@ model Activity {
   subtotalClassification Int?     @db.Integer
   numberStudents         Int?     @db.Integer
 
-  partialTemplate    PartialTemplate?     @relation(fields: [partialTemplateId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  partialTemplate    PartialTemplate?     @relation(fields: [partialTemplateId], references: [id], onUpdate: Cascade)
   educationalProgram EducationalPrograms? @relation(fields: [educationalProgramId], references: [id])
 }
 
@@ -143,5 +143,5 @@ model Subject {
   totalHours           Int                 @db.Integer
   monthPeriod          String              @db.VarChar(10)
   subjectName          String              @db.VarChar(120)
-  educationalProgram   EducationalPrograms @relation(fields: [educationalProgramId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  educationalProgram   EducationalPrograms @relation(fields: [educationalProgramId], references: [id], onUpdate: Cascade)
 }
