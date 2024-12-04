@@ -134,6 +134,30 @@ export class TemplatesService {
       )
     }
   }
+  async findJoinPartialTemplates() {
+    try {
+      const partialTemplates = await this.prisma.template.findMany({
+        include: {
+          partialTemplate: true
+        }
+      })
+      if (partialTemplates.length === 0) return {
+        error: null,
+        message: 'No se encontraron plantillas',
+        data: []
+      }
+      return {
+        data: partialTemplates,
+        message: 'Plantillas encontradas',
+        error: null
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las plantillas'
+      )
+    }
+  }
   /**
    * Updates a template by its ID.
    * @param {number} id - The ID of the template to update.

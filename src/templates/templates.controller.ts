@@ -44,6 +44,11 @@ export class TemplatesController {
   findByArea(@Query('id', customIdPipe) id: number) {
     return this.templatesService.findByArea(id);
   }
+  @Public()
+  @Get('partial-templates')
+  findJoinPartialTemplates() {
+    return this.templatesService.findJoinPartialTemplates()
+  }
   /**
    * Updates a template by ID
    * @param {number} id - The ID of the template to update
