@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PartialTemplate } from '@prisma/client';
+import { Activity, PartialTemplate } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { CreatePartialTemplateDto, CreatePartialTemplatesDto } from '../models/partialTemplate/create-partial-template.dto';
@@ -45,6 +45,33 @@ export class PartialTemplatesService {
         error,
         'Error al crear la plantilla parcial',
       );
+    }
+  }
+  async createWithActivities(createPartialTemplateDto: CreatePartialTemplateDto, activities: Activity[]) {
+    try {
+      const newPartialTemplate = await this.prisma.partialTemplate.create({
+        data: createPartialTemplateDto
+      })
+      const newActivities = activities.map((activity) => {
+        return {
+          ...activity,
+          partialTemplateId: newPartialTemplate.id
+        }
+      })
+      await this.prisma.activity.createMany({
+        data: newActivities
+      })
+      return {
+        message: 'Plantilla parcial creada con éxito',
+        error: null,
+        data: newPartialTemplate
+      }
+    } catch (error) {
+      console.log(error)
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear la plantilla parcial'
+      )
     }
   }
 

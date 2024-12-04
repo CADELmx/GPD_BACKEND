@@ -70,7 +70,7 @@ model PartialTemplate {
   total      Int     @db.Integer
   status     String  @default("pendiente") @db.VarChar(50)
   year       String  @db.VarChar(4)
-  period     String  @db.VarChar(10)
+  period     String  @db.VarChar(50)
   templateId BigInt  @unique
 
   personalData PersonalData @relation(fields: [nt], references: [ide])

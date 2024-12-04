@@ -13,6 +13,7 @@ import { CreatePartialTemplateDto, CreatePartialTemplatesDto } from '../models/p
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-partial-template.dto';
 import { Public } from '../auth/decorators/public.decorator';
+import { Activity } from '@prisma/client';
 
 
 @Controller('partial-templates')
@@ -35,6 +36,14 @@ export class PartialTemplatesController {
     @Query('id', customIdPipe) id: number,
     @Body() createPartialTemplatesDto: CreatePartialTemplatesDto[]) {
     return this.partialTemplatesService.createMany(id, createPartialTemplatesDto);
+  }
+  @Post('/activities')
+  createWithActivities(
+    @Body('partialTemplate') createPartialTemplateDto: CreatePartialTemplateDto & { activities: Activity[] },
+  ) {
+    console.log(createPartialTemplateDto)
+    const { activities, ...partialTemplate } = createPartialTemplateDto;
+    return this.partialTemplatesService.createWithActivities(partialTemplate, activities);
   }
   @Public()
   @Get()
