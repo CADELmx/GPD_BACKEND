@@ -1,5 +1,7 @@
-import { Controller, Get, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { UpdateUserDto } from 'src/models/user/update-user.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -23,5 +25,31 @@ export class UsersController {
       error,
       message
     };
+  }
+  @Post('update')
+  async updateUser(
+    @Request() req,
+    @Body() data: UpdateUserDto
+  ) {
+    const userId = BigInt(req.user.id);
+    return this.usersService.updateUser(userId, data);
+  }
+  @Post('update/password')
+  async updatePassword(
+    @Request() req,
+    @Body() newPassword: string
+  ) {
+    const userId = BigInt(req.user.id);
+    return this.usersService.updatePassword(userId, newPassword);
+  }
+  @Delete(':id')
+  remove(@Request() req) {
+    const userId = BigInt(req.user.id);
+    return this.usersService.remove(userId);
+  }
+  @Public()
+  @Get('decript')
+  removeMany(@Body('password') password: string) {
+    return this.usersService.decrypt(password);
   }
 }

@@ -10,6 +10,7 @@ import { createCipheriv, createDecipheriv, randomBytes, scrypt } from 'crypto';
 import { jwtConstants } from 'src/auth/constants';
 import { promisify } from 'util';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { UpdateUserDto } from 'src/models/user/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -68,7 +69,68 @@ export class UsersService {
     }
   }
 
-
+  async updateUser(userId: bigint, data: UpdateUserDto) {
+    try {
+      const selectedUser = await this.prisma.users.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+      if (!selectedUser) {
+        throw new NotFoundException('Usuario no encontrado');
+      }
+      const user = await this.prisma.users.update({
+        where: {
+          id: userId,
+        },
+        data,
+      });
+      return {
+        data: user,
+        error: null,
+        message: 'Usuario actualizado con éxito'
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al actualizar el usuario'
+      )
+    }
+  }
+  async updatePassword(userId: bigint, data: string) {
+    try {
+      const selectedUser = await this.prisma.users.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+      if (!selectedUser) {
+        throw new NotFoundException('Usuario no encontrado');
+      }
+      const encryptedPassword = await this.encryptPassword(data);
+      if (selectedUser.password === encryptedPassword) {
+        throw new NotAcceptableException('La contraseña nueva no puede ser igual a la anterior');
+      }
+      const user = await this.prisma.users.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          password: encryptedPassword,
+        },
+      });
+      return {
+        data: user,
+        error: null,
+        message: 'Contraseña actualizada con éxito'
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al actualizar la contraseña'
+      )
+    }
+  }
   async findUserById(userId: bigint): Promise<Users> {
     const user = await this.prisma.users.findUnique({
       where: {
@@ -123,6 +185,35 @@ export class UsersService {
       return this.prismaErrorHandler.handleError(
         error,
         'Error al crear el usuario'
+      );
+    }
+  }
+  async remove(userId: bigint) {
+    try {
+      const deletedUser = await this.prisma.users.delete({
+        where: {
+          id: userId,
+        },
+      });
+      return {
+        data: deletedUser,
+        error: null,
+        message: 'Usuario eliminado con éxito'
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al eliminar el usuario'
+      );
+    }
+  }
+  async decrypt(string: string) {
+    try {
+      return await this.decryptPassword(string);
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al desecriptar la contraseña'
       );
     }
   }

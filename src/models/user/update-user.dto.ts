@@ -1,6 +1,6 @@
 import { IsBoolean, IsEmail, IsInt, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
-export class CreateUserDto {
+export class UpdateUserDto {
     @IsOptional()
     @IsString({
         message: 'El email debe ser un texto',
