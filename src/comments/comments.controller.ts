@@ -3,15 +3,17 @@ import { CreateCommentDto } from '../models/comments/create-comment.dto';
 import { CommentsService } from './comments.service';
 import { UpdateCommentDto } from '../models/comments/update-comment.dto';
 import { Public } from '../auth/decorators/public.decorator';
+import { customIdPipe } from '../common/validation/custom-validation.pipe';
 
 @Controller('comments')
 export class CommentsController {
     constructor(
         private readonly commentService: CommentsService
     ) { }
-
+    @Public()
     @Post()
     create(@Body() createCommentDto: CreateCommentDto) {
+        console.log(createCommentDto);
         return this.commentService.create(createCommentDto)
     }
     @Public()
@@ -23,11 +25,11 @@ export class CommentsController {
         return this.commentService.findAll()
     }
     @Put(':id')
-    update(@Param('id') id: number, @Body() updateCommentDto: UpdateCommentDto) {
+    update(@Param('id', customIdPipe) id: number, @Body() updateCommentDto: UpdateCommentDto) {
         return this.commentService.update(id, updateCommentDto)
     }
     @Delete(':id')
-    delete(@Param('id') id: number) {
+    delete(@Param('id', customIdPipe) id: number) {
         return this.commentService.delete(id)
     }
 }
