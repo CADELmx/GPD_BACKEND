@@ -16,9 +16,6 @@ export class TemplatesService {
    * Registers a new template.
    * @param {CreateTemplateDto} createTemplateDto - The template data to register.
    * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The registered template.
-   * Registers a new template.
-   * @param {CreateTemplateDto} createTemplateDto - The template data to register.
-   * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The registered template.
    */
   async create(createTemplateDto: CreateTemplateDto): Promise<any> {
     try {
