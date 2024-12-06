@@ -9,9 +9,11 @@ import {
   Put,
 } from '@nestjs/common';
 import { PartialTemplatesService } from './partial-templates.service';
-import { CreatePartialTemplateDto } from '../models/partialTemplate/create-partial-template.dto';
+import { CreatePartialTemplateDto, CreatePartialTemplatesDto } from '../models/partialTemplate/create-partial-template.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-partial-template.dto';
+import { Public } from '../auth/decorators/public.decorator';
+import { Activity } from '@prisma/client';
 
 
 @Controller('partial-templates')
@@ -29,6 +31,21 @@ export class PartialTemplatesController {
   create(@Body() createPartialTemplateDto: CreatePartialTemplateDto) {
     return this.partialTemplatesService.create(createPartialTemplateDto);
   }
+  @Post('/many')
+  createMany(
+    @Query('id', customIdPipe) id: number,
+    @Body() createPartialTemplatesDto: CreatePartialTemplatesDto[]) {
+    return this.partialTemplatesService.createMany(id, createPartialTemplatesDto);
+  }
+  @Post('/activities')
+  createWithActivities(
+    @Body('partialTemplate') createPartialTemplateDto: CreatePartialTemplateDto & { activities: Activity[] },
+  ) {
+    console.log(createPartialTemplateDto)
+    const { activities, ...partialTemplate } = createPartialTemplateDto;
+    return this.partialTemplatesService.createWithActivities(partialTemplate, activities);
+  }
+  @Public()
   @Get()
   find(
     @Query('id', customIdPipe) id?: number,
@@ -44,6 +61,7 @@ export class PartialTemplatesController {
     if (status) return this.partialTemplatesService.findAll(status);
     return this.partialTemplatesService.findAll();
   }
+  @Public()
   @Get('/activities')
   findWithActivities(
     @Query('id', customIdPipe) id?: number,
@@ -53,6 +71,7 @@ export class PartialTemplatesController {
     if (status) return this.partialTemplatesService.findAllJoinActivities(status)
     return this.partialTemplatesService.findAllJoinActivities()
   }
+  @Public()
   @Get('/comments')
   findWithComments(
     @Query('id', customIdPipe) id?: number,
