@@ -12,6 +12,7 @@ export class CommentsService {
     ) { }
 
     async create(createCommentDto: CreateCommentDto) {
+        console.log(createCommentDto);
         try {
             const comment = await this.prisma.comments.create({
                 data: createCommentDto
@@ -73,6 +74,7 @@ export class CommentsService {
         }
     }
     async update(id: number, updateCommentDto: UpdateCommentDto) {
+        console.log(UpdateCommentDto)
         try {
             const result = await this.prisma.comments.update({
                 where: {
@@ -105,6 +107,7 @@ export class CommentsService {
                 data: result
             }
         } catch (error) {
+            console.log(error)
             return this.prismaErrorHandler.handleError(
                 error,
                 'Error al eliminar el comentario'
@@ -123,6 +126,7 @@ export class CommentsService {
                     id
                 }
             })
+            console.log(comment)
             if (comment) return {
                 message: 'No hay comentario para mostrar',
                 error: null,
