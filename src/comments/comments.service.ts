@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { CreateCommentDto } from '../models/comments/create-comment.dto';
 import { UpdateCommentDto } from '../models/comments/update-comment.dto';
+import { APIResult } from 'src/common/api-results-interface';
+import { Comments } from '@prisma/client';
 
 @Injectable()
 export class CommentsService {
@@ -11,7 +13,8 @@ export class CommentsService {
         private readonly prismaErrorHandler: PrismaErrorHandler
     ) { }
 
-    async create(createCommentDto: CreateCommentDto) {
+    async create(createCommentDto: CreateCommentDto): Promise<APIResult<Comments>> {
+        console.log(createCommentDto);
         try {
             const comment = await this.prisma.comments.create({
                 data: createCommentDto
@@ -29,7 +32,7 @@ export class CommentsService {
         }
     }
 
-    async findOne(id: number) {
+    async findOne(id: number): Promise<APIResult<Comments>> {
         try {
             const comment = await this.prisma.comments.findUnique({
                 where: { id }
@@ -52,7 +55,7 @@ export class CommentsService {
         }
     }
 
-    async findAll() {
+    async findAll(): Promise<APIResult<Comments[]>> {
         try {
             const comments = await this.prisma.comments.findMany()
             if (comments.length === 0) return {
@@ -72,7 +75,8 @@ export class CommentsService {
             )
         }
     }
-    async update(id: number, updateCommentDto: UpdateCommentDto) {
+    async update(id: number, updateCommentDto: UpdateCommentDto): Promise<APIResult<Comments>> {
+        console.log(UpdateCommentDto)
         try {
             const result = await this.prisma.comments.update({
                 where: {
@@ -92,7 +96,7 @@ export class CommentsService {
             )
         }
     }
-    async delete(id: number) {
+    async delete(id: number): Promise<APIResult<Comments>> {
         try {
             const result = await this.prisma.comments.delete({
                 where: {
@@ -105,6 +109,7 @@ export class CommentsService {
                 data: result
             }
         } catch (error) {
+            console.log(error)
             return this.prismaErrorHandler.handleError(
                 error,
                 'Error al eliminar el comentario'
@@ -116,13 +121,14 @@ export class CommentsService {
      * @param id The partial template ID
      * @returns the comment of the partial template
      */
-    async findByPartialTemplate(id: number) {
+    async findByPartialTemplate(id: number): Promise<APIResult<Comments>> {
         try {
             const comment = await this.prisma.comments.findUnique({
                 where: {
                     id
                 }
             })
+            console.log(comment)
             if (comment) return {
                 message: 'No hay comentario para mostrar',
                 error: null,

@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateActivitiesDto, CreateActivityDto } from '../models/activity/create-activity.dto';
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
+import { APIResult } from 'src/common/api-results-interface';
+import { Activity } from '@prisma/client';
 
 @Injectable()
 export class ActivityService {
@@ -9,7 +11,7 @@ export class ActivityService {
         private readonly prisma: PrismaService,
         private readonly prismaErrorHandler: PrismaErrorHandler,
     ) { }
-    async create(createActivityDto: CreateActivityDto): Promise<any> {
+    async create(createActivityDto: CreateActivityDto): Promise<APIResult<Activity>> {
         try {
             const activity = await this.prisma.activity.create({
                 data: createActivityDto
@@ -33,7 +35,7 @@ export class ActivityService {
                 })
             })
             const registeredActivities = await this.prisma.activity.createMany({
-                data: createActivities
+                data: activities
             })
             return {
                 message: 'Actividades academicas registradas',
@@ -45,7 +47,7 @@ export class ActivityService {
         }
     }
 
-    async findAll() {
+    async findAll(): Promise<APIResult<Activity[]>> {
         try {
             const activities = await this.prisma.activity.findMany()
             if (activities.length === 0) return {
@@ -63,7 +65,7 @@ export class ActivityService {
         }
     }
 
-    async findOne(id: string) {
+    async findOne(id: string): Promise<APIResult<Activity[]>> {
         try {
             const activities = await this.prisma.activity.findMany({
                 where: {
@@ -85,7 +87,7 @@ export class ActivityService {
         }
     }
 
-    async findByPartialTemplate(id: number) {
+    async findByPartialTemplate(id: number): Promise<APIResult<Activity[]>> {
         try {
             const activitiesByTemplate = await this.prisma.activity.findMany({
                 where: {
@@ -110,7 +112,7 @@ export class ActivityService {
         }
     }
 
-    async update(id: string, updateActivityDto: any): Promise<any> {
+    async update(id: string, updateActivityDto: any): Promise<APIResult<Activity>> {
         try {
             const activity = await this.prisma.activity.update({
                 where: {
@@ -128,7 +130,7 @@ export class ActivityService {
         }
     }
 
-    async remove(id: string): Promise<any> {
+    async remove(id: string): Promise<APIResult<Activity>> {
         try {
             const activity = await this.prisma.activity.delete({
                 where: {

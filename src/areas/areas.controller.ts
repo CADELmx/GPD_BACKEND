@@ -10,8 +10,9 @@ import {
 } from '@nestjs/common';
 import { AreasService } from './areas.service';
 import { CreateAreaDto } from '../models/area/create-area.dto';
-import { customIdPipe } from '../common/validation/custom-validation.pipe';
+import { customBoolPipe, customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateAreaDto } from '../models/area/update-area.dto';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('areas')
 export class AreasController {
@@ -41,6 +42,7 @@ export class AreasController {
    * @param name - The name of the area to retrieve (optional).
    * @returns The found area(s).
    */
+  @Public()
   @Get()
   async find(
     @Query('id', customIdPipe) id?: number,
@@ -49,6 +51,44 @@ export class AreasController {
     if (id) return this.areasService.findOneById(id);
     if (name) return this.areasService.findOneByName(name);
     return this.areasService.findAll();
+  }
+  /**
+   * Retrive all areas with their educational programs or the count of educational programs.
+   * @param count - If true, returns the count of educational programs instead of educationalPrograms.
+   * @returns The found areas with their educational programs or the count of educational programs.
+   */
+  @Public()
+  @Get('educational-programs')
+  findWithJoin(
+    @Query('count', customBoolPipe) count?: boolean,
+  ) {
+    if (count) return this.areasService.findAllEducationalProgramsCount()
+    return this.areasService.findAllJoinEducationalPrograms()
+  }
+  /**
+   * Retrieves all areas that have at least one worker or all areas that have a director.
+   * @param director A boolean value to filter the areas by director.
+   * @returns The found areas.
+   */
+  @Public()
+  @Get('workers')
+  findNotEmpty(
+    @Query('director', customBoolPipe) director?: boolean,
+  ) {
+    if (director) return this.areasService.findDirectorAreas()
+    return this.areasService.findNotEmptyAreas()
+  }
+  /**
+   * Retrieves an area based on the educational program ID.
+   * @param id id of the educational program
+   * @returns the area that contains the educational program including their educational programs.
+   */
+  @Public()
+  @Get('educational-programs/:id')
+  findByEducationalProgram(
+    @Param('id', customIdPipe) id: number
+  ) {
+    return this.areasService.findAreaBasedOnEducationalProgramId(id)
   }
 
   /**

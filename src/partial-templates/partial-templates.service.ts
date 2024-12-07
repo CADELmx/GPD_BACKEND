@@ -3,11 +3,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PartialTemplate } from '@prisma/client';
+import { Activity, PartialTemplate } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { CreatePartialTemplateDto, CreatePartialTemplatesDto } from '../models/partialTemplate/create-partial-template.dto';
 import { UpdatePartialTemplateDto } from '../models/partialTemplate/update-partial-template.dto';
+import { APIResult } from 'src/common/api-results-interface';
 
 
 @Injectable()
@@ -17,7 +18,17 @@ export class PartialTemplatesService {
     private readonly prisma: PrismaService,
     private readonly prismaErrorHandler: PrismaErrorHandler,
   ) { }
+  notFoundPArtialTemplateResult = <APIResult<PartialTemplate>>{
+    message: 'No se encontro la plantilla parcial',
+    error: null,
+    data: null
+  }
 
+  notFoundPartialTemplatesResult = <APIResult<PartialTemplate[]>>{
+    data: [],
+    error: null,
+    message: 'No se encontraros las plantillas parciales'
+  }
   /**
    * Rregisters a new PartialTemplate
    * @param {CreatePartialTemplateDto} createPartialTemplateDto - The partialTemplate data to register
@@ -45,6 +56,58 @@ export class PartialTemplatesService {
         error,
         'Error al crear la plantilla parcial',
       );
+    }
+  }
+  async createWithActivities(createPartialTemplateDto: CreatePartialTemplateDto, activities: Activity[]) {
+    try {
+      const newPartialTemplate = await this.prisma.partialTemplate.create({
+        data: createPartialTemplateDto
+      })
+      const newActivities = activities.map((activity) => {
+        return {
+          ...activity,
+          partialTemplateId: newPartialTemplate.id
+        }
+      })
+      await this.prisma.activity.createMany({
+        data: newActivities
+      })
+      return {
+        message: 'Plantilla parcial creada con éxito',
+        error: null,
+        data: newPartialTemplate
+      }
+    } catch (error) {
+      console.log(error)
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear la plantilla parcial'
+      )
+    }
+  }
+
+  async createMany(id: number, createPartialTemplates: CreatePartialTemplatesDto[]) {
+    try {
+      await this.validateId(id);
+      const partialTemplates: CreatePartialTemplateDto[] = createPartialTemplates.map((partialTemplate) => {
+        return {
+          ...partialTemplate,
+          templateId: id
+        }
+      })
+      const newPartialTemplates = await this.prisma.partialTemplate.createMany({
+        data: partialTemplates
+      })
+      return {
+        message: 'Plantillas parciales creadas con éxito',
+        error: null,
+        data: newPartialTemplates
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear las plantillas parciales'
+      )
     }
   }
 
@@ -78,11 +141,7 @@ export class PartialTemplatesService {
    * @param {string} [status] - Status to filter partial templates by. Allowed values
    * @returns {Promise<{name: string, totalHours: number, status: string}[]>} - All registered partialTemplates
    */
-  async findAll(status?: string): Promise<{
-    message: string;
-    error: string | null;
-    data: { name: string; total: number; status: string }[] | null;
-  }> {
+  async findAll(status?: string): Promise<APIResult<PartialTemplate[]>> {
     try {
       const allowedStatuses = ['pendiente', 'aprobado', 'corrección'];
       const filter: any = {};
@@ -93,18 +152,10 @@ export class PartialTemplatesService {
 
       const partialTemplates = await this.prisma.partialTemplate.findMany({
         where: filter,
-        select: {
-          name: true,
-          total: true,
-          status: true,
-        },
       });
 
-      if (partialTemplates.length === 0) return {
-        message: 'No hay plantillas parciales para mostrar',
-        error: null,
-        data: [],
-      }
+      if (partialTemplates.length === 0) return this.notFoundPartialTemplatesResult
+      
       return {
         message: 'Plantillas Parciales obtenidas con exito',
         error: null,
@@ -121,17 +172,18 @@ export class PartialTemplatesService {
   /**
    * Gets a partial template by its ID.
    * @param {number} id - The ID of the partial template to search for.
-   * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The partial template based on the given ID.
+   * @returns {Promise<APIResult<PartialTemplate>>} - The partial template based on the given ID.
    */
-  async findOne(id: number): Promise<any> {
+  async findOne(id: number): Promise<APIResult<PartialTemplate>> {
     try {
       if (id) {
         await this.validateId(id);
-        const partailTemplate = await this.prisma.partialTemplate.findMany({
+        const partailTemplate = await this.prisma.partialTemplate.findUnique({
           where: {
             id,
           },
         });
+        if (!partailTemplate) return this.notFoundPArtialTemplateResult
         return {
           message: 'Plantilla parcial obtenida con éxito',
           error: null,
@@ -150,28 +202,16 @@ export class PartialTemplatesService {
    * @param {number} id Id of the partial template
    * @returns Partial template with all its activities
    */
-  async findOneJoinActivities(id: number) {
+  async findOneJoinActivities(id: number): Promise<APIResult<PartialTemplate>> {
     await this.validateId(id)
     try {
       const partialTemplateAct = await this.prisma.partialTemplate.findUnique({
         where: { id },
         include: {
-          activities: {
-            select: {
-              id: true,
-              activityDistribution: true,
-              activityName: true,
-              educationalProgramId: true,
-              gradeGroups: true,
-              managmentType: true,
-              numberStudents: true,
-              stayType: true,
-              subtotalClassification: true,
-              weeklyHours: true
-            }
-          }
+          activities: true
         }
       })
+      if(!partialTemplateAct) return this.notFoundPArtialTemplateResult
       return {
         message: 'Plantilla parcial obtenida de forma exitosa',
         error: null,
@@ -185,7 +225,7 @@ export class PartialTemplatesService {
     }
   }
 
-  async findAllJoinActivities(status?: string) {
+  async findAllJoinActivities(status?: string): Promise<APIResult<PartialTemplate[]>> {
     try {
       const allowedStatuses = ['pendiente', 'aprobado', 'corrección'];
       const filter: any = {};
@@ -197,27 +237,10 @@ export class PartialTemplatesService {
       const partialTemplatesJoin = await this.prisma.partialTemplate.findMany({
         where: filter,
         include: {
-          activities: {
-            select: {
-              id: true,
-              activityDistribution: true,
-              activityName: true,
-              educationalProgramId: true,
-              gradeGroups: true,
-              managmentType: true,
-              numberStudents: true,
-              stayType: true,
-              subtotalClassification: true,
-              weeklyHours: true
-            }
-          }
+          activities: true
         }
       })
-      if (partialTemplatesJoin.length === 0) return {
-        message: 'No hay plantillas parciales para mostrar',
-        error: null,
-        data: null
-      }
+      if (partialTemplatesJoin.length === 0) return this.notFoundPartialTemplatesResult
       return {
         message: 'Plantillas parciales obtenidas con éxito',
         error: null,
@@ -227,7 +250,7 @@ export class PartialTemplatesService {
       return this.prismaErrorHandler.handleError(error, 'Error al obtener todas las plantillas parciales con sus actividades')
     }
   }
-  async findOneJoinComments(id: number) {
+  async findOneJoinComments(id: number): Promise<APIResult<PartialTemplate>> {
     try {
       const partialTemplate = await this.prisma.partialTemplate.findUnique({
         where: { id },
@@ -241,6 +264,7 @@ export class PartialTemplatesService {
           }
         }
       })
+      if(!partialTemplate) return this.notFoundPArtialTemplateResult
       return {
         message: 'Plantillas parciales obtenidas con éxito',
         error: null,
@@ -253,7 +277,7 @@ export class PartialTemplatesService {
       )
     }
   }
-  async findAllJoinComments(status?: string) {
+  async findAllJoinComments(status?: string): Promise<APIResult<PartialTemplate[]>> {
     try {
       const allowedStatuses = ['pendiente', 'aprobado', 'corrección'];
       const filter: any = {};
@@ -275,11 +299,7 @@ export class PartialTemplatesService {
           }
         }
       })
-      if (partialTemplates.length === 0) return {
-        message: 'No hay plantillas parciales para mostrar',
-        error: null,
-        data: null
-      }
+      if (partialTemplates.length === 0) return this.notFoundPartialTemplatesResult
       return {
         message: 'Plantillas parciales obtenidas con éxito',
         error: null,
@@ -301,12 +321,9 @@ export class PartialTemplatesService {
   async update(
     id: number,
     updatePartialTemplateDto: UpdatePartialTemplateDto,
-  ): Promise<any> {
+  ): Promise<APIResult<PartialTemplate>> {
     try {
       await this.validateId(id);
-      await this.validateIfExistsTemplateId(updatePartialTemplateDto);
-      await this.validateTotalByPosition(updatePartialTemplateDto);
-
       const updatePartialTemplate = await this.prisma.partialTemplate.update({
         data: { ...updatePartialTemplateDto } as any,
         where: {
@@ -315,7 +332,7 @@ export class PartialTemplatesService {
       });
       return {
         message: 'Plantilla parcial actualizada',
-        errror: null,
+        error: null,
         data: updatePartialTemplate,
       };
     } catch (error) {
@@ -331,10 +348,10 @@ export class PartialTemplatesService {
    * @param {number} id - ID of the partialTemplate to delete
    * @returns {Promise<PartialTemplate>} - The deleted partialTemplate
    */
-  async remove(id: number): Promise<any> {
+  async remove(id: number): Promise<APIResult<PartialTemplate>> {
     try {
       await this.findOne(id);
-      await this.prisma.partialTemplate.delete({
+      const removedPartialTemplate = await this.prisma.partialTemplate.delete({
         where: {
           id,
         },
@@ -342,7 +359,7 @@ export class PartialTemplatesService {
       return {
         message: 'Plantilla parcial eliminada con exito',
         error: null,
-        data: null,
+        data: removedPartialTemplate,
       };
     } catch (error) {
       return this.prismaErrorHandler.handleError(

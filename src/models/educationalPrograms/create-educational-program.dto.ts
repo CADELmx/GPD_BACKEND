@@ -15,3 +15,12 @@ export class CreateEducationalProgramDto {
   areaId: number;
 }
 
+export class CreateEducationalProgramsDto {
+  @IsString({ message: 'La abreviatura debe ser una cadena de texto' })
+  @IsNotEmpty({ message: 'La abreviatura es obligatoria' })
+  abbreviation: string;
+
+  @IsString({ message: 'La descripción debe ser una cadena de texto' })
+  @IsNotEmpty({ message: 'La descripción es obligatoria' })
+  description: string;
+}

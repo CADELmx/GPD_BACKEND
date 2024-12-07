@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Users" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "email" VARCHAR(120) NOT NULL,
     "password" VARCHAR(120) NOT NULL,
     "nt" INTEGER NOT NULL,
@@ -11,10 +11,10 @@ CREATE TABLE "Users" (
 
 -- CreateTable
 CREATE TABLE "PersonalData" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "ide" INTEGER NOT NULL,
-    "name" VARCHAR(50),
-    "position" VARCHAR(50),
+    "name" VARCHAR(60),
+    "position" VARCHAR(100),
     "area" VARCHAR,
     "birthDate" VARCHAR(20),
     "birthPlace" VARCHAR(80),
@@ -47,24 +47,24 @@ CREATE TABLE "PersonalData" (
 CREATE TABLE "PartialTemplate" (
     "id" SERIAL NOT NULL,
     "nt" INTEGER NOT NULL,
-    "name" VARCHAR(255),
+    "name" VARCHAR(255) NOT NULL,
     "gender" VARCHAR(10),
-    "position" VARCHAR(120),
-    "total" INTEGER,
-    "status" VARCHAR(50) DEFAULT 'pendiente',
-    "year" VARCHAR(4),
-    "period" VARCHAR(10),
-    "templateId" BIGINT NOT NULL,
+    "position" VARCHAR(120) NOT NULL,
+    "total" INTEGER NOT NULL,
+    "status" VARCHAR(50) NOT NULL DEFAULT 'pendiente',
+    "year" VARCHAR(4) NOT NULL,
+    "period" VARCHAR(50) NOT NULL,
+    "templateId" INTEGER NOT NULL,
 
     CONSTRAINT "PartialTemplate_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Comments" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "comment" VARCHAR(200),
-    "partialtemplateId" INTEGER,
+    "comment" VARCHAR(200) NOT NULL,
+    "partialtemplateId" INTEGER NOT NULL,
 
     CONSTRAINT "Comments_pkey" PRIMARY KEY ("id")
 );
@@ -72,10 +72,10 @@ CREATE TABLE "Comments" (
 -- CreateTable
 CREATE TABLE "Activity" (
     "id" TEXT NOT NULL,
-    "educationalProgramId" BIGINT,
+    "educationalProgramId" INTEGER,
     "partialTemplateId" INTEGER,
     "activityDistribution" VARCHAR(120),
-    "managmentType" VARCHAR(120),
+    "managementType" VARCHAR(120),
     "stayType" VARCHAR(120),
     "activityName" VARCHAR(120),
     "gradeGroups" VARCHAR(50)[],
@@ -88,9 +88,9 @@ CREATE TABLE "Activity" (
 
 -- CreateTable
 CREATE TABLE "Template" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "state" VARCHAR(50) NOT NULL DEFAULT 'pendiente',
-    "areaId" BIGINT NOT NULL,
+    "areaId" INTEGER NOT NULL,
     "period" VARCHAR(50) NOT NULL,
     "responsibleId" INTEGER NOT NULL,
     "revisedById" INTEGER NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE "Template" (
 
 -- CreateTable
 CREATE TABLE "Area" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" VARCHAR(120) NOT NULL,
 
     CONSTRAINT "Area_pkey" PRIMARY KEY ("id")
@@ -108,22 +108,22 @@ CREATE TABLE "Area" (
 
 -- CreateTable
 CREATE TABLE "EducationalPrograms" (
-    "id" BIGSERIAL NOT NULL,
-    "abbreviation" VARCHAR(20),
-    "description" VARCHAR(255),
-    "areaId" BIGINT,
+    "id" SERIAL NOT NULL,
+    "abbreviation" VARCHAR(20) NOT NULL,
+    "description" VARCHAR(255) NOT NULL,
+    "areaId" INTEGER NOT NULL,
 
     CONSTRAINT "EducationalPrograms_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Subject" (
-    "id" BIGSERIAL NOT NULL,
-    "educationalProgramId" BIGINT NOT NULL,
-    "weeklyHours" INTEGER,
-    "totalHours" INTEGER,
-    "monthPeriod" VARCHAR(10),
-    "subjectName" VARCHAR(120),
+    "id" SERIAL NOT NULL,
+    "educationalProgramId" INTEGER NOT NULL,
+    "weeklyHours" INTEGER NOT NULL,
+    "totalHours" INTEGER NOT NULL,
+    "monthPeriod" VARCHAR(10) NOT NULL,
+    "subjectName" VARCHAR(120) NOT NULL,
 
     CONSTRAINT "Subject_pkey" PRIMARY KEY ("id")
 );
@@ -153,12 +153,6 @@ CREATE UNIQUE INDEX "PersonalData_id_ide_key" ON "PersonalData"("id", "ide");
 CREATE UNIQUE INDEX "PartialTemplate_id_key" ON "PartialTemplate"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PartialTemplate_nt_key" ON "PartialTemplate"("nt");
-
--- CreateIndex
-CREATE UNIQUE INDEX "PartialTemplate_templateId_key" ON "PartialTemplate"("templateId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Comments_id_key" ON "Comments"("id");
 
 -- CreateIndex
@@ -168,16 +162,7 @@ CREATE UNIQUE INDEX "Comments_partialtemplateId_key" ON "Comments"("partialtempl
 CREATE UNIQUE INDEX "Activity_id_key" ON "Activity"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Activity_educationalProgramId_key" ON "Activity"("educationalProgramId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Activity_partialTemplateId_key" ON "Activity"("partialTemplateId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Template_id_key" ON "Template"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Template_areaId_key" ON "Template"("areaId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Area_id_key" ON "Area"("id");
@@ -201,7 +186,7 @@ ALTER TABLE "PartialTemplate" ADD CONSTRAINT "PartialTemplate_nt_fkey" FOREIGN K
 ALTER TABLE "PartialTemplate" ADD CONSTRAINT "PartialTemplate_templateId_fkey" FOREIGN KEY ("templateId") REFERENCES "Template"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comments" ADD CONSTRAINT "Comments_partialtemplateId_fkey" FOREIGN KEY ("partialtemplateId") REFERENCES "PartialTemplate"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_partialtemplateId_fkey" FOREIGN KEY ("partialtemplateId") REFERENCES "PartialTemplate"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Activity" ADD CONSTRAINT "Activity_partialTemplateId_fkey" FOREIGN KEY ("partialTemplateId") REFERENCES "PartialTemplate"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -213,13 +198,13 @@ ALTER TABLE "Activity" ADD CONSTRAINT "Activity_educationalProgramId_fkey" FOREI
 ALTER TABLE "Template" ADD CONSTRAINT "Template_areaId_fkey" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Template" ADD CONSTRAINT "Template_responsibleId_fkey" FOREIGN KEY ("responsibleId") REFERENCES "Users"("nt") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Template" ADD CONSTRAINT "Template_responsibleId_fkey" FOREIGN KEY ("responsibleId") REFERENCES "Users"("nt") ON DELETE NO ACTION ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Template" ADD CONSTRAINT "Template_revisedById_fkey" FOREIGN KEY ("revisedById") REFERENCES "Users"("nt") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Template" ADD CONSTRAINT "Template_revisedById_fkey" FOREIGN KEY ("revisedById") REFERENCES "Users"("nt") ON DELETE NO ACTION ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EducationalPrograms" ADD CONSTRAINT "EducationalPrograms_areaId_fkey" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "EducationalPrograms" ADD CONSTRAINT "EducationalPrograms_areaId_fkey" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Subject" ADD CONSTRAINT "Subject_educationalProgramId_fkey" FOREIGN KEY ("educationalProgramId") REFERENCES "EducationalPrograms"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

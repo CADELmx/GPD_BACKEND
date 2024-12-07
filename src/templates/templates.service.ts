@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma.service';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
 import { CreateTemplateDto } from '../models/template/create-template.dto';
 import { UpdateTemplateDto } from '../models/template/update-template.dto';
+import { APIResult } from 'src/common/api-results-interface';
 
 @Injectable()
 export class TemplatesService {
@@ -16,11 +17,8 @@ export class TemplatesService {
    * Registers a new template.
    * @param {CreateTemplateDto} createTemplateDto - The template data to register.
    * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The registered template.
-   * Registers a new template.
-   * @param {CreateTemplateDto} createTemplateDto - The template data to register.
-   * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The registered template.
    */
-  async create(createTemplateDto: CreateTemplateDto): Promise<any> {
+  async create(createTemplateDto: CreateTemplateDto): Promise<APIResult<Template>> {
     try {
       await this.validateAreaId(createTemplateDto);
       await this.validateResponsibleId(createTemplateDto);
@@ -48,7 +46,7 @@ export class TemplatesService {
    * Lists all templates.
    * @returns {Promise<{ message: string; error: string | null; data: Template[] | null }>} - All registered templates.
    */
-  async findAll(): Promise<any> {
+  async findAll(): Promise<APIResult<Template[]>> {
     // return await this.prisma.personalData.findMany();
     try {
       const templates = await this.prisma.template.findMany();
@@ -75,25 +73,22 @@ export class TemplatesService {
    * @param {number} id - The ID of the template to search for.
    * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The template based on the given ID.
    */
-  async findOne(id: number): Promise<any> {
+  async findOne(id: number): Promise<APIResult<Template>> {
     try {
       if (id) {
-        await this.validateId(id);
-        const template = await this.prisma.template.findMany({
+        const template = await this.prisma.template.findUnique({
           where: {
             id,
           },
         });
 
-        if (template.length === 0) {
-          return {
-            message: 'Aún no existen plantillas para este área',
-            error: null,
-            data: template,
-          };
-        }
+        if (!template) return {
+          message: 'Plantilla inexistente',
+          error: null,
+          data: template,
+        };
         return {
-          message: 'Plantillas obtenidas con éxito',
+          message: 'Plantilla obtenidas con éxito',
           error: null,
           data: template,
         };
@@ -105,14 +100,69 @@ export class TemplatesService {
       );
     }
   }
-
+  async findByArea(id: number): Promise<APIResult<Template[]>> {
+    try {
+      if (!id) {
+        return {
+          message: 'El id del area es requerido',
+          error: null,
+          data: null,
+        }
+      }
+      await this.validateAreaId({ areaId: id });
+      const templates = await this.prisma.template.findMany({
+        where: {
+          areaId: id
+        }
+      });
+      if (templates.length === 0) return {
+        message: 'No se encontraron plantillas para este area',
+        error: null,
+        data: [],
+      }
+      return {
+        message: 'Plantillas obtenidas con exito',
+        error: null,
+        data: templates
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar la plantilla',
+      )
+    }
+  }
+  async findJoinPartialTemplates(): Promise<APIResult<Template[]>> {
+    try {
+      const partialTemplates = await this.prisma.template.findMany({
+        include: {
+          partialTemplate: true
+        }
+      })
+      if (partialTemplates.length === 0) return {
+        error: null,
+        message: 'No se encontraron plantillas',
+        data: []
+      }
+      return {
+        data: partialTemplates,
+        message: 'Plantillas encontradas',
+        error: null
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al consultar las plantillas'
+      )
+    }
+  }
   /**
    * Updates a template by its ID.
    * @param {number} id - The ID of the template to update.
    * @param {UpdateTemplateDto} updateTemplateDto - The template data to update.
    * @returns {Promise<{ message: string; error: string | null; data: Template | null }>} - The updated template.
    */
-  async update(id: number, updateTemplateDto: UpdateTemplateDto): Promise<any> {
+  async update(id: number, updateTemplateDto: UpdateTemplateDto): Promise<APIResult<Template>> {
     try {
       await this.validateId(id);
       await this.validateAreaId(updateTemplateDto);
@@ -158,10 +208,10 @@ export class TemplatesService {
    * @param {number} id - The ID of the template to delete.
    * @returns {Promise<{ message: string; error: string | null; data: null }>} - The result of the deletion.
    */
-  async remove(id: number): Promise<any> {
+  async remove(id: number): Promise<APIResult<Template>> {
     try {
       await this.validateId(id);
-      await this.prisma.template.delete({
+      const deletedTemplate = await this.prisma.template.delete({
         where: {
           id,
         },
@@ -169,7 +219,7 @@ export class TemplatesService {
       return {
         message: 'Se eliminó la plantilla',
         error: null,
-        data: null,
+        data: deletedTemplate,
       };
     } catch (error) {
       return this.prismaErrorHandler.handleError(
