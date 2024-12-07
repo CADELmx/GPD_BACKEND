@@ -196,7 +196,6 @@ export class EducationalProgramsService {
       if (updateEducationalProgramDto.areaId) {
         await this.validateAreaId(updateEducationalProgramDto.areaId);
       }
-
       await this.findProgramById(id);
       const updatedProgram = await this.prisma.educationalPrograms.update({
         data: updateEducationalProgramDto,

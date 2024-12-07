@@ -111,6 +111,31 @@ export class PartialTemplatesService {
     }
   }
 
+  async createMany(id: number, createPartialTemplates: CreatePartialTemplatesDto[]) {
+    try {
+      await this.validateId(id);
+      const partialTemplates: CreatePartialTemplateDto[] = createPartialTemplates.map((partialTemplate) => {
+        return {
+          ...partialTemplate,
+          templateId: id
+        }
+      })
+      const newPartialTemplates = await this.prisma.partialTemplate.createMany({
+        data: partialTemplates
+      })
+      return {
+        message: 'Plantillas parciales creadas con éxito',
+        error: null,
+        data: newPartialTemplates
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear las plantillas parciales'
+      )
+    }
+  }
+
   /**
    * Lists partialTemplates filtered by status
    * @param {string} [status] - Status to filter partial templates by. Allowed values
