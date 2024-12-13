@@ -4,48 +4,26 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Subject } from '@prisma/client';
-import { CreateSubjectDto } from '../models/subject/create-subject.dto';
+import { CreateSubjectDto, CreateSubjectsDto } from '../models/subject/create-subject.dto';
 import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
 import { PrismaService } from '../prisma.service';
 import { validateForeignKeys } from '../common/validation/custom-validation.pipe';
 import { PrismaErrorHandler } from '../common/validation/prisma-error-handler';
-/**
- * Interface to define the methods of the subjects service
- */
-interface SubjectResult {
-  create(
-    createSubjectDto: CreateSubjectDto,
-  ): Promise<{ message: string; data: void | Subject; error: string | null }>;
-  findByProgram(
-    id: number,
-  ): Promise<{ message: string; data: Subject[] | null; error: string | null }>;
-  findOne(
-    id: number,
-  ): Promise<{ message: string; data: Subject | null; error: null | string }>;
-  findAll(): Promise<{
-    message: string;
-    data: Subject[];
-    error: null | string;
-  }>;
-  update(
-    id: number,
-    updateSubjectDto: UpdateSubjectDto,
-  ): Promise<{ message: string; data: Subject; error: null | string }>;
-}
+import { APIResult } from 'src/common/api-results-interface';
 
 @Injectable()
-export class SubjectService implements SubjectResult {
+export class SubjectService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly foreign: validateForeignKeys,
     private readonly prismaErrorHandler: PrismaErrorHandler,
-  ) {}
+  ) { }
   /**
    * Creates a new subject
    * @param createSubjectDto data to create a new subject
    * @returns object with the new subject, a message and an error if ocurred
    */
-  async create(createSubjectDto: CreateSubjectDto) {
+  async create(createSubjectDto: CreateSubjectDto): Promise<APIResult<Subject>> {
     this.foreign.add(
       this.prisma.educationalPrograms.count({
         where: { id: createSubjectDto.educationalProgramId },
@@ -69,12 +47,33 @@ export class SubjectService implements SubjectResult {
       );
     }
   }
+  async createMany(id: number, createSubjectsDto: CreateSubjectsDto[]) {
+    try {
+      const newSubjects: CreateSubjectDto[] = createSubjectsDto.map((subject) => ({
+        ...subject,
+        educationalProgramId: id,
+      }));
+      const subjects = await this.prisma.subject.createMany({
+        data: newSubjects,
+      });
+      return {
+        data: subjects,
+        error: null,
+        message: 'Materias registradas',
+      };
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al crear las materias',
+      );
+    }
+  }
   /**
    * Returns all subjects of an educational program
    * @param id the id of the educational program
    * @returns object with the subjects, a message and an error if ocurred
    */
-  async findByProgram(id: number) {
+  async findByProgram(id: number): Promise<APIResult<Subject[]>> {
     try {
       const subjects = await this.prisma.subject.findMany({
         where: {
@@ -98,12 +97,56 @@ export class SubjectService implements SubjectResult {
       );
     }
   }
+  async findByProgramGroupedByPeriod(id: number): Promise<APIResult<{
+    subjects: Subject[],
+    period: string
+  }[]>> {
+    try {
+      const periods = await this.prisma.subject.groupBy({
+        by: ['monthPeriod'],
+        where: {
+          educationalProgramId: id,
+        },
+        orderBy: {
+          monthPeriod: 'asc'
+        }
+      })
+      const subjectPromises = periods.map(period => {
+        return this.prisma.subject.findMany({
+          where: {
+            educationalProgramId: id,
+            monthPeriod: period.monthPeriod,
+          },
+          orderBy: {
+            totalHours: 'desc'
+          }
+        })
+      })
+      const subjectResults = await Promise.all(subjectPromises)
+      const subjects = subjectResults.map((subject, index) => {
+        return {
+          period: periods[index].monthPeriod,
+          subjects: subject
+        }
+      })
+      return {
+        data: subjects,
+        error: null,
+        message: 'Materias agrupadas por periodo'
+      }
+    } catch (error) {
+      return this.prismaErrorHandler.handleError(
+        error,
+        'Error al buscar la materia',
+      );
+    }
+  }
   /**
    * Returns a subject by its id
    * @param id id of the subject
    * @returns object with the subject, a message and an error if ocurred
    */
-  async findOne(id: number) {
+  async findOne(id: number): Promise<APIResult<Subject>> {
     try {
       const subject = await this.prisma.subject.findFirst({
         where: { id },
@@ -125,7 +168,7 @@ export class SubjectService implements SubjectResult {
    * Returns all subjects
    * @returns object with all subjects, a message and an error if ocurred
    */
-  async findAll() {
+  async findAll(): Promise<APIResult<Subject[]>> {
     try {
       const subjects = await this.prisma.subject.findMany({
         orderBy: [
@@ -156,7 +199,7 @@ export class SubjectService implements SubjectResult {
    * @param updateSubjectDto data to update the subject
    * @returns object with the updated subject, a message and an error if ocurred
    */
-  async update(id: number, updateSubjectDto: UpdateSubjectDto) {
+  async update(id: number, updateSubjectDto: UpdateSubjectDto): Promise<APIResult<Subject>> {
     try {
       this.foreign.add(this.prisma.subject.count({ where: { id } }));
       if (await this.foreign.validate())
@@ -184,18 +227,18 @@ export class SubjectService implements SubjectResult {
    * @param id id of the subject
    * @returns a message and an error if ocurred
    */
-  async delete(id: number) {
+  async delete(id: number): Promise<APIResult<Subject>> {
     try {
       this.foreign.add(this.prisma.subject.count({ where: { id } }));
       if (await this.foreign.validate())
         throw new NotFoundException('La materia no existe');
-      await this.prisma.subject.delete({
+      const deletedSubject = await this.prisma.subject.delete({
         where: {
           id,
         },
       });
       return {
-        data: null,
+        data: deletedSubject,
         error: null,
         message: 'Eliminado!',
       };

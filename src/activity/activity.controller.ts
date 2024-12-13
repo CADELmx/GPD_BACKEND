@@ -3,6 +3,7 @@ import { ActivityService } from './activity.service';
 import { CreateActivitiesDto, CreateActivityDto } from '../models/activity/create-activity.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateActivityDto } from '../models/activity/update-activity.dto';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('activity')
 export class ActivityController {
@@ -22,6 +23,7 @@ export class ActivityController {
     ) {
         return this.activityService.createMany(id, createManyActivities)
     }
+    @Public()
     @Get()
     find(
         @Query('id') id?: string,

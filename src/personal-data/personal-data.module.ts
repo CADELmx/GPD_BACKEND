@@ -6,6 +6,6 @@ import { PrismaErrorHandler } from 'src/common/validation/prisma-error-handler';
 
 @Module({
   providers: [PersonalDataService, PrismaService, PrismaErrorHandler],
-  controllers: [PersonalDataController]
+  controllers: [PersonalDataController],
 })
-export class PersonalDataModule { }
+export class PersonalDataModule {}

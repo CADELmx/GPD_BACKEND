@@ -1,3 +1,4 @@
+import { Activity } from '@prisma/client';
 import {
   IsInt,
   IsNotEmpty,
@@ -78,4 +79,8 @@ export class CreatePartialTemplatesDto {
   @IsString({ message: 'El campo periodo tiene que ser una cadena de texto' })
   @IsNotEmpty({ message: 'El campo periodo no puede estar vacío' })
   period: string;
+}
+
+export class CreatePartialTemplateDtoWithActivities extends CreatePartialTemplateDto {
+  activities: Activity[];
 }

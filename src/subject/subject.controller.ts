@@ -11,10 +11,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { SubjectService } from './subject.service';
-import { CreateSubjectDto } from '../models/subject/create-subject.dto';
+import { CreateSubjectDto, CreateSubjectsDto } from '../models/subject/create-subject.dto';
 import { customIdPipe } from '../common/validation/custom-validation.pipe';
 import { UpdateSubjectDto } from '../models/subject/update-subject.dto';
 import { ApiBody, ApiCreatedResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('subject')
 export class SubjectController {
@@ -34,6 +35,13 @@ export class SubjectController {
   create(@Body() createSubjectDto: CreateSubjectDto) {
     return this.subjectService.create(createSubjectDto);
   }
+  @Post('many/')
+  createMany(
+    @Query('id', customIdPipe) id: number,
+    @Body() createSubjectsDto: CreateSubjectsDto[]
+  ) {
+    return this.subjectService.createMany(id, createSubjectsDto);
+  }
   /**
    * Handles the get request to get all subjects
    * @returns
@@ -46,23 +54,31 @@ export class SubjectController {
   @ApiCreatedResponse({ type: CreateSubjectDto, isArray: true })
   @ApiQuery({ name: 'id', required: false, type: Number })
   @ApiQuery({ name: 'programid', required: false, type: Number })
+  @Public()
   @Get()
   find(
     @Query('id', customIdPipe) id?: number,
     @Query(
       'programid',
-      new ParseIntPipe({
-        optional: true,
-        exceptionFactory: () => {
-          return new BadRequestException('El id del programa no es un número');
-        },
-      }),
+      customIdPipe
     )
     programId?: number,
   ) {
     if (id) return this.subjectService.findByProgram(id);
     if (programId) return this.subjectService.findByProgram(programId);
     return this.subjectService.findAll();
+  }
+  /**
+   * Returns subjects grouped by period for a specific educational program
+   * @param id the educational program id
+   * @returns subjects grouped by period
+   */
+  @Public()
+  @Get('grouped')
+  findGrouped(
+    @Query('id', customIdPipe) id: number,
+  ) {
+    return this.subjectService.findByProgramGroupedByPeriod(id);
   }
   /**
    * Handles the patch request to update a subject

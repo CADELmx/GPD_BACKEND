@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Users {
-  id                  BigInt       @id @default(autoincrement())
+  id                  Int          @id @default(autoincrement())
   email               String       @unique @db.VarChar(120)
   password            String       @db.VarChar(120)
   nt                  Int          @unique
@@ -27,7 +27,7 @@ model Users {
 }
 
 model PersonalData {
-  id                BigInt            @id @unique @default(autoincrement())
+  id                Int               @id @unique @default(autoincrement())
   ide               Int               @unique @db.Integer
   name              String?           @db.VarChar(60)
   position          String?           @db.VarChar(100)
@@ -63,34 +63,34 @@ model PersonalData {
 
 model PartialTemplate {
   id         Int     @id @unique @default(autoincrement())
-  nt         Int     @unique @db.Integer
+  nt         Int     @db.Integer
   name       String  @db.VarChar(255)
   gender     String? @db.VarChar(10)
   position   String  @db.VarChar(120)
   total      Int     @db.Integer
   status     String  @default("pendiente") @db.VarChar(50)
   year       String  @db.VarChar(4)
-  period     String  @db.VarChar(10)
-  templateId BigInt  @unique
+  period     String  @db.VarChar(50)
+  templateId Int     @db.Integer
 
   personalData PersonalData @relation(fields: [nt], references: [ide])
-  template     Template     @relation(fields: [templateId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  template     Template     @relation(fields: [templateId], references: [id], onUpdate: Cascade)
   activities   Activity[]
   comments     Comments[]
 }
 
 model Comments {
-  id                BigInt          @id @unique @default(autoincrement())
+  id                Int             @id @unique @default(autoincrement())
   createAt          DateTime        @default(now())
   comment           String          @db.VarChar(200)
   partialtemplateId Int             @unique
-  partialTemplate   PartialTemplate @relation(fields: [partialtemplateId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  partialTemplate   PartialTemplate @relation(fields: [partialtemplateId], references: [id], onUpdate: Cascade)
 }
 
 model Activity {
   id                     String   @id @unique
-  educationalProgramId   BigInt?  @unique
-  partialTemplateId      Int?     @unique
+  educationalProgramId   Int?     @db.Integer
+  partialTemplateId      Int?     @db.Integer
   activityDistribution   String?  @db.VarChar(120)
   managementType         String?  @db.VarChar(120)
   stayType               String?  @db.VarChar(120)
@@ -100,14 +100,14 @@ model Activity {
   subtotalClassification Int?     @db.Integer
   numberStudents         Int?     @db.Integer
 
-  partialTemplate    PartialTemplate?     @relation(fields: [partialTemplateId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  partialTemplate    PartialTemplate?     @relation(fields: [partialTemplateId], references: [id], onUpdate: Cascade)
   educationalProgram EducationalPrograms? @relation(fields: [educationalProgramId], references: [id])
 }
 
 model Template {
-  id              BigInt            @id @unique @default(autoincrement())
+  id              Int               @id @unique @default(autoincrement())
   state           String            @default("pendiente") @db.VarChar(50)
-  areaId          BigInt
+  areaId          Int
   period          String            @db.VarChar(50)
   responsibleId   Int
   revisedById     Int
@@ -118,7 +118,7 @@ model Template {
 }
 
 model Area {
-  id   BigInt @id @unique @default(autoincrement())
+  id   Int    @id @unique @default(autoincrement())
   name String @unique @db.VarChar(120)
 
   template            Template[]
@@ -126,22 +126,22 @@ model Area {
 }
 
 model EducationalPrograms {
-  id           BigInt @id @unique @default(autoincrement())
+  id           Int    @id @unique @default(autoincrement())
   abbreviation String @db.VarChar(20)
   description  String @db.VarChar(255)
 
-  areaId     BigInt
+  areaId     Int
   area       Area       @relation(fields: [areaId], references: [id], onUpdate: Cascade)
   activities Activity[]
   subjects   Subject[]
 }
 
 model Subject {
-  id                   BigInt              @id @unique @default(autoincrement())
-  educationalProgramId BigInt
+  id                   Int                 @id @unique @default(autoincrement())
+  educationalProgramId Int                 @db.Integer
   weeklyHours          Int                 @db.Integer
   totalHours           Int                 @db.Integer
   monthPeriod          String              @db.VarChar(10)
   subjectName          String              @db.VarChar(120)
-  educationalProgram   EducationalPrograms @relation(fields: [educationalProgramId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  educationalProgram   EducationalPrograms @relation(fields: [educationalProgramId], references: [id], onUpdate: Cascade)
 }
