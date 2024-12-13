@@ -1,0 +1,317 @@
+[
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "1o.",
+        "subjectName": "QUÍMICA"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "1o.",
+        "subjectName": "MATEMÁTICAS"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "1o.",
+        "subjectName": "INFORMÁTICA"
+    },
+    {
+        "id": 11,
+        "totalHours": 90,
+        "weeklyHours": 6,
+        "monthPeriod": "1o.",
+        "subjectName": "ANATOMÍA"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "1o.",
+        "subjectName": "PSICOLOGÍA DE LA EMERGENCIA"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "1o.",
+        "subjectName": "TÉCNICAS EXPLORATORIAS I"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "1o.",
+        "subjectName": "ACONDICIONAMIENTO FÍSICO INICIAL"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "1o.",
+        "subjectName": "INGLÉS I"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "1o.",
+        "subjectName": "EXPRESIÓN ORAL Y ESCRITA I"
+    },
+    {
+        "id": 11,
+        "totalHours": 30,
+        "weeklyHours": 2,
+        "monthPeriod": "1o.",
+        "subjectName": "FORMACIÓN SOCIOCULTURAL I"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "2o.",
+        "subjectName": "BIOQUÍMICA"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "2o.",
+        "subjectName": "FÍSICA"
+    },
+    {
+        "id": 11,
+        "totalHours": 90,
+        "weeklyHours": 6,
+        "monthPeriod": "2o.",
+        "subjectName": "FISIOLOGÍA"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "2o.",
+        "subjectName": "MANEJO DE URGENCIAS I"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "2o.",
+        "subjectName": "TÉCNICAS EXPLORATORIAS II"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "2o.",
+        "subjectName": "ACONDICIONAMIENTO FÍSICO INTERMEDIO"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "2o.",
+        "subjectName": "INGLÉS II"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "2o.",
+        "subjectName": "FORMACIÓN SOCIOCULTURAL II"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "3o.",
+        "subjectName": "MANEJO DE EQUIPO ELECTROM�DICO"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "3o.",
+        "subjectName": "FARMACOLOGÍA"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "3o.",
+        "subjectName": "SOPORTE PREHOSPITALARIO EN TRAUMA I"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "3o.",
+        "subjectName": "FISIOPATOLOGÍA"
+    },
+    {
+        "id": 11,
+        "totalHours": 90,
+        "weeklyHours": 6,
+        "monthPeriod": "3o.",
+        "subjectName": "MANEJO DE URGENCIAS II"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "3o.",
+        "subjectName": "COMUNICACIÓN EN EMERGENCIAS"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "3o.",
+        "subjectName": "ACONDICIONAMIENTO FÍSICO AVANZADO"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "3o.",
+        "subjectName": "INGLÉS III"
+    },
+    {
+        "id": 11,
+        "totalHours": 30,
+        "weeklyHours": 2,
+        "monthPeriod": "3o.",
+        "subjectName": "FORMACIÓN SOCIOCULTURAL III"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "4o.",
+        "subjectName": "SOPORTE PREHOSPITALARIO EN TRAUMA II"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "4o.",
+        "subjectName": "MANEJO DE ESCENARIOS DE VIOLENCIA"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "4o.",
+        "subjectName": "TÉCNICAS DE RESCATE"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "4o.",
+        "subjectName": "SEGURIDAD INDUSTRIAL I"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "4o.",
+        "subjectName": "ENTRENAMIENTO FÍSICO I"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "4o.",
+        "subjectName": "INGLÉS IV"
+    },
+    {
+        "id": 11,
+        "totalHours": 30,
+        "weeklyHours": 2,
+        "monthPeriod": "4o.",
+        "subjectName": "INTEGRADORA I"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "4o.",
+        "subjectName": "FORMACIÓN SOCIOCULTURAL IV"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "5o.",
+        "subjectName": "METODOLOGÍA DE LA INVESTIGACIÓN"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "5o.",
+        "subjectName": "ESTADÍSTICA"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "5o.",
+        "subjectName": "OPERACIÓN Y MANTENIMIENTO DE AMBULANCIAS"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "5o.",
+        "subjectName": "ADMINISTRACIÓN PARA EL SERVICIO"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "5o.",
+        "subjectName": "SEGURIDAD INDUSTRIAL II"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "5o.",
+        "subjectName": "COORDINACIÓN OPERATIVA"
+    },
+    {
+        "id": 11,
+        "totalHours": 45,
+        "weeklyHours": 3,
+        "monthPeriod": "5o.",
+        "subjectName": "ENTRENAMIENTO FÍSICO II"
+    },
+    {
+        "id": 11,
+        "totalHours": 60,
+        "weeklyHours": 4,
+        "monthPeriod": "5o.",
+        "subjectName": "INGLÉS V"
+    },
+    {
+        "id": 11,
+        "totalHours": 75,
+        "weeklyHours": 5,
+        "monthPeriod": "5o.",
+        "subjectName": "EXPRESIÒN ORAL Y ESCRITA II"
+    },
+    {
+        "id": 11,
+        "totalHours": 525,
+        "weeklyHours": 35,
+        "monthPeriod": "ESTADÍA",
+        "subjectName": "ESTAD�A"
+    }
+]
